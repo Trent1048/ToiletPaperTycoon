@@ -4,39 +4,66 @@ using UnityEngine;
 public class CharacterControl : MonoBehaviour {
 
     public float speed;
+    public float accuracy;
+
+    private GameObject targetLoc;
+
     private Animator animator;
     private Direction dir;
 
     private void Start() {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
     }
 
-    private void Update() {
-        // get input
-        float xIn = Input.GetAxis("Horizontal");
-        float yIn = Input.GetAxis("Vertical");
+    private void FixedUpdate() {
+        if (targetLoc != null) {
+            Move(targetLoc.transform);
+        }
+    }
+
+    public void UpdateTarget(GameObject targetLoc) {
+        this.targetLoc = targetLoc;
+    }
+
+    private void Move(Transform target) {
+        Vector3 targetPos = target.position;
+
+        // isographic coordinates
+        float targetIsoX = targetPos.y / 0.25f + targetPos.x / 0.5f;
+        float targetIsoY = targetPos.y / 0.25f - targetPos.x / 0.5f;
+
+        float isoX = transform.position.y / 0.25f + transform.position.x / 0.5f;
+        float isoY = transform.position.y / 0.25f - transform.position.x / 0.5f;
+
+        float moveX = targetIsoX - isoX;
+        float moveY = targetIsoY - isoY;
 
         // keep the player moving on only one isometric axis
-        if (Math.Abs(xIn) < Math.Abs(yIn)) {
-            xIn = 0;
-            if (yIn < 0) dir = Direction.FrontRight;
-            else if (yIn > 0) dir = Direction.BackLeft;
+        if (Math.Abs(moveX) < accuracy) {
+            moveX = 0;
+            if (moveY < 0) dir = Direction.FrontRight;
+            else if (moveY > 0) dir = Direction.BackLeft;
         } else {
-            yIn = 0;
-            if (xIn < 0) dir = Direction.FrontLeft;
-            else if (xIn > 0) dir = Direction.BackRight;   
+            moveY = 0;
+            if (moveX < 0) dir = Direction.FrontLeft;
+            else if (moveX > 0) dir = Direction.BackRight;
         }
 
         animator.SetInteger("Direction", (int)dir);
 
-        xIn *= Time.deltaTime * speed;
-        yIn *= Time.deltaTime * speed;
+        // so it won't move when it is really close
+        if (Math.Abs(moveX) > accuracy || Math.Abs(moveY) > accuracy) {
 
-        // deal with isometric movement
-        float xMove = (xIn - yIn) * 0.5f;
-        float yMove = (xIn + yIn) * 0.25f;
+            Vector3 moveVector = new Vector3((moveX - moveY) * 0.5f, (moveX + moveY) * 0.25f, 0);
 
-        transform.Translate(xMove, yMove, 0);
+            // keep the speed the same regardless of distance or framerate
+            moveVector.Normalize();
+            moveVector *= Time.fixedDeltaTime * speed;
+
+            transform.Translate(moveVector);
+        } else {
+            targetLoc = null;
+        }
     }
 }
 

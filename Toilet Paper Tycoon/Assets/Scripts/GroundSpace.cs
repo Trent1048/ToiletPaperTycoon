@@ -23,11 +23,14 @@ public class GroundSpace : MonoBehaviour {
     }
 
     private void OnMouseDown() {
-        if (currentObject == null) {
-            currentObject = Instantiate(GameController.gameController.selectedObject, transform);
-        } else {
-            Destroy(currentObject);
-            currentObject = null;
+        if (GameController.instance.selectedObject != null) {
+            if (currentObject == null) {
+                currentObject = Instantiate(GameController.instance.selectedObject, transform);
+            } else {
+                Destroy(currentObject);
+                currentObject = null;
+            }
         }
+        GameController.instance.ChangeSelectedSpace(gameObject);
     }
 }
