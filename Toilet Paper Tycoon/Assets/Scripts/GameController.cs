@@ -32,6 +32,10 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    public CharacterType GetSelectedCharacterType() {
+        return selectedCharacterControl.characterType;
+    }
+
     public void ToggleSelectedObject() {
         objectIsSelected = !objectIsSelected;
     }
@@ -50,7 +54,7 @@ public class GameController : MonoBehaviour {
 
     public void ChangeSelectedSpace(GameObject newSpace) {
         selectedSpace = newSpace;
-        if (selectedCharacterControl != null) {
+        if (!objectIsSelected && selectedCharacterControl != null) {
             selectedCharacterControl.UpdateTarget(newSpace);
         }
     }

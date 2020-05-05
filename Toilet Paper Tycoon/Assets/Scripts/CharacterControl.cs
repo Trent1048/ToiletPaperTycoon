@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class CharacterControl : MonoBehaviour {
 
+    public CharacterType characterType;
+
     public float speed;
     public float accuracy;
 
@@ -65,6 +67,18 @@ public class CharacterControl : MonoBehaviour {
             targetLoc = null;
         }
     }
+
+    private void OnMouseEnter() {
+        gameObject.transform.localScale = Vector3.one * 1.2f;
+    }
+
+    private void OnMouseExit() {
+        gameObject.transform.localScale = Vector3.one;
+    }
+
+    private void OnMouseDown() {
+        GameController.instance.ChangeSelectedCharacter(gameObject);
+    }
 }
 
 public enum Direction {
@@ -72,4 +86,10 @@ public enum Direction {
     FrontRight,
     BackLeft,
     BackRight
+}
+
+public enum CharacterType {
+    Jerry,
+    Rachel,
+    Rick
 }
