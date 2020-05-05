@@ -23,9 +23,9 @@ public class GroundSpace : MonoBehaviour {
     }
 
     private void OnMouseDown() {
-        if (GameController.instance.selectedObject != null) {
+        if (GameController.instance.GetSelectedObject() != null) {
             if (currentObject == null) {
-                currentObject = Instantiate(GameController.instance.selectedObject, transform);
+                currentObject = Instantiate(GameController.instance.GetSelectedObject(), transform);
             } else {
                 Destroy(currentObject);
                 currentObject = null;

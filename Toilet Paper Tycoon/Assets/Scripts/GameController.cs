@@ -4,11 +4,13 @@ public class GameController : MonoBehaviour {
 
     public static GameController instance;
 
-    // TODO: add a system to change these with UI
-    public GameObject selectedObject;
-    private GameObject selectedSpace;
+    public GameObject initialSelectedObject;
+    public GameObject initialCharacter;
 
-    public GameObject initialCharacter; // this is temporary, will go away with the UI
+    private GameObject selectedObject;
+    private GameObject selectedSpace;
+    private bool objectIsSelected = true;
+
     private CharacterControl selectedCharacterControl;
 
     private void Awake() {
@@ -18,7 +20,7 @@ public class GameController : MonoBehaviour {
         } else {
             Debug.LogError("Cannot have more than one game controller");
         }
-
+        ChangeSelectedObject(initialSelectedObject);
         ChangeSelectedCharacter(initialCharacter);
     }
 
@@ -27,6 +29,22 @@ public class GameController : MonoBehaviour {
             selectedCharacterControl = character.GetComponent<CharacterControl>();
         } catch {
             Debug.LogError("That is not a valid character");
+        }
+    }
+
+    public void ToggleSelectedObject() {
+        objectIsSelected = !objectIsSelected;
+    }
+
+    public void ChangeSelectedObject(GameObject selectedObject) {
+        this.selectedObject = selectedObject;
+    }
+
+    public GameObject GetSelectedObject() {
+        if (objectIsSelected) {
+            return selectedObject;
+        } else {
+            return null;
         }
     }
 
