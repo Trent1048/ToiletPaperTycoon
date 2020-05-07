@@ -7,11 +7,24 @@ public class GroundSpace : MonoBehaviour {
     private Color hoverColor;
 
     private GameObject currentObject;
+    public GameObject[] objects;
 
     private void Start() {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         startingColor = spriteRenderer.color;
         hoverColor = new Color(0f, 0f, 0f, 0.5f);
+
+        int roll = Random.Range(0, 50);
+        if (roll <= 25)
+        {
+            int rand = Random.Range(0, objects.Length);
+            GameObject newtree = Instantiate(objects[rand], transform);
+            ChangeCurrentObject(newtree);
+        }
+        else
+        {
+            return;
+        }
     }
 
     public void ChangeCurrentObject(GameObject newObject) {
@@ -39,4 +52,5 @@ public class GroundSpace : MonoBehaviour {
         }
         GameController.instance.ChangeSelectedSpace(gameObject);
     }
+   
 }
