@@ -3,6 +3,7 @@
 public class GameController : MonoBehaviour {
 
     public static GameController instance;
+    private float masterTime;
 
     public GameObject initialSelectedObject;
     public GameObject initialCharacter;
@@ -22,6 +23,20 @@ public class GameController : MonoBehaviour {
         }
         ChangeSelectedObject(initialSelectedObject);
         ChangeSelectedCharacter(initialCharacter);
+    }
+
+    private void FixedUpdate() {
+        int previousSecond = (int)masterTime;
+        masterTime += Time.fixedDeltaTime;
+        if ((int)masterTime != previousSecond) {
+            // calls GameTick once per second
+            GameTick();
+        }
+    }
+
+    // put anything that runs every tick in this function
+    public void GameTick() {
+
     }
 
     public void ChangeSelectedCharacter(GameObject character) {
