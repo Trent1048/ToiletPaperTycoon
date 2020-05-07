@@ -14,16 +14,10 @@ public class GroundSpace : MonoBehaviour {
         startingColor = spriteRenderer.color;
         hoverColor = new Color(0f, 0f, 0f, 0.5f);
 
-        int roll = Random.Range(0, 50);
-        if (roll <= 25)
-        {
-            int rand = Random.Range(0, objects.Length);
-            GameObject newtree = Instantiate(objects[rand], transform);
-            ChangeCurrentObject(newtree);
-        }
-        else
-        {
-            return;
+        // initial tree generation
+        if (Random.Range(0, 3) == 0) {
+            int treeType = Random.Range(0, objects.Length);
+            ChangeCurrentObject(objects[treeType]);
         }
     }
 
@@ -31,7 +25,11 @@ public class GroundSpace : MonoBehaviour {
         if (currentObject != null) {
             Destroy(currentObject);
         }
-        currentObject = newObject;
+        if (newObject != null) {
+            currentObject = Instantiate(newObject, transform);
+        } else {
+            currentObject = null;
+        }
     }
 
     private void OnMouseEnter() {
@@ -45,7 +43,7 @@ public class GroundSpace : MonoBehaviour {
     private void OnMouseDown() {
         if (GameController.instance.GetSelectedObject() != null) {
             if (currentObject == null) {
-                currentObject = Instantiate(GameController.instance.GetSelectedObject(), transform);
+                ChangeCurrentObject(GameController.instance.GetSelectedObject());
             } else {
                 ChangeCurrentObject(null);
             }
