@@ -14,6 +14,13 @@ public class GroundSpace : MonoBehaviour {
         hoverColor = new Color(0f, 0f, 0f, 0.5f);
     }
 
+    public void ChangeCurrentObject(GameObject newObject) {
+        if (currentObject != null) {
+            Destroy(currentObject);
+        }
+        currentObject = newObject;
+    }
+
     private void OnMouseEnter() {
         spriteRenderer.color = hoverColor;
     }
@@ -27,8 +34,7 @@ public class GroundSpace : MonoBehaviour {
             if (currentObject == null) {
                 currentObject = Instantiate(GameController.instance.GetSelectedObject(), transform);
             } else {
-                Destroy(currentObject);
-                currentObject = null;
+                ChangeCurrentObject(null);
             }
         }
         GameController.instance.ChangeSelectedSpace(gameObject);
