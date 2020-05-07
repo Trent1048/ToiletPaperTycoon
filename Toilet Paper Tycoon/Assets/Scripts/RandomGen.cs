@@ -6,10 +6,20 @@ public class RandomGen : MonoBehaviour
 {
     public GameObject[] objects;
 
+    
+
     void Start()
     {
-        int rand = Random.Range(0, objects.Length);
-        Instantiate(objects[rand],transform);
+        int roll = Random.Range(0, 50);
+        if (roll <= 25)
+        {
+            int rand = Random.Range(0, objects.Length);
+            Instantiate(objects[rand], transform);
+        }
+        else
+        {
+            return;
+        }
     }
 
 
