@@ -14,7 +14,7 @@ public class CharacterControl : MonoBehaviour {
     private Direction dir;
 
     private void Start() {
-        animator = GetComponentInChildren<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     private void FixedUpdate() {
