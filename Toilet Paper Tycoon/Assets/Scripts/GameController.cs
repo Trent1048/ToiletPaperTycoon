@@ -25,6 +25,12 @@ public class GameController : MonoBehaviour {
         ChangeSelectedCharacter(initialCharacter);
     }
 
+    private void Update() {
+        if (Input.GetMouseButtonDown(1) && !objectIsSelected) {
+            selectedCharacterControl.MoveToTree();
+        }
+    }
+
     private void FixedUpdate() {
         int previousSecond = (int)masterTime;
         masterTime += Time.fixedDeltaTime;

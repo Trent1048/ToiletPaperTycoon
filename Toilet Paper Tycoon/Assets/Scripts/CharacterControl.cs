@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterControl : MonoBehaviour {
@@ -9,12 +10,15 @@ public class CharacterControl : MonoBehaviour {
     public float accuracy;
 
     private GameObject targetLoc;
+    private GameObject previousTargetLoc;
 
+    private ContactFilter2D contactFilter;
     private Animator animator;
     private Direction dir;
 
     private void Start() {
         animator = GetComponent<Animator>();
+        contactFilter = new ContactFilter2D();
     }
 
     private void FixedUpdate() {
@@ -64,8 +68,26 @@ public class CharacterControl : MonoBehaviour {
 
             transform.Translate(moveVector);
         } else {
+            previousTargetLoc = targetLoc;
             targetLoc = null;
         }
+    }
+
+    public void MoveToTree() {
+        List<Collider2D> hitColliders = new List<Collider2D>();
+        Physics2D.OverlapCircle(transform.position, 5f, contactFilter, hitColliders);
+
+        foreach (Collider2D col in hitColliders) {
+            GroundSpace ground = col.GetComponent<GroundSpace>();
+            if (ground != null && col.gameObject != previousTargetLoc) {
+                GameObject groundCurrentObject = ground.GetCurrentObject();
+                if (groundCurrentObject != null && groundCurrentObject.GetComponent<TreeController>() != null) {
+                    UpdateTarget(col.gameObject);
+                    return;
+                }
+            }
+        }
+        Debug.Log("No Trees found");
     }
 
     private void OnMouseEnter() {

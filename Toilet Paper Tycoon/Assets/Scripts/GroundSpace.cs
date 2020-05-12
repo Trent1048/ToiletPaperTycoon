@@ -32,6 +32,10 @@ public class GroundSpace : MonoBehaviour {
         }
     }
 
+    public GameObject GetCurrentObject() {
+        return currentObject;
+    }
+
     private void OnMouseEnter() {
         spriteRenderer.color = hoverColor;
     }
