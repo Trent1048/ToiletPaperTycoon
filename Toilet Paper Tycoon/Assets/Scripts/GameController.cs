@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour {
     public GameObject initialSelectedObject;
     public GameObject initialCharacter;
 
+    private GameObject box;
     private GameObject selectedObject;
     private GameObject selectedSpace;
     private bool objectIsSelected = true;
@@ -108,5 +109,16 @@ public class GameController : MonoBehaviour {
 
     public GameObject GetSelectedSpace() {
         return selectedSpace;
+    }
+
+    // there can only be one box in the game
+    // this tells if there already is one
+    // and will be used to prevent another from being created
+    public bool BoxCanSpawn() {
+        return box == null;
+    }
+
+    public void AddBox(GameObject box) {
+        this.box = box;
     }
 }

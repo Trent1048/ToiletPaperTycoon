@@ -26,7 +26,13 @@ public class GroundSpace : MonoBehaviour {
             Destroy(currentObject);
         }
         if (newObject != null) {
-            currentObject = Instantiate(newObject, transform);
+            // makes sure the object is not a box or that a box can spawn if it is
+            bool currentObjectIsBox = newObject.GetComponent<BoxController>() != null;
+            if (!currentObjectIsBox || (currentObjectIsBox && GameController.instance.BoxCanSpawn())) {
+                currentObject = Instantiate(newObject, transform);
+            } else {
+                currentObject = null;
+            }
         } else {
             currentObject = null;
         }
