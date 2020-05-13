@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CharacterControl : MonoBehaviour {
 
-    public CharacterType characterType;
-
     public float speed;
     public float accuracy;
 
@@ -73,9 +71,9 @@ public class CharacterControl : MonoBehaviour {
         }
     }
 
-    public void MoveToTree() {
+    public void MoveToTree(float radius = 1f) {
         List<Collider2D> hitColliders = new List<Collider2D>();
-        Physics2D.OverlapCircle(transform.position, 5f, contactFilter, hitColliders);
+        Physics2D.OverlapCircle(transform.position, radius, contactFilter, hitColliders);
 
         foreach (Collider2D col in hitColliders) {
             GroundSpace ground = col.GetComponent<GroundSpace>();
@@ -87,19 +85,9 @@ public class CharacterControl : MonoBehaviour {
                 }
             }
         }
-        Debug.Log("No Trees found");
-    }
-
-    private void OnMouseEnter() {
-        gameObject.transform.localScale = Vector3.one * 1.2f;
-    }
-
-    private void OnMouseExit() {
-        gameObject.transform.localScale = Vector3.one;
-    }
-
-    private void OnMouseDown() {
-        GameController.instance.ChangeSelectedCharacter(gameObject);
+        if (radius < 10f) {
+            MoveToTree(radius * 2);
+        }
     }
 }
 
@@ -108,10 +96,4 @@ public enum Direction {
     FrontRight,
     BackLeft,
     BackRight
-}
-
-public enum CharacterType {
-    Jerry,
-    Rachel,
-    Rick
 }

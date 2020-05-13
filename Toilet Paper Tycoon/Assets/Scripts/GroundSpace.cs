@@ -37,7 +37,9 @@ public class GroundSpace : MonoBehaviour {
     }
 
     private void OnMouseEnter() {
-        spriteRenderer.color = hoverColor;
+        if (!GameController.instance.GameIsPaused()) {
+            spriteRenderer.color = hoverColor;
+        }
     }
 
     private void OnMouseExit() {
@@ -45,14 +47,16 @@ public class GroundSpace : MonoBehaviour {
     }
 
     private void OnMouseDown() {
-        if (GameController.instance.GetSelectedObject() != null) {
-            if (currentObject == null) {
-                ChangeCurrentObject(GameController.instance.GetSelectedObject());
-            } else {
-                ChangeCurrentObject(null);
+        if (!GameController.instance.GameIsPaused()) {
+            if (GameController.instance.GetSelectedObject() != null) {
+                if (currentObject == null) {
+                    ChangeCurrentObject(GameController.instance.GetSelectedObject());
+                } else {
+                    ChangeCurrentObject(null);
+                }
             }
+            GameController.instance.ChangeSelectedSpace(gameObject);
         }
-        GameController.instance.ChangeSelectedSpace(gameObject);
     }
    
 }

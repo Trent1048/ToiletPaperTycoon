@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour {
     private GameObject selectedObject;
     private GameObject selectedSpace;
     private bool objectIsSelected = true;
+    private bool gameIsPaused = false;
 
     private CharacterControl selectedCharacterControl;
 
@@ -45,24 +46,49 @@ public class GameController : MonoBehaviour {
         TreeController.GrowTrees();
     }
 
-    public void ChangeSelectedCharacter(GameObject character) {
-        try {
-            selectedCharacterControl = character.GetComponent<CharacterControl>();
-        } catch {
+    // Pausing and Resuming the Game:
+
+    public void PauseGame() {
+        Time.timeScale = 0;
+        gameIsPaused = true;
+    }
+
+    public bool GameIsPaused() {
+        return gameIsPaused;
+    }
+
+    public void ResumeGame() {
+        Time.timeScale = 1;
+        gameIsPaused = false;
+    }
+
+    public void TogglePause() {
+        if (gameIsPaused) {
+            ResumeGame();
+        } else {
+            PauseGame();
+        }
+    }
+
+    // Character and Object selection:
+
+    private void ChangeSelectedCharacter(GameObject character) {
+        CharacterControl newCharacterControl = character.GetComponent<CharacterControl>();
+        if (newCharacterControl != null) { 
+            selectedCharacterControl = newCharacterControl;
+        } else {
             Debug.LogError("That is not a valid character");
         }
     }
 
-    public CharacterType GetSelectedCharacterType() {
-        return selectedCharacterControl.characterType;
-    }
-
-    public void ToggleSelectedObject() {
-        objectIsSelected = !objectIsSelected;
-    }
-
     public void ChangeSelectedObject(GameObject selectedObject) {
-        this.selectedObject = selectedObject;
+        if (selectedObject.GetComponent<CharacterControl>() == null) {
+            objectIsSelected = true;
+            this.selectedObject = selectedObject;
+        } else {
+            objectIsSelected = false;
+            ChangeSelectedCharacter(selectedObject);
+        }
     }
 
     public GameObject GetSelectedObject() {
