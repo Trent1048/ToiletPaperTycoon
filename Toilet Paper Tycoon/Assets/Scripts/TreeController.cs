@@ -1,7 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+
+
+
 public class TreeController : MonoBehaviour {
+
+    public GameObject[] plantStage;
 
     protected static List<TreeController> treeControllers;
 
@@ -25,6 +30,10 @@ public class TreeController : MonoBehaviour {
     }
 
     private void Grow() {
-        // put the grow stuff here
+        float growth = Mathf.Lerp(0, 1, Time.deltaTime);
+        int treeForm = (int)Mathf.Floor(growth * 4);
+        for (int i = 0; i < 4; i++) plantStage[i].SetActive(false);
+        plantStage[treeForm].SetActive(true);
+
     }
 }
