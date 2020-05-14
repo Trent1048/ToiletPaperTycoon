@@ -1,31 +1,19 @@
 fileFormatVersion: 2
-guid: 12016dfa9134cfc48884cec2d88c9636
+guid: 838c98acad0ed054a9e06d42450c07dd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6954113043342598828
-    second: jerry_front
+      213: -7874262641381568579
+    second: conveyorBelt_top_right
   - first:
-      213: -3010850317369471465
-    second: jerry_back
+      213: 2699063360140803876
+    second: conveyorBelt_top_left
   - first:
-      213: -4333703202763947503
-    second: jerry_right
+      213: 4635450942556347315
+    second: conveyorBelt_bottom_left
   - first:
-      213: -7808461130958378366
-    second: jerry_left
-  - first:
-      213: 2487340315571952887
-    second: jerry_front_left
-  - first:
-      213: 3292256884811638005
-    second: jerry_front_right
-  - first:
-      213: -7336477845744379357
-    second: jerry_back_right
-  - first:
-      213: -2693449432816467186
-    second: jerry_back_left
+      213: 6618317597360158505
+    second: conveyorBelt_bottom_right
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -111,85 +99,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: jerry_front_left
+      name: conveyorBelt_top_right
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 8
-        height: 16
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7fc9c29a6dec48220800000000000000
-      internalID: 2487340315571952887
+      spriteID: dbf8258e8dff8b290800000000000000
+      internalID: -7874262641381568579
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jerry_front_right
-      rect:
-        serializedVersion: 2
-        x: 8
-        y: 0
-        width: 8
-        height: 16
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5f42880913270bd20800000000000000
-      internalID: 3292256884811638005
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: jerry_back_right
+      name: conveyorBelt_top_left
       rect:
         serializedVersion: 2
         x: 16
         y: 0
-        width: 8
-        height: 16
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 32a12e505489f2a90800000000000000
-      internalID: -7336477845744379357
+      spriteID: 42ff67763dff47520800000000000000
+      internalID: 2699063360140803876
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jerry_back_left
+      name: conveyorBelt_bottom_left
       rect:
         serializedVersion: 2
-        x: 24
+        x: 32
         y: 0
-        width: 8
-        height: 16
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e034f78e202fe9ad0800000000000000
-      internalID: -2693449432816467186
+      spriteID: 3bb12d4921e645040800000000000000
+      internalID: 4635450942556347315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: conveyorBelt_bottom_right
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9277e591accf8db50800000000000000
+      internalID: 6618317597360158505
       vertices: []
       indices: 
       edges: []

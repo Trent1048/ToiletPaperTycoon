@@ -14,16 +14,10 @@ public class GroundSpace : MonoBehaviour {
         startingColor = spriteRenderer.color;
         hoverColor = new Color(0f, 0f, 0f, 0.5f);
 
-        int roll = Random.Range(0, 50);
-        if (roll <= 25)
-        {
-            int rand = Random.Range(0, objects.Length);
-            GameObject newtree = Instantiate(objects[rand], transform);
-            ChangeCurrentObject(newtree);
-        }
-        else
-        {
-            return;
+        // initial tree generation
+        if (Random.Range(0, 3) == 0) {
+            int treeType = Random.Range(0, objects.Length);
+            ChangeCurrentObject(objects[treeType]);
         }
     }
 
@@ -31,11 +25,27 @@ public class GroundSpace : MonoBehaviour {
         if (currentObject != null) {
             Destroy(currentObject);
         }
-        currentObject = newObject;
+        if (newObject != null) {
+            // makes sure the object is not a box or that a box can spawn if it is
+            bool currentObjectIsBox = newObject.GetComponent<BoxController>() != null;
+            if (!currentObjectIsBox || (currentObjectIsBox && GameController.instance.BoxCanSpawn())) {
+                currentObject = Instantiate(newObject, transform);
+            } else {
+                currentObject = null;
+            }
+        } else {
+            currentObject = null;
+        }
+    }
+
+    public GameObject GetCurrentObject() {
+        return currentObject;
     }
 
     private void OnMouseEnter() {
-        spriteRenderer.color = hoverColor;
+        if (!GameController.instance.GameIsPaused()) {
+            spriteRenderer.color = hoverColor;
+        }
     }
 
     private void OnMouseExit() {
@@ -43,14 +53,16 @@ public class GroundSpace : MonoBehaviour {
     }
 
     private void OnMouseDown() {
-        if (GameController.instance.GetSelectedObject() != null) {
-            if (currentObject == null) {
-                currentObject = Instantiate(GameController.instance.GetSelectedObject(), transform);
-            } else {
-                ChangeCurrentObject(null);
+        if (!GameController.instance.GameIsPaused()) {
+            if (GameController.instance.GetSelectedObject() != null) {
+                if (currentObject == null) {
+                    ChangeCurrentObject(GameController.instance.GetSelectedObject());
+                } else {
+                    ChangeCurrentObject(null);
+                }
             }
+            GameController.instance.ChangeSelectedSpace(gameObject);
         }
-        GameController.instance.ChangeSelectedSpace(gameObject);
     }
    
 }

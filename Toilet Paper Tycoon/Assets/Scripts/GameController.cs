@@ -3,13 +3,16 @@
 public class GameController : MonoBehaviour {
 
     public static GameController instance;
+    private float masterTime;
 
     public GameObject initialSelectedObject;
     public GameObject initialCharacter;
 
+    private GameObject box;
     private GameObject selectedObject;
     private GameObject selectedSpace;
     private bool objectIsSelected = true;
+    private bool gameIsPaused = false;
 
     private CharacterControl selectedCharacterControl;
 
@@ -24,24 +27,69 @@ public class GameController : MonoBehaviour {
         ChangeSelectedCharacter(initialCharacter);
     }
 
-    public void ChangeSelectedCharacter(GameObject character) {
-        try {
-            selectedCharacterControl = character.GetComponent<CharacterControl>();
-        } catch {
+    private void Update() {
+        if (Input.GetMouseButtonDown(1) && !objectIsSelected) {
+            selectedCharacterControl.MoveToTree();
+        }
+    }
+
+    private void FixedUpdate() {
+        int previousSecond = (int)masterTime;
+        masterTime += Time.fixedDeltaTime;
+        if ((int)masterTime != previousSecond) {
+            // calls GameTick once per second
+            GameTick();
+        }
+    }
+
+    // put anything that runs every tick in this function
+    public void GameTick() {
+        TreeController.GrowTrees();
+    }
+
+    // Pausing and Resuming the Game:
+
+    public void PauseGame() {
+        Time.timeScale = 0;
+        gameIsPaused = true;
+    }
+
+    public bool GameIsPaused() {
+        return gameIsPaused;
+    }
+
+    public void ResumeGame() {
+        Time.timeScale = 1;
+        gameIsPaused = false;
+    }
+
+    public void TogglePause() {
+        if (gameIsPaused) {
+            ResumeGame();
+        } else {
+            PauseGame();
+        }
+    }
+
+    // Character and Object selection:
+
+    private void ChangeSelectedCharacter(GameObject character) {
+        CharacterControl newCharacterControl = character.GetComponent<CharacterControl>();
+        if (newCharacterControl != null) { 
+            selectedCharacterControl = newCharacterControl;
+        } else {
             Debug.LogError("That is not a valid character");
         }
     }
 
-    public CharacterType GetSelectedCharacterType() {
-        return selectedCharacterControl.characterType;
-    }
-
-    public void ToggleSelectedObject() {
-        objectIsSelected = !objectIsSelected;
-    }
-
     public void ChangeSelectedObject(GameObject selectedObject) {
-        this.selectedObject = selectedObject;
+        if (selectedObject.GetComponent<CharacterControl>() == null) {
+            objectIsSelected = true;
+            this.selectedObject = selectedObject;
+        } else {
+            objectIsSelected = false;
+            ChangeSelectedCharacter(selectedObject);
+        }
     }
 
     public GameObject GetSelectedObject() {
@@ -61,5 +109,16 @@ public class GameController : MonoBehaviour {
 
     public GameObject GetSelectedSpace() {
         return selectedSpace;
+    }
+
+    // there can only be one box in the game
+    // this tells if there already is one
+    // and will be used to prevent another from being created
+    public bool BoxCanSpawn() {
+        return box == null;
+    }
+
+    public void AddBox(GameObject box) {
+        this.box = box;
     }
 }
