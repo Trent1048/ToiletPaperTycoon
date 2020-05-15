@@ -6,7 +6,10 @@ using UnityEngine;
 
 public class TreeController : MonoBehaviour {
 
-    public GameObject[] plantStage;
+    public Sprite[] plantStage;
+    public int growCount = 0;
+    
+
 
     protected static List<TreeController> treeControllers;
 
@@ -14,6 +17,9 @@ public class TreeController : MonoBehaviour {
         if (treeControllers != null) {
             foreach (TreeController tree in treeControllers) {
                 tree.Grow();
+                
+                
+
             }
         }
     }
@@ -29,14 +35,32 @@ public class TreeController : MonoBehaviour {
         treeControllers.Remove(this);
     }
 
-    private void Grow() {
-        float startTime = -1.0f;
-        float endTime = 3f;
+    public void Grow()
+    {
+        
+        
+        if (growCount >= 0 && growCount < 5)
+        {
 
-        float growth = Mathf.Lerp(0, 1, (endTime - Time.time) / (endTime - startTime));
-        int treeForm = (int)Mathf.Floor(growth * 4);
-        for (int i = 0; i < 4; i++) plantStage[i].SetActive(false);
-        plantStage[treeForm].SetActive(true);
+            this.gameObject.GetComponent<SpriteRenderer>().sprite=plantStage[0];
+        }
+        if (growCount >=5 && growCount<10)
+        {
+            
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = plantStage[1];
+        }
+        if (growCount >= 10 && growCount < 15)
+        {
+            
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = plantStage[2]; 
+        }
+        if (growCount >= 15 )
+        {
+            
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = plantStage[3];
+        }
 
+        growCount++;
     }
+
 }
