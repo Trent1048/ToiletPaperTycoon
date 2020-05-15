@@ -30,8 +30,8 @@ public class TreeController : MonoBehaviour {
     }
 
     private void Grow() {
-        float startTime = -5.0f;
-        float endTime = 0f;
+        float startTime = -1.0f;
+        float endTime = 3f;
 
         float growth = Mathf.Lerp(0, 1, (endTime - Time.time) / (endTime - startTime));
         int treeForm = (int)Mathf.Floor(growth * 4);
