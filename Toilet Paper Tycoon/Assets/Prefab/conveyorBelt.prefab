@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8758841101066059142}
   - component: {fileID: 6128877895886556741}
   - component: {fileID: 1789107445382652086}
+  - component: {fileID: 8155700356827894968}
   m_Layer: 0
   m_Name: conveyorBelt_bottom_left
   m_TagString: Untagged
@@ -115,3 +116,22 @@ PolygonCollider2D:
       - {x: 0.5, y: -0.34375}
       - {x: 0.5, y: 0.34375}
       - {x: 0.4375, y: 0.40625}
+--- !u!114 &8155700356827894968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3438637974438974920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd6e9c8973258b54689f5394bb4b7cd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storedObject: {fileID: 0}
+  next: {fileID: 0}
+  sprites:
+  - {fileID: 4635450942556347315, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
+  - {fileID: 6618317597360158505, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
+  - {fileID: -7874262641381568579, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
+  - {fileID: 2699063360140803876, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
