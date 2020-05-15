@@ -30,7 +30,10 @@ public class TreeController : MonoBehaviour {
     }
 
     private void Grow() {
-        float growth = Mathf.Lerp(0, 1, Time.deltaTime);
+        float startTime = -5.0f;
+        float endTime = 0f;
+
+        float growth = Mathf.Lerp(0, 1, (endTime - Time.time) / (endTime - startTime));
         int treeForm = (int)Mathf.Floor(growth * 4);
         for (int i = 0; i < 4; i++) plantStage[i].SetActive(false);
         plantStage[treeForm].SetActive(true);
