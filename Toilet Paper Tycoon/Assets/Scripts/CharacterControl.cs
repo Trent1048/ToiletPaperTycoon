@@ -9,6 +9,7 @@ public class CharacterControl : MonoBehaviour {
 
     private GameObject targetLoc;
     private GameObject previousTargetLoc;
+    private GameObject nextTargetLoc;
 
     private ContactFilter2D contactFilter;
     private Animator animator;
@@ -67,7 +68,8 @@ public class CharacterControl : MonoBehaviour {
             transform.Translate(moveVector);
         } else {
             previousTargetLoc = targetLoc;
-            targetLoc = null;
+            targetLoc = nextTargetLoc;
+            nextTargetLoc = null;
         }
     }
 
@@ -81,6 +83,7 @@ public class CharacterControl : MonoBehaviour {
                 GameObject groundCurrentObject = ground.GetCurrentObject();
                 if (groundCurrentObject != null && groundCurrentObject.GetComponent<TreeController>() != null) {
                     UpdateTarget(col.gameObject);
+                    nextTargetLoc = GameController.instance.GetBox().transform.parent.gameObject;
                     return;
                 }
             }
