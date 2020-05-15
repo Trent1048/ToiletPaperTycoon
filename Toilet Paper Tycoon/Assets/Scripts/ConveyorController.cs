@@ -74,11 +74,3 @@ public class ConveyorController : MonoBehaviour
         }
     }
 }
-
-public enum Direction
-{
-    FrontLeft,
-    FrontRight,
-    BackLeft,
-    BackRight
-}
