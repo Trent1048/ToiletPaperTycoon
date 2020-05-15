@@ -740,7 +740,7 @@ Transform:
   m_Children:
   - {fileID: 523695544}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &136394296
 PrefabInstance:
@@ -4940,7 +4940,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
 --- !u!114 &967857223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10425,7 +10425,7 @@ PrefabInstance:
     - target: {fileID: 2317723479936612356, guid: 8cba3b15c289ff54e950baa6f399f1ca,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2317723479936612356, guid: 8cba3b15c289ff54e950baa6f399f1ca,
         type: 3}
