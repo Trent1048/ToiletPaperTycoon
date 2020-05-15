@@ -9,9 +9,10 @@ public class ConveyorController : MonoBehaviour
     //list of conveyors
     protected static List<ConveyorController> conveyorControllers;
 
-    //singly linked nodes
+    //doubly linked nodes
     public GameObject storedObject;
     public ConveyorController next;
+    public ConveyorController prev;
 
 
     //variables for right-click switch
@@ -63,9 +64,12 @@ public class ConveyorController : MonoBehaviour
       
 
     }
+
+    //unlinks any conveyor connected through prev and next, and removes conveyor
     private void OnDestroy()
     {
-        next = null;
+        if(prev !=null) prev.next = null;
+        if(next != null) next.prev = null;
         conveyorControllers.Remove(this);
     }
 
@@ -74,7 +78,7 @@ public class ConveyorController : MonoBehaviour
         //moves object
     }
 
-    //switch on right click
+    //changes sprite with right-click and check for new reference
     private void OnMouseOver()
     {
         
@@ -85,18 +89,18 @@ public class ConveyorController : MonoBehaviour
             FindFront();
             FindBehind();
 
-            if (switchCounter >= 3)
-            {
-                switchCounter = -1;
-            }
+            if (switchCounter >= 3) switchCounter = -1;
         }
     }
 
+    //allows conveyor to find and reference another conveyor in front of it
     private void FindFront()
     {
+        //find and store surrounding object
         List<Collider2D> hitColliders = new List<Collider2D>();
         Physics2D.OverlapCircle(transform.position, 0.5f, contactFilter, hitColliders);
 
+        //searches for conveyor and references it
         foreach (Collider2D col in hitColliders)
         {
             ConveyorController conveyor = col.GetComponent<ConveyorController>();
@@ -106,18 +110,22 @@ public class ConveyorController : MonoBehaviour
             {
                 if (thisPos + offsetDictionary[switchCounter] == otherPos)
                 {
-                    next = conveyor.next;
+                    next = conveyor.prev;
+                    conveyor.prev = next;
                     Debug.LogError("Connects2");
                 }
             }
         }
     }
 
+    //allows conveyor to find and reference another conveyor behind it
     private void FindBehind()
     {
+        //find and store surrounding object
         List<Collider2D> hitColliders = new List<Collider2D>();
         Physics2D.OverlapCircle(transform.position, 0.5f, contactFilter, hitColliders);
 
+        //searches for conveyor and references it
         foreach (Collider2D col in hitColliders)
         {
             ConveyorController conveyor = col.GetComponent<ConveyorController>();
@@ -127,7 +135,8 @@ public class ConveyorController : MonoBehaviour
             {
                 if (otherPos + offsetDictionary[switchCounter] == thisPos)
                 {
-                    conveyor.next = next;
+                    conveyor.next = prev;
+                    prev = conveyor.next;
                     Debug.LogError("Connects1");
                 }
             }
