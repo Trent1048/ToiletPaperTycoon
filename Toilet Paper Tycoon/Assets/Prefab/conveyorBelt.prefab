@@ -129,6 +129,6 @@ MonoBehaviour:
   next: {fileID: 0}
   sprites:
   - {fileID: 4635450942556347315, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
-  - {fileID: 6618317597360158505, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
-  - {fileID: -7874262641381568579, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
   - {fileID: 2699063360140803876, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
+  - {fileID: -7874262641381568579, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
+  - {fileID: 6618317597360158505, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
