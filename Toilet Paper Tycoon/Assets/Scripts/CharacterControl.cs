@@ -109,7 +109,14 @@ public class CharacterControl : MonoBehaviour {
                     // makes the player move to the box after it's done moving
                     DoAfterMove = () => {
                         TakeItem();
-                        UpdateTarget(GameController.instance.GetBox().transform.parent.gameObject);
+                        GameObject box = GameController.instance.GetBox();
+
+                        if (box != null) {
+                            UpdateTarget(box.transform.parent.gameObject);
+                        } else {
+                            UpdateTarget(null);
+                        }
+
                         DoAfterMove = () => DoNothing();
                     };
 
