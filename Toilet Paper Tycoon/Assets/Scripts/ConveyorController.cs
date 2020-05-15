@@ -77,7 +77,7 @@ public class ConveyorController : MonoBehaviour
     //!needs to be improved!
     public void MoveObject()
     {
-        //moves object from this to next
+       /* //moves object from this to next
         if (storedObject != null && next != null && next.storedObject == null)
         {
             next.storedObject = storedObject;
@@ -88,7 +88,7 @@ public class ConveyorController : MonoBehaviour
         {
             storedObject = prev.storedObject;
             prev.storedObject = null;
-        }
+        }*/
     }
 
     //changes sprite with right-click and check for new reference
