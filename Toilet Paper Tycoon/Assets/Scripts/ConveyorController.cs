@@ -8,8 +8,10 @@ public class ConveyorController : MonoBehaviour
     //list of conveyors
     protected static List<ConveyorController> conveyorControllers;
 
-    //connected conveyors
-    private ConveyorNode head;
+    //singly linked nodes
+    public GameObject storedObject;
+    public ConveyorController next;
+
 
     //variables for right-click switch
     public Sprite[] sprites;
@@ -56,7 +58,7 @@ public class ConveyorController : MonoBehaviour
 
     public static void MoveObject()
     {
-
+        //moves object
     }
 
     //switch on right click
@@ -73,12 +75,4 @@ public class ConveyorController : MonoBehaviour
             }
         }
     }
-}
-
-public enum Direction
-{
-    FrontLeft,
-    FrontRight,
-    BackLeft,
-    BackRight
 }
