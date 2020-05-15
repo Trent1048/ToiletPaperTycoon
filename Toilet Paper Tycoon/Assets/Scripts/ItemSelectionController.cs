@@ -18,7 +18,7 @@ public class ItemSelectionController : MonoBehaviour {
     }
 
     public void ToggleMenu() {
-        itemSelectionMenu.SetActive(!itemSelectionMenu.active);
+        itemSelectionMenu.SetActive(!itemSelectionMenu.activeInHierarchy);
         GameController.instance.TogglePause();
     }
 }

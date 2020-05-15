@@ -45,7 +45,7 @@ public class GameController : MonoBehaviour {
     // put anything that runs every tick in this function
     public void GameTick() {
         TreeController.GrowTrees();
-        ConveyorController.MoveObject();
+        ConveyorController.MoveObjects();
     }
 
     // Pausing and Resuming the Game:

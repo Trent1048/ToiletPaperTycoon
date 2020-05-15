@@ -75,9 +75,8 @@ public class ConveyorController : MonoBehaviour
 
     // moves object individually
     //!needs to be improved!
-    public void MoveObject()
-    {
-       /* //moves object from this to next
+    public void MoveObject() {
+        /* //moves object from this to next
         if (storedObject != null && next != null && next.storedObject == null)
         {
             next.storedObject = storedObject;
@@ -89,6 +88,15 @@ public class ConveyorController : MonoBehaviour
             storedObject = prev.storedObject;
             prev.storedObject = null;
         }*/
+    }
+
+    public static void MoveObjects()
+    {
+        if (conveyorControllers != null) {
+            foreach (ConveyorController belt in conveyorControllers) {
+                belt.MoveObject();
+            }
+        }
     }
 
     //changes sprite with right-click and check for new reference
