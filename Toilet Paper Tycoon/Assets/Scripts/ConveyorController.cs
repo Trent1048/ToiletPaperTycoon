@@ -52,6 +52,9 @@ public class ConveyorController : MonoBehaviour
         }
 
         contactFilter = new ContactFilter2D();
+
+        FindFront();
+        FindBehind();
     }
 
     // Update is called once per frame
@@ -62,6 +65,7 @@ public class ConveyorController : MonoBehaviour
     }
     private void OnDestroy()
     {
+        next = null;
         conveyorControllers.Remove(this);
     }
 
@@ -78,27 +82,54 @@ public class ConveyorController : MonoBehaviour
         {
             switchCounter++;
             spriteRenderer.sprite = sprites[switchCounter];
-
-            List<Collider2D> hitColliders = new List<Collider2D>();
-            Physics2D.OverlapCircle(transform.position, 0.5f, contactFilter, hitColliders);
-
-            foreach (Collider2D col in hitColliders)
-            {
-                ConveyorController conveyor = col.GetComponent<ConveyorController>();
-                Vector3 otherPos = new Vector3(col.transform.parent.position.x, col.transform.parent.position.y);
-                Vector3 thisPos = new Vector3(transform.parent.position.x, transform.parent.position.y);
-                if (conveyor != null)
-                {
-                    if (thisPos + offsetDictionary[switchCounter] == otherPos)
-                    {
-                        next = conveyor.next;
-                    }
-                }
-            }
+            FindFront();
+            FindBehind();
 
             if (switchCounter >= 3)
             {
                 switchCounter = -1;
+            }
+        }
+    }
+
+    private void FindFront()
+    {
+        List<Collider2D> hitColliders = new List<Collider2D>();
+        Physics2D.OverlapCircle(transform.position, 0.5f, contactFilter, hitColliders);
+
+        foreach (Collider2D col in hitColliders)
+        {
+            ConveyorController conveyor = col.GetComponent<ConveyorController>();
+            Vector3 otherPos = new Vector3(col.transform.parent.position.x, col.transform.parent.position.y);
+            Vector3 thisPos = new Vector3(transform.parent.position.x, transform.parent.position.y);
+            if (conveyor != null)
+            {
+                if (thisPos + offsetDictionary[switchCounter] == otherPos)
+                {
+                    next = conveyor.next;
+                    Debug.LogError("Connects2");
+                }
+            }
+        }
+    }
+
+    private void FindBehind()
+    {
+        List<Collider2D> hitColliders = new List<Collider2D>();
+        Physics2D.OverlapCircle(transform.position, 0.5f, contactFilter, hitColliders);
+
+        foreach (Collider2D col in hitColliders)
+        {
+            ConveyorController conveyor = col.GetComponent<ConveyorController>();
+            Vector3 otherPos = new Vector3(col.transform.parent.position.x, col.transform.parent.position.y);
+            Vector3 thisPos = new Vector3(transform.parent.position.x, transform.parent.position.y);
+            if (conveyor != null)
+            {
+                if (otherPos + offsetDictionary[switchCounter] == thisPos)
+                {
+                    conveyor.next = next;
+                    Debug.LogError("Connects1");
+                }
             }
         }
     }
