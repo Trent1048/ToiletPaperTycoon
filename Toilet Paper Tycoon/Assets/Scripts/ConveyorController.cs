@@ -73,9 +73,22 @@ public class ConveyorController : MonoBehaviour
         conveyorControllers.Remove(this);
     }
 
-    public static void MoveObject()
+    // moves object individually
+    //!needs to be improved!
+    public void MoveObject()
     {
-        //moves object
+        //moves object from this to next
+        if (storedObject != null && next != null && next.storedObject == null)
+        {
+            next.storedObject = storedObject;
+            storedObject = null;
+        }
+        //moves object from prev to this
+        else if (storedObject == null && prev != null && prev.storedObject != null)
+        {
+            storedObject = prev.storedObject;
+            prev.storedObject = null;
+        }
     }
 
     //changes sprite with right-click and check for new reference
