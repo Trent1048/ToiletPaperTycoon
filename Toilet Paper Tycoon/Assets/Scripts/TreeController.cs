@@ -5,6 +5,11 @@ public class TreeController : MonoBehaviour {
 
     protected static List<TreeController> treeControllers;
 
+    private SpriteRenderer spriteRenderer;
+
+    public Sprite[] treeSprites;
+    public GameObject leaf;
+
     public static void GrowTrees() {
         if (treeControllers != null) {
             foreach (TreeController tree in treeControllers) {
@@ -18,6 +23,8 @@ public class TreeController : MonoBehaviour {
             treeControllers = new List<TreeController>();
         }
         treeControllers.Add(this);
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void OnDestroy() {
@@ -26,5 +33,10 @@ public class TreeController : MonoBehaviour {
 
     private void Grow() {
         // put the grow stuff here
+    }
+
+    public GameObject PickLeaf() {
+        spriteRenderer.sprite = treeSprites[3];
+        return leaf;
     }
 }

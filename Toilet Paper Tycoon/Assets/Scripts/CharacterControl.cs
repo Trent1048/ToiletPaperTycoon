@@ -9,7 +9,11 @@ public class CharacterControl : MonoBehaviour {
 
     private GameObject targetLoc;
     private GameObject previousTargetLoc;
-    private GameObject nextTargetLoc;
+    private Action DoAfterMove;
+
+    private GameObject item;
+    private GameObject itemBubble;
+    private SpriteRenderer itemBubbleIcon;
 
     private ContactFilter2D contactFilter;
     private Animator animator;
@@ -18,6 +22,10 @@ public class CharacterControl : MonoBehaviour {
     private void Start() {
         animator = GetComponent<Animator>();
         contactFilter = new ContactFilter2D();
+
+        itemBubble = transform.GetChild(0).gameObject;
+        itemBubbleIcon = itemBubble.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        DoAfterMove = DoNothing;
     }
 
     private void FixedUpdate() {
@@ -29,6 +37,21 @@ public class CharacterControl : MonoBehaviour {
     public void UpdateTarget(GameObject targetLoc) {
         this.targetLoc = targetLoc;
     }
+
+    // Actions
+
+    private void DoNothing() {
+        targetLoc = null;
+    }
+
+    private void TakeItem() {
+        GroundSpace ground = targetLoc.GetComponent<GroundSpace>();
+        if (ground != null) {
+            AddItem(ground.Interact());
+        }
+    }
+
+    // Movement
 
     private void Move(Transform target) {
         Vector3 targetPos = target.position;
@@ -68,8 +91,7 @@ public class CharacterControl : MonoBehaviour {
             transform.Translate(moveVector);
         } else {
             previousTargetLoc = targetLoc;
-            targetLoc = nextTargetLoc;
-            nextTargetLoc = null;
+            DoAfterMove();
         }
     }
 
@@ -83,7 +105,14 @@ public class CharacterControl : MonoBehaviour {
                 GameObject groundCurrentObject = ground.GetCurrentObject();
                 if (groundCurrentObject != null && groundCurrentObject.GetComponent<TreeController>() != null) {
                     UpdateTarget(col.gameObject);
-                    nextTargetLoc = GameController.instance.GetBox().transform.parent.gameObject;
+
+                    // makes the player move to the box after it's done moving
+                    DoAfterMove = () => {
+                        TakeItem();
+                        UpdateTarget(GameController.instance.GetBox().transform.parent.gameObject);
+                        DoAfterMove = () => DoNothing();
+                    };
+
                     return;
                 }
             }
@@ -91,6 +120,26 @@ public class CharacterControl : MonoBehaviour {
         if (radius < 10f) {
             MoveToTree(radius * 2);
         }
+    }
+
+    // Item Stuff:
+
+    public void AddItem(GameObject item) {
+        this.item = item;
+        itemBubbleIcon.sprite = item.GetComponent<SpriteRenderer>().sprite;
+        itemBubble.SetActive(true);
+    }
+
+    public bool HasItem() {
+        return item != null;
+    }
+
+    // removes the item and returns it 
+    public GameObject GetItem() {
+        GameObject temp = item;
+        item = null;
+        itemBubble.SetActive(false);
+        return temp;
     }
 }
 
