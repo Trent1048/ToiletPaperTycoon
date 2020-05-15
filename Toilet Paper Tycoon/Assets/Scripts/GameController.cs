@@ -122,4 +122,8 @@ public class GameController : MonoBehaviour {
     public void AddBox(GameObject box) {
         this.box = box;
     }
+
+    public GameObject GetBox() {
+        return box;
+    }
 }
