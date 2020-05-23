@@ -11,13 +11,11 @@ public class CharacterControl : MonoBehaviour {
     private GameObject previousTargetLoc;
     private GameObject nextTargetLoc;
 
-    private ContactFilter2D contactFilter;
     private Animator animator;
     private Direction dir;
 
     private void Start() {
         animator = GetComponent<Animator>();
-        contactFilter = new ContactFilter2D();
     }
 
     private void FixedUpdate() {
@@ -26,6 +24,7 @@ public class CharacterControl : MonoBehaviour {
         }
     }
 
+    // the target should always be a ground tile
     public void UpdateTarget(GameObject targetLoc) {
         this.targetLoc = targetLoc;
     }
@@ -73,26 +72,18 @@ public class CharacterControl : MonoBehaviour {
         }
     }
 
-    public void MoveToTree(float radius = 1f) {
-        List<Collider2D> hitColliders = new List<Collider2D>();
-        Physics2D.OverlapCircle(transform.position, radius, contactFilter, hitColliders);
-
-        foreach (Collider2D col in hitColliders) {
-            GroundSpace ground = col.GetComponent<GroundSpace>();
-            if (ground != null && col.gameObject != previousTargetLoc) {
-                GameObject groundCurrentObject = ground.GetCurrentObject();
-                if (groundCurrentObject != null && groundCurrentObject.GetComponent<TreeController>() != null) {
-                    UpdateTarget(col.gameObject);
-                    GameObject box = GameController.instance.GetBox();
-                    if (box != null) {
-                        nextTargetLoc = box.transform.parent.gameObject;
-                    }
-                    return;
-                }
-            }
+    public void MoveToTree() {
+        GroundSpace previousSpace = null;
+        if (previousTargetLoc != null) {
+            previousSpace = previousTargetLoc.GetComponent<GroundSpace>();
         }
-        if (radius < 10f) {
-            MoveToTree(radius * 2);
+        GroundSpace treeLoc = GameController.instance.FindObjectInGround(previousSpace, "Tree");
+        if (treeLoc != null) {
+            UpdateTarget(treeLoc.gameObject);
+            GroundSpace boxLoc = GameController.instance.FindObjectInGround(null, "Box");
+            if (boxLoc != null) {
+                nextTargetLoc = boxLoc.gameObject;
+            }
         }
     }
 }

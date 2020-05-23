@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
@@ -9,7 +10,7 @@ public class GameController : MonoBehaviour {
     public GameObject initialCharacter;
 
     public GameObject groundTileParent;
-    public GameObject[] groundTiles;
+    private GroundSpace[] groundTiles;
 
     private GameObject box;
     private GameObject selectedObject;
@@ -30,10 +31,10 @@ public class GameController : MonoBehaviour {
         ChangeSelectedCharacter(initialCharacter);
 
         // set up the array of ground tiles for making a graph
-        groundTiles = new GameObject[100];
+        groundTiles = new GroundSpace[100];
         int currentSpace = 0;
         foreach (Transform tile in groundTileParent.transform) {
-            groundTiles[currentSpace] = tile.gameObject;
+            groundTiles[currentSpace] = tile.gameObject.GetComponent<GroundSpace>();
             tile.GetComponent<GroundSpace>().tileNum = currentSpace;
             currentSpace++;
         }
@@ -122,6 +123,49 @@ public class GameController : MonoBehaviour {
 
     public GameObject GetSelectedSpace() {
         return selectedSpace;
+    }
+
+    public GroundSpace[] GetGroundTiles() {
+        return groundTiles;
+    }
+
+    // unmarks all ground tiles as being searched already
+    public void ResetGroundSearch() {
+        foreach (GroundSpace tile in groundTiles) {
+            tile.marked = false;
+        }
+    }
+
+    // returns the nearest ground tile that contains an object with the specified tag
+    // if none are found, returns null
+    public GroundSpace FindObjectInGround(GroundSpace start, string tag) {
+        // setup
+        ResetGroundSearch();
+        if (start == null) {
+            start = groundTiles[55]; // picks a tile in the middle if start is null
+        }
+
+        // uses a queue for breadth first search in order to find the nearest tile
+        Queue<GroundSpace> spacesToCheck = new Queue<GroundSpace>();
+        spacesToCheck.Enqueue(start);
+
+        // the queue is not empty
+        while (spacesToCheck.Count != 0) {
+            GroundSpace current = spacesToCheck.Dequeue();
+            current.marked = true;
+            if (current != start && current.GetCurrentObject() != null && current.GetCurrentObject().CompareTag(tag)) {
+                return current;
+            }
+            // add all unmarked spaces to the queue
+            foreach (GroundSpace neigbor in current.GetNeighbors()) {
+                if (!neigbor.marked) {
+                    spacesToCheck.Enqueue(neigbor);
+                }
+            }
+            
+        }
+
+        return null;
     }
 
     // there can only be one box in the game
