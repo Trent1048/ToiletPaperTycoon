@@ -20,15 +20,12 @@ public class ConveyorController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private int switchCounter = 0;
 
-    private ContactFilter2D contactFilter;
-    private Direction dir;
-
-    private Dictionary<int, Vector3> offsetDictionary = new Dictionary<int, Vector3>
+    private Dictionary<int, Vector2> offsetDictionary = new Dictionary<int, Vector2>
     {
-        {0, new Vector3(-0.5f,-0.25f,0)},
-        {1, new Vector3(-0.5f,0.25f,0)},
-        {2, new Vector3(0.5f,0.25f,0)},
-        {3, new Vector3(0.5f,-0.25f,0)}
+        {0, new Vector2(-0.5f,-0.25f)},
+        {1, new Vector2(-0.5f,0.25f)},
+        {2, new Vector2(0.5f,0.25f)},
+        {3, new Vector2(0.5f,-0.25f)}
     };
 
     // Start is called before the first frame update
@@ -51,8 +48,6 @@ public class ConveyorController : MonoBehaviour
         {
             sprites[0] = spriteRenderer.sprite;
         }
-
-        contactFilter = new ContactFilter2D();
 
         FindFront();
         FindBehind();
@@ -106,59 +101,62 @@ public class ConveyorController : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             switchCounter++;
+            if (switchCounter > 3) switchCounter = 0;
             spriteRenderer.sprite = sprites[switchCounter];
             FindFront();
             FindBehind();
-
-            if (switchCounter >= 3) switchCounter = -1;
         }
     }
 
     //allows conveyor to find and reference another conveyor in front of it
     private void FindFront()
     {
-        //find and store surrounding object
-        List<Collider2D> hitColliders = new List<Collider2D>();
-        Physics2D.OverlapCircle(transform.position, 0.5f, contactFilter, hitColliders);
 
         //searches for conveyor and references it
-        foreach (Collider2D col in hitColliders)
-        {
-            ConveyorController conveyor = col.GetComponent<ConveyorController>();
-            Vector3 otherPos = new Vector3(col.transform.parent.position.x, col.transform.parent.position.y);
-            Vector3 thisPos = new Vector3(transform.parent.position.x, transform.parent.position.y);
-            if (conveyor != null)
-            {
-                if (thisPos + offsetDictionary[switchCounter] == otherPos)
-                {
-                    next = conveyor.prev;
-                    conveyor.prev = next;
-                    Debug.LogError("Connects2");
+        foreach (GroundSpace space in transform.parent.GetComponent<GroundSpace>().GetNeighbors()) {
+
+            GameObject objectAttachedToSpace = space.GetCurrentObject();
+            // the space has something on it
+            if (objectAttachedToSpace != null) {
+                ConveyorController conveyor = objectAttachedToSpace.GetComponent<ConveyorController>();
+
+                // the thing on that space is a conveyor belt
+                if (conveyor != null) {
+
+                    Vector2 otherPos = new Vector2(space.transform.position.x, space.transform.position.y);
+                    Vector2 thisPos = new Vector2(transform.parent.position.x, transform.parent.position.y);
+
+                    if (thisPos + offsetDictionary[switchCounter] == otherPos) {
+                        next = conveyor.prev;
+                        conveyor.prev = next;
+                        Debug.Log("found front");
+                    }
                 }
             }
         }
     }
 
     //allows conveyor to find and reference another conveyor behind it
-    private void FindBehind()
-    {
-        //find and store surrounding object
-        List<Collider2D> hitColliders = new List<Collider2D>();
-        Physics2D.OverlapCircle(transform.position, 0.5f, contactFilter, hitColliders);
-
+    private void FindBehind() {
         //searches for conveyor and references it
-        foreach (Collider2D col in hitColliders)
-        {
-            ConveyorController conveyor = col.GetComponent<ConveyorController>();
-            Vector3 otherPos = new Vector3(col.transform.parent.position.x, col.transform.parent.position.y);
-            Vector3 thisPos = new Vector3(transform.parent.position.x, transform.parent.position.y);
-            if (conveyor != null)
-            {
-                if (otherPos + offsetDictionary[switchCounter] == thisPos)
-                {
-                    conveyor.next = prev;
-                    prev = conveyor.next;
-                    Debug.LogError("Connects1");
+        foreach (GroundSpace space in transform.parent.GetComponent<GroundSpace>().GetNeighbors()) {
+
+            GameObject objectAttachedToSpace = space.GetCurrentObject();
+            // the space has something on it
+            if (objectAttachedToSpace != null) {
+                ConveyorController conveyor = objectAttachedToSpace.GetComponent<ConveyorController>();
+
+                // the thing on that space is a conveyor belt
+                if (conveyor != null) {
+
+                    Vector2 otherPos = new Vector2(space.transform.position.x, space.transform.position.y);
+                    Vector2 thisPos = new Vector2(transform.parent.position.x, transform.parent.position.y);
+
+                    if (otherPos + offsetDictionary[switchCounter] == thisPos) {
+                        conveyor.next = prev;
+                        prev = conveyor.next;
+                        Debug.Log("found back");
+                    }
                 }
             }
         }
