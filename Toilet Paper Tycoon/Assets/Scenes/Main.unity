@@ -6021,6 +6021,8 @@ MonoBehaviour:
   initialSelectedObject: {fileID: 6764785069711079150, guid: 854b5d0ab2b2b1a488f1646ffba69ecd,
     type: 3}
   initialCharacter: {fileID: 313050902}
+  groundTileParent: {fileID: 661992146}
+  groundTiles: []
 --- !u!1 &1215446817
 GameObject:
   m_ObjectHideFlags: 0
@@ -8203,7 +8205,7 @@ PrefabInstance:
     - target: {fileID: 961612067753173512, guid: 43b5214c93d67b04e9175801b4cc49ad,
         type: 3}
       propertyPath: m_Name
-      value: GroundTile
+      value: GroundTile (0)
       objectReference: {fileID: 0}
     - target: {fileID: 961612067753173518, guid: 43b5214c93d67b04e9175801b4cc49ad,
         type: 3}

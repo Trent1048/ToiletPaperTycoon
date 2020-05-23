@@ -83,7 +83,10 @@ public class CharacterControl : MonoBehaviour {
                 GameObject groundCurrentObject = ground.GetCurrentObject();
                 if (groundCurrentObject != null && groundCurrentObject.GetComponent<TreeController>() != null) {
                     UpdateTarget(col.gameObject);
-                    nextTargetLoc = GameController.instance.GetBox().transform.parent.gameObject;
+                    GameObject box = GameController.instance.GetBox();
+                    if (box != null) {
+                        nextTargetLoc = box.transform.parent.gameObject;
+                    }
                     return;
                 }
             }

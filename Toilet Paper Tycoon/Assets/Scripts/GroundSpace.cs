@@ -8,6 +8,7 @@ public class GroundSpace : MonoBehaviour {
 
     private GameObject currentObject;
     public GameObject[] objects;
+    public int tileNum;
 
     private void Start() {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();

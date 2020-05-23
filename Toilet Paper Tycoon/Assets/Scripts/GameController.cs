@@ -8,6 +8,9 @@ public class GameController : MonoBehaviour {
     public GameObject initialSelectedObject;
     public GameObject initialCharacter;
 
+    public GameObject groundTileParent;
+    public GameObject[] groundTiles;
+
     private GameObject box;
     private GameObject selectedObject;
     private GameObject selectedSpace;
@@ -25,6 +28,15 @@ public class GameController : MonoBehaviour {
         }
         ChangeSelectedObject(initialSelectedObject);
         ChangeSelectedCharacter(initialCharacter);
+
+        // set up the array of ground tiles for making a graph
+        groundTiles = new GameObject[100];
+        int currentSpace = 0;
+        foreach (Transform tile in groundTileParent.transform) {
+            groundTiles[currentSpace] = tile.gameObject;
+            tile.GetComponent<GroundSpace>().tileNum = currentSpace;
+            currentSpace++;
+        }
     }
 
     private void Update() {
