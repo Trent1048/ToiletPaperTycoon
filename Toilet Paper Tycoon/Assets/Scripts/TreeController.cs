@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class TreeController : MonoBehaviour {
 
-    protected static List<TreeController> treeControllers;
-
+    public Sprite[] plantStage;
+    private float growCount;
+    private int currentPlantStage;
     private SpriteRenderer spriteRenderer;
 
-    public Sprite[] treeSprites;
-    public GameObject leaf;
+    protected static List<TreeController> treeControllers;
 
     public static void GrowTrees() {
         if (treeControllers != null) {
@@ -18,25 +18,38 @@ public class TreeController : MonoBehaviour {
         }
     }
 
-    private void Start() {
+    private void Awake() {
         if (treeControllers == null) {
             treeControllers = new List<TreeController>();
         }
         treeControllers.Add(this);
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        growCount = 0f;
+        currentPlantStage = (int)growCount;
+        
+        spriteRenderer.sprite = plantStage[currentPlantStage];
+    }
+
+    public void RandomizeAge() {
+        growCount = Random.Range(0f, 3f);
+        currentPlantStage = (int)growCount;
+
+        spriteRenderer.sprite = plantStage[currentPlantStage];
     }
 
     private void OnDestroy() {
         treeControllers.Remove(this);
     }
 
-    private void Grow() {
-        // put the grow stuff here
+    public void Grow() {
+        int previousPlantStage = currentPlantStage;
+        growCount += 0.05f;
+        currentPlantStage = (int)growCount;
+
+        if (currentPlantStage < plantStage.Length - 1 && previousPlantStage != currentPlantStage) {
+            spriteRenderer.sprite = plantStage[currentPlantStage];
+        }        
     }
 
-    public GameObject PickLeaf() {
-        spriteRenderer.sprite = treeSprites[3];
-        return leaf;
-    }
 }

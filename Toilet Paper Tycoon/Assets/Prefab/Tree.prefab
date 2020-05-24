@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1672512491278512261}
   m_Layer: 8
   m_Name: Tree
-  m_TagString: Untagged
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95,9 +95,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c040d6937e564a241ae5bc6f9cd7b0d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  treeSprites:
+  plantStage:
   - {fileID: -8667466294985060184, guid: 7c800493a83742947a92decb86037d67, type: 3}
   - {fileID: 5281997702118322174, guid: 7c800493a83742947a92decb86037d67, type: 3}
   - {fileID: -3105659087322419395, guid: 7c800493a83742947a92decb86037d67, type: 3}
   - {fileID: -25497680464327838, guid: 7c800493a83742947a92decb86037d67, type: 3}
-  leaf: {fileID: 8178116865223952026, guid: f9d734b7e6178684fa42e782f1f233ac, type: 3}

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class GroundSpace : MonoBehaviour {
 
@@ -6,8 +7,13 @@ public class GroundSpace : MonoBehaviour {
     private Color startingColor;
     private Color hoverColor;
 
+    private GroundSpace[] neighbors;
     private GameObject currentObject;
     public GameObject[] objects;
+
+    // for graph based pathfinding
+    public int tileNum;
+    public bool marked;
 
     private void Start() {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -18,6 +24,7 @@ public class GroundSpace : MonoBehaviour {
         if (Random.Range(0, 3) == 0) {
             int treeType = Random.Range(0, objects.Length);
             ChangeCurrentObject(objects[treeType]);
+            currentObject.GetComponent<TreeController>().RandomizeAge();
         }
     }
 
@@ -42,12 +49,29 @@ public class GroundSpace : MonoBehaviour {
         return currentObject;
     }
 
-    public GameObject Interact() {
-        TreeController treeControl = currentObject.GetComponent<TreeController>();
-        if (treeControl != null) {
-            return treeControl.PickLeaf();
+    public GroundSpace[] GetNeighbors() {
+        if (neighbors == null) {
+            List<GroundSpace> neighborHelper = new List<GroundSpace>();
+            GroundSpace[] allGroundTiles = GameController.instance.GetGroundTiles();
+
+            // makes sure not to add tiles that don't exist or are on the 
+            // other side of the ground area
+            if (tileNum % 10 != 9) {
+                neighborHelper.Add(allGroundTiles[tileNum + 1]);
+            }
+            if (tileNum % 10 != 0) {
+                neighborHelper.Add(allGroundTiles[tileNum - 1]);
+            }
+            if (tileNum / 10 != 9) {
+                neighborHelper.Add(allGroundTiles[tileNum + 10]);
+            }
+            if (tileNum / 10 != 0) {
+                neighborHelper.Add(allGroundTiles[tileNum - 10]);
+            }
+
+            neighbors = neighborHelper.ToArray();
         }
-        return null;
+        return neighbors;
     }
 
     private void OnMouseEnter() {

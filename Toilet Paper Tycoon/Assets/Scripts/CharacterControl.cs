@@ -9,23 +9,13 @@ public class CharacterControl : MonoBehaviour {
 
     private GameObject targetLoc;
     private GameObject previousTargetLoc;
-    private Action DoAfterMove;
+    private GameObject nextTargetLoc;
 
-    private GameObject item;
-    private GameObject itemBubble;
-    private SpriteRenderer itemBubbleIcon;
-
-    private ContactFilter2D contactFilter;
     private Animator animator;
     private Direction dir;
 
     private void Start() {
         animator = GetComponent<Animator>();
-        contactFilter = new ContactFilter2D();
-
-        itemBubble = transform.GetChild(0).gameObject;
-        itemBubbleIcon = itemBubble.transform.GetChild(0).GetComponent<SpriteRenderer>();
-        DoAfterMove = DoNothing;
     }
 
     private void FixedUpdate() {
@@ -34,24 +24,10 @@ public class CharacterControl : MonoBehaviour {
         }
     }
 
+    // the target should always be a ground tile
     public void UpdateTarget(GameObject targetLoc) {
         this.targetLoc = targetLoc;
     }
-
-    // Actions
-
-    private void DoNothing() {
-        targetLoc = null;
-    }
-
-    private void TakeItem() {
-        GroundSpace ground = targetLoc.GetComponent<GroundSpace>();
-        if (ground != null) {
-            AddItem(ground.Interact());
-        }
-    }
-
-    // Movement
 
     private void Move(Transform target) {
         Vector3 targetPos = target.position;
@@ -91,62 +67,24 @@ public class CharacterControl : MonoBehaviour {
             transform.Translate(moveVector);
         } else {
             previousTargetLoc = targetLoc;
-            DoAfterMove();
+            targetLoc = nextTargetLoc;
+            nextTargetLoc = null;
         }
     }
 
-    public void MoveToTree(float radius = 1f) {
-        List<Collider2D> hitColliders = new List<Collider2D>();
-        Physics2D.OverlapCircle(transform.position, radius, contactFilter, hitColliders);
-
-        foreach (Collider2D col in hitColliders) {
-            GroundSpace ground = col.GetComponent<GroundSpace>();
-            if (ground != null && col.gameObject != previousTargetLoc) {
-                GameObject groundCurrentObject = ground.GetCurrentObject();
-                if (groundCurrentObject != null && groundCurrentObject.GetComponent<TreeController>() != null) {
-                    UpdateTarget(col.gameObject);
-
-                    // makes the player move to the box after it's done moving
-                    DoAfterMove = () => {
-                        TakeItem();
-                        GameObject box = GameController.instance.GetBox();
-
-                        if (box != null) {
-                            UpdateTarget(box.transform.parent.gameObject);
-                        } else {
-                            UpdateTarget(null);
-                        }
-
-                        DoAfterMove = () => DoNothing();
-                    };
-
-                    return;
-                }
+    public void MoveToTree() {
+        GroundSpace previousSpace = null;
+        if (previousTargetLoc != null) {
+            previousSpace = previousTargetLoc.GetComponent<GroundSpace>();
+        }
+        GroundSpace treeLoc = GameController.instance.FindObjectInGround(previousSpace, "Tree");
+        if (treeLoc != null) {
+            UpdateTarget(treeLoc.gameObject);
+            GroundSpace boxLoc = GameController.instance.FindObjectInGround(null, "Box");
+            if (boxLoc != null) {
+                nextTargetLoc = boxLoc.gameObject;
             }
         }
-        if (radius < 10f) {
-            MoveToTree(radius * 2);
-        }
-    }
-
-    // Item Stuff:
-
-    public void AddItem(GameObject item) {
-        this.item = item;
-        itemBubbleIcon.sprite = item.GetComponent<SpriteRenderer>().sprite;
-        itemBubble.SetActive(true);
-    }
-
-    public bool HasItem() {
-        return item != null;
-    }
-
-    // removes the item and returns it 
-    public GameObject GetItem() {
-        GameObject temp = item;
-        item = null;
-        itemBubble.SetActive(false);
-        return temp;
     }
 }
 
