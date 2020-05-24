@@ -9,6 +9,10 @@ public class CharacterControl : MonoBehaviour {
 
     private Transform previousTargetLoc;
 
+    private GameObject item;
+    private GameObject itemBubble;
+    private SpriteRenderer itemBubbleIcon;
+
     private Action currentAction;
     private Queue<Action> actions;
 
@@ -18,6 +22,9 @@ public class CharacterControl : MonoBehaviour {
     private void Start() {
         animator = GetComponent<Animator>();
         actions = new Queue<Action>();
+
+        itemBubble = transform.GetChild(0).gameObject;
+        itemBubbleIcon = itemBubble.transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
 
     private void FixedUpdate() {
@@ -75,7 +82,7 @@ public class CharacterControl : MonoBehaviour {
         }
     }
 
-    // moves the character to a tree and then to the box if it exists
+    // moves the character to a tree, picks some leaves, and then to the box if it exists
     public void AddMoveToTree() {
 
         actions.Enqueue(() => {
@@ -92,6 +99,14 @@ public class CharacterControl : MonoBehaviour {
         });
 
         actions.Enqueue(() => {
+            GameObject newItem = previousTargetLoc.GetComponent<GroundSpace>().Interact();
+            if (newItem != null) {
+                AddItem(newItem);
+            }
+            currentAction = null;
+        });
+
+        actions.Enqueue(() => {
             GroundSpace boxLoc = GameController.instance.FindObjectInGround(null, "Box");
             if (boxLoc != null) {
                 currentAction = () => Move(boxLoc.transform);
@@ -99,6 +114,24 @@ public class CharacterControl : MonoBehaviour {
                 currentAction = null;
 			}
         });
+    }
+
+    public void AddItem(GameObject item) {
+        this.item = item;
+        itemBubbleIcon.sprite = item.GetComponent<SpriteRenderer>().sprite;
+        itemBubble.SetActive(true);
+    }
+
+    public bool HasItem() {
+        return item != null;
+    }
+
+    // removes the item and returns it 
+    public GameObject PopItem() {
+        GameObject temp = item;
+        item = null;
+        itemBubble.SetActive(false);
+        return temp;
     }
 }
 
