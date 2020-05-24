@@ -18,13 +18,20 @@ public class TreeController : MonoBehaviour {
         }
     }
 
-    private void Start() {
+    private void Awake() {
         if (treeControllers == null) {
             treeControllers = new List<TreeController>();
         }
         treeControllers.Add(this);
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
+        growCount = 0f;
+        currentPlantStage = (int)growCount;
+        
+        spriteRenderer.sprite = plantStage[currentPlantStage];
+    }
+
+    public void RandomizeAge() {
         growCount = Random.Range(0f, 3f);
         currentPlantStage = (int)growCount;
 

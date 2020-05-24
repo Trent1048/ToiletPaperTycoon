@@ -18,6 +18,7 @@ public class GroundSpace : MonoBehaviour {
         if (Random.Range(0, 3) == 0) {
             int treeType = Random.Range(0, objects.Length);
             ChangeCurrentObject(objects[treeType]);
+            currentObject.GetComponent<TreeController>().RandomizeAge();
         }
     }
 
