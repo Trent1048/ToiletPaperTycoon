@@ -168,6 +168,42 @@ public class GameController : MonoBehaviour {
         return null;
     }
 
+    // returns the nearest ground tile that contains an adult tree with it's leaves attached
+    // if none are found, returns null
+    public GroundSpace FindAdultTree(GroundSpace start) {
+        // setup
+        ResetGroundSearch();
+        if (start == null) {
+            start = groundTiles[55]; // picks a tile in the middle if start is null
+        }
+
+        // uses a queue for breadth first search in order to find the nearest tile
+        Queue<GroundSpace> spacesToCheck = new Queue<GroundSpace>();
+        spacesToCheck.Enqueue(start);
+
+        // the queue is not empty
+        while (spacesToCheck.Count != 0) {
+            GroundSpace current = spacesToCheck.Dequeue();
+            current.marked = true;
+            GameObject currentObject = current.GetCurrentObject();
+            if (current != start && currentObject != null) {
+                TreeController currentTree = currentObject.GetComponent<TreeController>();
+                if (currentTree != null && currentTree.CanPickLeaves()) {
+                    return current;
+                }
+            }
+            // add all unmarked spaces to the queue
+            foreach (GroundSpace neigbor in current.GetNeighbors()) {
+                if (!neigbor.marked) {
+                    spacesToCheck.Enqueue(neigbor);
+                }
+            }
+
+        }
+
+        return null;
+    }
+
     // there can only be one box in the game
     // this tells if there already is one
     // and will be used to prevent another from being created

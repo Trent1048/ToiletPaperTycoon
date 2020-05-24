@@ -90,7 +90,7 @@ public class CharacterControl : MonoBehaviour {
             if (previousTargetLoc != null) {
                 previousSpace = previousTargetLoc.GetComponent<GroundSpace>();
             }
-            GroundSpace treeLoc = GameController.instance.FindObjectInGround(previousSpace, "Tree");
+            GroundSpace treeLoc = GameController.instance.FindAdultTree(previousSpace);
             if (treeLoc != null) {
                 currentAction = () => Move(treeLoc.transform);   
             } else {

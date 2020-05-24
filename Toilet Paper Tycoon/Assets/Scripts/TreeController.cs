@@ -55,6 +55,10 @@ public class TreeController : MonoBehaviour {
         }        
     }
 
+    public bool CanPickLeaves() {
+        return hasLeaves && currentPlantStage >= 2;
+    }
+
     public GameObject PickLeaf() {
         if (hasLeaves && currentPlantStage >= 2) {
             spriteRenderer.sprite = plantStage[3];
