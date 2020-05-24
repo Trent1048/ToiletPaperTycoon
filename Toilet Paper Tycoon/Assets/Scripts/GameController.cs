@@ -42,7 +42,7 @@ public class GameController : MonoBehaviour {
 
     private void Update() {
         if (Input.GetMouseButtonDown(1) && !objectIsSelected) {
-            selectedCharacterControl.MoveToTree();
+            selectedCharacterControl.AddMoveToTree();
         }
     }
 
@@ -117,7 +117,7 @@ public class GameController : MonoBehaviour {
     public void ChangeSelectedSpace(GameObject newSpace) {
         selectedSpace = newSpace;
         if (!objectIsSelected && selectedCharacterControl != null) {
-            selectedCharacterControl.UpdateTarget(newSpace);
+            selectedCharacterControl.AddMove(newSpace);
         }
     }
 

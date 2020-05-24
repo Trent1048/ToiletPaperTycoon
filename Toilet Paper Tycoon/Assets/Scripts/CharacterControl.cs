@@ -7,26 +7,30 @@ public class CharacterControl : MonoBehaviour {
     public float speed;
     public float accuracy;
 
-    private GameObject targetLoc;
-    private GameObject previousTargetLoc;
-    private GameObject nextTargetLoc;
+    private Transform previousTargetLoc;
+
+    private Action currentAction;
+    private Queue<Action> actions;
 
     private Animator animator;
     private Direction dir;
 
     private void Start() {
         animator = GetComponent<Animator>();
+        actions = new Queue<Action>();
     }
 
     private void FixedUpdate() {
-        if (targetLoc != null) {
-            Move(targetLoc.transform);
-        }
+        if (currentAction != null) {
+            currentAction();
+		} else if (actions.Count > 0) {
+            currentAction = actions.Dequeue();
+		}
     }
 
     // the target should always be a ground tile
-    public void UpdateTarget(GameObject targetLoc) {
-        this.targetLoc = targetLoc;
+    public void AddMove(GameObject targetLoc) {
+        actions.Enqueue(() => Move(targetLoc.transform));
     }
 
     private void Move(Transform target) {
@@ -66,25 +70,35 @@ public class CharacterControl : MonoBehaviour {
 
             transform.Translate(moveVector);
         } else {
-            previousTargetLoc = targetLoc;
-            targetLoc = nextTargetLoc;
-            nextTargetLoc = null;
+            currentAction = null;
+            previousTargetLoc = target;
         }
     }
 
-    public void MoveToTree() {
-        GroundSpace previousSpace = null;
-        if (previousTargetLoc != null) {
-            previousSpace = previousTargetLoc.GetComponent<GroundSpace>();
-        }
-        GroundSpace treeLoc = GameController.instance.FindObjectInGround(previousSpace, "Tree");
-        if (treeLoc != null) {
-            UpdateTarget(treeLoc.gameObject);
+    // moves the character to a tree and then to the box if it exists
+    public void AddMoveToTree() {
+
+        actions.Enqueue(() => {
+            GroundSpace previousSpace = null;
+            if (previousTargetLoc != null) {
+                previousSpace = previousTargetLoc.GetComponent<GroundSpace>();
+            }
+            GroundSpace treeLoc = GameController.instance.FindObjectInGround(previousSpace, "Tree");
+            if (treeLoc != null) {
+                currentAction = () => Move(treeLoc.transform);   
+            } else {
+                currentAction = null;
+			}
+        });
+
+        actions.Enqueue(() => {
             GroundSpace boxLoc = GameController.instance.FindObjectInGround(null, "Box");
             if (boxLoc != null) {
-                nextTargetLoc = boxLoc.gameObject;
-            }
-        }
+                currentAction = () => Move(boxLoc.transform);
+            } else {
+                currentAction = null;
+			}
+        });
     }
 }
 
