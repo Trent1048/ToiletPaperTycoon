@@ -74,25 +74,23 @@ public class ConveyorController : MonoBehaviour
     // moves object individually
     //!needs to be improved!
     public void MoveObject() {
-        /* //moves object from this to next
-        if (storedObject != null && next != null && next.storedObject == null)
+        //moves object from this to next
+        if (storedObject != null && next.storedObject == null)
         {
-            next.storedObject = storedObject;
-            storedObject = null;
+            Debug.Log("tryna move");
+            next.storedObject = Instantiate(storedObject, transform);
+            Destroy(storedObject);
         }
-        //moves object from prev to this
-        else if (storedObject == null && prev != null && prev.storedObject != null)
-        {
-            storedObject = prev.storedObject;
-            prev.storedObject = null;
-        }*/
     }
 
     public static void MoveObjects()
     {
         if (conveyorControllers != null) {
             foreach (ConveyorController belt in conveyorControllers) {
-                belt.MoveObject();
+                if (belt.next != null) {
+                    Debug.Log("found next");
+                    belt.MoveObject();
+                }
             }
         }
     }
