@@ -14,7 +14,6 @@ public class ConveyorController : MonoBehaviour
     public ConveyorController next;
     public ConveyorController prev;
 
-
     //variables for right-click switch
     public Sprite[] sprites;
     private SpriteRenderer spriteRenderer;
@@ -52,8 +51,7 @@ public class ConveyorController : MonoBehaviour
             sprites[0] = spriteRenderer.sprite;
         }
 
-        FindFront();
-        FindBehind();
+        FindConveyor();
     }
 
     // Update is called once per frame
@@ -66,8 +64,10 @@ public class ConveyorController : MonoBehaviour
     //unlinks any conveyor connected through prev and next, and removes conveyor
     private void OnDestroy()
     {
-        if(prev !=null) prev.next = null;
+        if(prev != null) prev.next = null;
         if(next != null) next.prev = null;
+        if (storedObject != null) Destroy(storedObject);
+
         conveyorControllers.Remove(this);
     }
 
@@ -106,8 +106,9 @@ public class ConveyorController : MonoBehaviour
             switchCounter++;
             if (switchCounter > 3) switchCounter = 0;
             spriteRenderer.sprite = sprites[switchCounter];
-            FindFront();
-            FindBehind();
+            FindConveyor();
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if(storedObject != null)
@@ -121,8 +122,8 @@ public class ConveyorController : MonoBehaviour
         }
     }
 
-    //allows conveyor to find and reference another conveyor in front of it
-    private void FindFront()
+    //allows conveyor to find and reference another conveyor in front or behind it
+    private void FindConveyor()
     {
 
         //searches for conveyor and references it
@@ -140,35 +141,15 @@ public class ConveyorController : MonoBehaviour
                     Vector2 thisPos = new Vector2(transform.parent.position.x, transform.parent.position.y);
 
                     if (thisPos + offsetDictionary[switchCounter] == otherPos) {
-                        next = conveyor.prev;
-                        conveyor.prev = next;
-                        Debug.Log("found front");
+                        next = conveyor;
+                        conveyor.prev = this;
+                        Debug.Log("front= " + next);
                     }
-                }
-            }
-        }
-    }
-
-    //allows conveyor to find and reference another conveyor behind it
-    private void FindBehind() {
-        //searches for conveyor and references it
-        foreach (GroundSpace space in transform.parent.GetComponent<GroundSpace>().GetNeighbors()) {
-
-            GameObject objectAttachedToSpace = space.GetCurrentObject();
-            // the space has something on it
-            if (objectAttachedToSpace != null) {
-                ConveyorController conveyor = objectAttachedToSpace.GetComponent<ConveyorController>();
-
-                // the thing on that space is a conveyor belt
-                if (conveyor != null) {
-
-                    Vector2 otherPos = new Vector2(space.transform.position.x, space.transform.position.y);
-                    Vector2 thisPos = new Vector2(transform.parent.position.x, transform.parent.position.y);
-
-                    if (otherPos + offsetDictionary[switchCounter] == thisPos) {
-                        conveyor.next = prev;
-                        prev = conveyor.next;
-                        Debug.Log("found back");
+                    if (otherPos + offsetDictionary[switchCounter] == thisPos)
+                    {
+                        conveyor.next = this;
+                        prev = conveyor;
+                        Debug.Log("behind= " + conveyor.next);
                     }
                 }
             }
