@@ -74,6 +74,14 @@ public class GroundSpace : MonoBehaviour {
         return neighbors;
     }
 
+    public GameObject Interact() {
+        TreeController treeControl = currentObject.GetComponent<TreeController>();
+        if (treeControl != null) {
+            return treeControl.PickLeaf();
+        }
+        return null;
+    }
+
     private void OnMouseEnter() {
         if (!GameController.instance.GameIsPaused()) {
             spriteRenderer.color = hoverColor;

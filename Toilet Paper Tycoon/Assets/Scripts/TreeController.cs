@@ -52,4 +52,8 @@ public class TreeController : MonoBehaviour {
         }        
     }
 
+    public GameObject PickLeaf() {
+        spriteRenderer.sprite = treeSprites[3];
+        return leaf;
+    }
 }
