@@ -8,6 +8,7 @@ public class TreeController : MonoBehaviour {
     private int currentPlantStage;
     private SpriteRenderer spriteRenderer;
 
+    public GameObject leaf;
     protected static List<TreeController> treeControllers;
 
     public static void GrowTrees() {
@@ -53,7 +54,7 @@ public class TreeController : MonoBehaviour {
     }
 
     public GameObject PickLeaf() {
-        spriteRenderer.sprite = treeSprites[3];
+        spriteRenderer.sprite = plantStage[3];
         return leaf;
     }
 }

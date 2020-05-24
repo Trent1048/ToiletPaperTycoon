@@ -6022,7 +6022,6 @@ MonoBehaviour:
     type: 3}
   initialCharacter: {fileID: 313050902}
   groundTileParent: {fileID: 661992146}
-  groundTiles: []
 --- !u!1 &1215446817
 GameObject:
   m_ObjectHideFlags: 0
