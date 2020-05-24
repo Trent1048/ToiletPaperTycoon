@@ -28,6 +28,9 @@ public class ConveyorController : MonoBehaviour
         {3, new Vector2(0.5f,-0.25f)}
     };
 
+    //instantiation var
+    public GameObject newObject;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -105,6 +108,16 @@ public class ConveyorController : MonoBehaviour
             spriteRenderer.sprite = sprites[switchCounter];
             FindFront();
             FindBehind();
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if(storedObject != null)
+            {
+                Destroy(storedObject);
+            }
+            else
+            {
+                storedObject = Instantiate(newObject, transform);
+            }
         }
     }
 
