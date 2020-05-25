@@ -107,12 +107,26 @@ public class CharacterControl : MonoBehaviour {
         });
 
         actions.Enqueue(() => {
-            GroundSpace boxLoc = GameController.instance.FindObjectInGround(null, "Box");
-            if (boxLoc != null) {
-                currentAction = () => Move(boxLoc.transform);
+            // only do this if a box exists
+            if (!GameController.instance.BoxCanSpawn()) {
+                GroundSpace boxLoc = GameController.instance.FindObjectInGround(null, "Box");
+                if (boxLoc != null) {
+                    currentAction = () => Move(boxLoc.transform);
+                } else {
+                    currentAction = null;
+                }
             } else {
                 currentAction = null;
 			}
+        });
+
+        actions.Enqueue(() => {
+            GameObject box = GameController.instance.GetBox();
+            // makes sure the box exists and the character is at the box's location
+            if (box != null && box.transform.parent == previousTargetLoc) {
+                previousTargetLoc.GetComponent<GroundSpace>().Interact(PopItem());
+            }
+            currentAction = null;
         });
     }
 

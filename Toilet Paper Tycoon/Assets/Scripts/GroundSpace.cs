@@ -74,10 +74,21 @@ public class GroundSpace : MonoBehaviour {
         return neighbors;
     }
 
-    public GameObject Interact() {
-        TreeController treeControl = currentObject.GetComponent<TreeController>();
-        if (treeControl != null) {
-            return treeControl.PickLeaf();
+    public GameObject Interact(GameObject item = null) {
+        if (item == null) {
+
+            TreeController treeControl = currentObject.GetComponent<TreeController>();
+            if (treeControl != null) {
+                return treeControl.PickLeaf();
+            }
+
+        } else {
+
+            BoxController boxControl = currentObject.GetComponent<BoxController>();
+            if (boxControl != null) {
+                boxControl.IncreaseToiletPaper(1);
+            }
+
         }
         return null;
     }
