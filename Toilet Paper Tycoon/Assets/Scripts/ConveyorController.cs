@@ -2,17 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Vector3 = UnityEngine.Vector3;
 
 public class ConveyorController : MonoBehaviour
 {
     //list of conveyors
     protected static List<ConveyorController> conveyorControllers;
 
-    //doubly linked nodes
+    //singly linked nodes
     public GameObject storedObject;
     public ConveyorController next;
-    public ConveyorController prev;
 
     //variables for right-click switch
     public Sprite[] sprites;
@@ -64,10 +62,7 @@ public class ConveyorController : MonoBehaviour
     //unlinks any conveyor connected through prev and next, and removes conveyor
     private void OnDestroy()
     {
-        if(prev != null) prev.next = null;
-        if(next != null) next.prev = null;
         if (storedObject != null) Destroy(storedObject);
-
         conveyorControllers.Remove(this);
     }
 
@@ -140,14 +135,10 @@ public class ConveyorController : MonoBehaviour
 
                     if (thisPos + offsetDictionary[switchCounter] == otherPos) {
                         next = conveyor;
-                        conveyor.prev = this;
-                        Debug.Log("front= " + next);
                     }
                     if (otherPos + offsetDictionary[switchCounter] == thisPos)
                     {
                         conveyor.next = this;
-                        prev = conveyor;
-                        Debug.Log("behind= " + conveyor.next);
                     }
                 }
             }
