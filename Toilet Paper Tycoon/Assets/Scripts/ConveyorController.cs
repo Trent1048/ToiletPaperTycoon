@@ -115,7 +115,7 @@ public class ConveyorController : MonoBehaviour
         }
     }
 
-    //allows conveyor to find and reference another conveyor in front or behind it
+    //allows conveyor to find another conveyor in front or behind it
     private void FindConveyor()
     {
 
@@ -124,19 +124,28 @@ public class ConveyorController : MonoBehaviour
 
             GameObject objectAttachedToSpace = space.GetCurrentObject();
             // the space has something on it
-            if (objectAttachedToSpace != null) {
+            if (objectAttachedToSpace != null)
+            {
                 ConveyorController conveyor = objectAttachedToSpace.GetComponent<ConveyorController>();
 
                 // the thing on that space is a conveyor belt
-                if (conveyor != null) {
+                if (conveyor != null)
+                {
+
+                    next = conveyor.next = null;
+                    Debug.Log((bool)next);
+                    Debug.Log((bool)conveyor.next);
 
                     Vector2 otherPos = new Vector2(space.transform.position.x, space.transform.position.y);
                     Vector2 thisPos = new Vector2(transform.parent.position.x, transform.parent.position.y);
 
-                    if (thisPos + offsetDictionary[switchCounter] == otherPos) {
+                    //find conveyor infront
+                    if (thisPos + offsetDictionary[switchCounter] == otherPos)
+                    {
                         next = conveyor;
                     }
-                    if (otherPos + offsetDictionary[switchCounter] == thisPos)
+                    //find conveyor behind
+                    if (otherPos + offsetDictionary[conveyor.switchCounter] == thisPos)
                     {
                         conveyor.next = this;
                     }
