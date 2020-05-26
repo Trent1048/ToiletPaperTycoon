@@ -143,11 +143,13 @@ public class ConveyorController : MonoBehaviour
                     if (thisPos + offsetDictionary[switchCounter] == otherPos)
                     {
                         next = conveyor;
+                        Debug.Log((bool)next);
                     }
                     //find conveyor behind
                     if (otherPos + offsetDictionary[conveyor.switchCounter] == thisPos)
                     {
                         conveyor.next = this;
+                        Debug.Log((bool)conveyor.next);
                     }
                 }
             }
