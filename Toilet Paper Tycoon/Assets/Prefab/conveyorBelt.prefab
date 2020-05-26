@@ -125,7 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd6e9c8973258b54689f5394bb4b7cd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  storedObject: {fileID: 0}
+  storedObject: {fileID: 7173054258936085819, guid: e1e73b4dbd02eec46a139c5300e7320f,
+    type: 3}
   next: {fileID: 0}
   prev: {fileID: 0}
   sprites:
