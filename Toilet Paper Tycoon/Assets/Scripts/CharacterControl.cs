@@ -7,26 +7,37 @@ public class CharacterControl : MonoBehaviour {
     public float speed;
     public float accuracy;
 
-    private GameObject targetLoc;
-    private GameObject previousTargetLoc;
-    private GameObject nextTargetLoc;
+    private Transform previousTargetLoc;
+
+    private GameObject item;
+    private GameObject itemBubble;
+    private SpriteRenderer itemBubbleIcon;
+
+    private Action currentAction;
+    private Queue<Action> actions;
 
     private Animator animator;
     private Direction dir;
 
     private void Start() {
         animator = GetComponent<Animator>();
+        actions = new Queue<Action>();
+
+        itemBubble = transform.GetChild(0).gameObject;
+        itemBubbleIcon = itemBubble.transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
 
     private void FixedUpdate() {
-        if (targetLoc != null) {
-            Move(targetLoc.transform);
-        }
+        if (currentAction != null) {
+            currentAction();
+		} else if (actions.Count > 0) {
+            currentAction = actions.Dequeue();
+		}
     }
 
     // the target should always be a ground tile
-    public void UpdateTarget(GameObject targetLoc) {
-        this.targetLoc = targetLoc;
+    public void AddMove(GameObject targetLoc) {
+        actions.Enqueue(() => Move(targetLoc.transform));
     }
 
     private void Move(Transform target) {
@@ -66,25 +77,75 @@ public class CharacterControl : MonoBehaviour {
 
             transform.Translate(moveVector);
         } else {
-            previousTargetLoc = targetLoc;
-            targetLoc = nextTargetLoc;
-            nextTargetLoc = null;
+            currentAction = null;
+            previousTargetLoc = target;
         }
     }
 
-    public void MoveToTree() {
-        GroundSpace previousSpace = null;
-        if (previousTargetLoc != null) {
-            previousSpace = previousTargetLoc.GetComponent<GroundSpace>();
-        }
-        GroundSpace treeLoc = GameController.instance.FindObjectInGround(previousSpace, "Tree");
-        if (treeLoc != null) {
-            UpdateTarget(treeLoc.gameObject);
-            GroundSpace boxLoc = GameController.instance.FindObjectInGround(null, "Box");
-            if (boxLoc != null) {
-                nextTargetLoc = boxLoc.gameObject;
+    // moves the character to a tree, picks some leaves, and then to the box if it exists
+    public void AddMoveToTree() {
+
+        actions.Enqueue(() => {
+            GroundSpace previousSpace = null;
+            if (previousTargetLoc != null) {
+                previousSpace = previousTargetLoc.GetComponent<GroundSpace>();
             }
-        }
+            GroundSpace treeLoc = GameController.instance.FindAdultTree(previousSpace);
+            if (treeLoc != null) {
+                currentAction = () => Move(treeLoc.transform);   
+            } else {
+                currentAction = null;
+			}
+        });
+
+        actions.Enqueue(() => {
+            GameObject newItem = previousTargetLoc.GetComponent<GroundSpace>().Interact();
+            if (newItem != null) {
+                AddItem(newItem);
+            }
+            currentAction = null;
+        });
+
+        actions.Enqueue(() => {
+            // only do this if a box exists
+            if (!GameController.instance.BoxCanSpawn()) {
+                GroundSpace boxLoc = GameController.instance.FindObjectInGround(null, "Box");
+                if (boxLoc != null) {
+                    currentAction = () => Move(boxLoc.transform);
+                } else {
+                    currentAction = null;
+                }
+            } else {
+                currentAction = null;
+			}
+        });
+
+        actions.Enqueue(() => {
+            GameObject box = GameController.instance.GetBox();
+            // makes sure the box exists and the character is at the box's location
+            if (box != null && box.transform.parent == previousTargetLoc) {
+                previousTargetLoc.GetComponent<GroundSpace>().Interact(PopItem());
+            }
+            currentAction = null;
+        });
+    }
+
+    public void AddItem(GameObject item) {
+        this.item = item;
+        itemBubbleIcon.sprite = item.GetComponent<SpriteRenderer>().sprite;
+        itemBubble.SetActive(true);
+    }
+
+    public bool HasItem() {
+        return item != null;
+    }
+
+    // removes the item and returns it 
+    public GameObject PopItem() {
+        GameObject temp = item;
+        item = null;
+        itemBubble.SetActive(false);
+        return temp;
     }
 }
 

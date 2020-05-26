@@ -8,6 +8,8 @@ public class TreeController : MonoBehaviour {
     private int currentPlantStage;
     private SpriteRenderer spriteRenderer;
 
+    public GameObject leaf;
+    private bool hasLeaves;
     protected static List<TreeController> treeControllers;
 
     public static void GrowTrees() {
@@ -29,6 +31,7 @@ public class TreeController : MonoBehaviour {
         currentPlantStage = (int)growCount;
         
         spriteRenderer.sprite = plantStage[currentPlantStage];
+        hasLeaves = true;
     }
 
     public void RandomizeAge() {
@@ -52,4 +55,17 @@ public class TreeController : MonoBehaviour {
         }        
     }
 
+    public bool CanPickLeaves() {
+        return hasLeaves && currentPlantStage >= 2;
+    }
+
+    public GameObject PickLeaf() {
+        if (hasLeaves && currentPlantStage >= 2) {
+            spriteRenderer.sprite = plantStage[3];
+            hasLeaves = false;
+            return leaf;
+        } else {
+            return null;
+		}
+    }
 }

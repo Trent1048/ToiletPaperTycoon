@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6764785069711079150
+--- !u!1 &8178116865223952026
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,37 +8,36 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6764785069711079144}
-  - component: {fileID: 6764785069711079151}
-  - component: {fileID: 1672512491278512261}
+  - component: {fileID: 8178116865223952028}
+  - component: {fileID: 8178116865223952029}
   m_Layer: 8
-  m_Name: Tree
-  m_TagString: Tree
+  m_Name: leaf
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6764785069711079144
+--- !u!4 &8178116865223952028
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6764785069711079150}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_GameObject: {fileID: 8178116865223952026}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &6764785069711079151
+--- !u!212 &8178116865223952029
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6764785069711079150}
+  m_GameObject: {fileID: 8178116865223952026}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -71,33 +70,14 @@ SpriteRenderer:
   m_SortingLayerID: 1009806605
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: -3105659087322419395, guid: 7c800493a83742947a92decb86037d67,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8d5f9ee0a31be7f468ba8dd3c22b85d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1.125}
+  m_Size: {x: 0.9375, y: 0.9375}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1672512491278512261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6764785069711079150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c040d6937e564a241ae5bc6f9cd7b0d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plantStage:
-  - {fileID: -8667466294985060184, guid: 7c800493a83742947a92decb86037d67, type: 3}
-  - {fileID: 5281997702118322174, guid: 7c800493a83742947a92decb86037d67, type: 3}
-  - {fileID: -3105659087322419395, guid: 7c800493a83742947a92decb86037d67, type: 3}
-  - {fileID: -25497680464327838, guid: 7c800493a83742947a92decb86037d67, type: 3}
-  leaf: {fileID: 8178116865223952026, guid: f9d734b7e6178684fa42e782f1f233ac, type: 3}

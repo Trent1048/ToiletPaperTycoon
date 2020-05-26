@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6128877895886556741}
   - component: {fileID: 1789107445382652086}
   - component: {fileID: 8155700356827894968}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: conveyorBelt
   m_TagString: Belt
   m_Icon: {fileID: 0}
@@ -109,10 +109,14 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0, y: 0.25}
-      - {x: -0.5, y: -0.025}
-      - {x: 0, y: -0.3}
-      - {x: 0.5, y: -0.025}
+    - - {x: 0.06266524, y: 0.24411982}
+      - {x: -0.06235622, y: 0.24409813}
+      - {x: -0.5007992, y: -0.006627679}
+      - {x: -0.50037354, y: -0.068840206}
+      - {x: -0.063323274, y: -0.3193103}
+      - {x: 0.063158005, y: -0.31916034}
+      - {x: 0.5006503, y: -0.06906527}
+      - {x: 0.5006868, y: -0.0067402124}
 --- !u!114 &8155700356827894968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,7 +132,6 @@ MonoBehaviour:
   storedObject: {fileID: 7173054258936085819, guid: e1e73b4dbd02eec46a139c5300e7320f,
     type: 3}
   next: {fileID: 0}
-  prev: {fileID: 0}
   sprites:
   - {fileID: 4635450942556347315, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
   - {fileID: 2699063360140803876, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
