@@ -8,6 +8,9 @@ public class ConveyorController : MonoBehaviour
     //list of conveyors
     protected static List<ConveyorController> conveyorControllers;
 
+    //list of filled conveyors
+    protected static List<ConveyorController> filledConveyors;
+
     //singly linked nodes
     public GameObject storedObject;
     public ConveyorController next;
@@ -35,6 +38,7 @@ public class ConveyorController : MonoBehaviour
         if (conveyorControllers == null)
         {
             conveyorControllers = new List<ConveyorController>();
+            filledConveyors = conveyorControllers;
         }
         conveyorControllers.Add(this);
 
@@ -54,9 +58,15 @@ public class ConveyorController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-      
-
+    { 
+        if(storedObject != null)
+        {
+            filledConveyors.Add(this);
+        }
+        else if(filledConveyors.Contains(this) && storedObject == null)
+        {
+            filledConveyors.Remove(this);
+        }
     }
 
     //unlinks any conveyor connected through prev and next, and removes conveyor
@@ -81,9 +91,8 @@ public class ConveyorController : MonoBehaviour
     public static void MoveObjects()
     {
         if (conveyorControllers != null) {
-            foreach (ConveyorController belt in conveyorControllers) {
+            foreach (ConveyorController belt in filledConveyors) {
                 if (belt.next != null) {
-                    Debug.Log("found next");
                     belt.MoveObject();
                 }
             }
@@ -132,7 +141,8 @@ public class ConveyorController : MonoBehaviour
                 if (conveyor != null)
                 {
 
-                    next = conveyor.next = null;
+                    next = null;
+                    if (conveyor.next == this) conveyor.next = null;
 
                     Vector2 otherPos = new Vector2(space.transform.position.x, space.transform.position.y);
                     Vector2 thisPos = new Vector2(transform.parent.position.x, transform.parent.position.y);
