@@ -72,9 +72,9 @@ public class ConveyorController : MonoBehaviour
         //moves object from this to next
         if (storedObject != null && next.storedObject == null)
         {
-            Debug.Log("tryna move");
-            next.storedObject = Instantiate(storedObject, transform);
-            Destroy(storedObject);
+            next.storedObject = storedObject;
+            next.storedObject.transform.SetParent(next.transform,false);
+            storedObject = null;
         }
     }
 
@@ -133,8 +133,6 @@ public class ConveyorController : MonoBehaviour
                 {
 
                     next = conveyor.next = null;
-                    Debug.Log((bool)next);
-                    Debug.Log((bool)conveyor.next);
 
                     Vector2 otherPos = new Vector2(space.transform.position.x, space.transform.position.y);
                     Vector2 thisPos = new Vector2(transform.parent.position.x, transform.parent.position.y);
@@ -143,13 +141,11 @@ public class ConveyorController : MonoBehaviour
                     if (thisPos + offsetDictionary[switchCounter] == otherPos)
                     {
                         next = conveyor;
-                        Debug.Log((bool)next);
                     }
                     //find conveyor behind
                     if (otherPos + offsetDictionary[conveyor.switchCounter] == thisPos)
                     {
                         conveyor.next = this;
-                        Debug.Log((bool)conveyor.next);
                     }
                 }
             }
