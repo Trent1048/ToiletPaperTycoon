@@ -75,20 +75,29 @@ public class GroundSpace : MonoBehaviour {
     }
 
     public GameObject Interact(GameObject item = null) {
-        if (item == null) {
+        if (currentObject != null) {
+            if (item == null) {
 
-            TreeController treeControl = currentObject.GetComponent<TreeController>();
-            if (treeControl != null) {
-                return treeControl.PickLeaf();
+                TreeController treeControl = currentObject.GetComponent<TreeController>();
+                if (treeControl != null) {
+                    return treeControl.ChopWood();
+                }
+
+            } else {
+
+                BoxController boxControl = currentObject.GetComponent<BoxController>();
+                if (boxControl != null) {
+                    ItemController itemControl = item.GetComponent<ItemController>();
+                    int amount = 0;
+
+                    if (itemControl != null) {
+                        amount = itemControl.value;
+					}
+
+                    boxControl.IncreaseToiletPaper(amount);
+                }
+
             }
-
-        } else {
-
-            BoxController boxControl = currentObject.GetComponent<BoxController>();
-            if (boxControl != null) {
-                boxControl.IncreaseToiletPaper(1);
-            }
-
         }
         return null;
     }

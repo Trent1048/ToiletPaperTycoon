@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8178116865223952028}
   - component: {fileID: 8178116865223952029}
-  - component: {fileID: 8392965900664349268}
+  - component: {fileID: 3501466353163363875}
   m_Layer: 8
-  m_Name: leaf
+  m_Name: wood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: 1009806605
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8d5f9ee0a31be7f468ba8dd3c22b85d5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 51edaa9137450684b806f41a9140c05a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8392965900664349268
+--- !u!114 &3501466353163363875
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,4 +94,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92c9c686e0339014f89b497e6b87ba5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: 1
+  value: 2
