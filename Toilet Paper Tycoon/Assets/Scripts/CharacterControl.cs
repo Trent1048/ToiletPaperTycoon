@@ -35,7 +35,7 @@ public class CharacterControl : MonoBehaviour {
 		} else if (actions.Count > 0) {
             currentAction = actions.Dequeue();
 		} else if (auto) {
-            AddMoveToTree();
+            AddPlantTree();
 		}
     }
 
@@ -89,6 +89,7 @@ public class CharacterControl : MonoBehaviour {
     // moves the character to a tree, picks some leaves, and then to the box if it exists
     public void AddMoveToTree() {
 
+        // go to the tree
         actions.Enqueue(() => {
             GroundSpace previousSpace = null;
             if (previousTargetLoc != null) {
@@ -103,17 +104,22 @@ public class CharacterControl : MonoBehaviour {
 			}
         });
 
+        // chop the tree or pick it's leaves
         actions.Enqueue(() => {
             GroundSpace previousGroundSpace = previousTargetLoc.GetComponent<GroundSpace>();
-            previousGroundSpace.hardMarked = false;
+            if(previousGroundSpace.hardMarked) {
+                previousGroundSpace.hardMarked = false;
 
-            GameObject newItem = previousGroundSpace.Harvest(shouldChopWood);
-            if (newItem != null) {
-                AddItem(newItem);
+                GameObject newItem = previousGroundSpace.Harvest(shouldChopWood);
+                if (newItem != null) {
+                    AddItem(newItem);
+
+                }
             }
             currentAction = null;
         });
 
+        // go to the box
         actions.Enqueue(() => {
             // only do this if a box exists
             if (!GameController.instance.BoxCanSpawn()) {
@@ -128,11 +134,67 @@ public class CharacterControl : MonoBehaviour {
 			}
         });
 
+        // deposit the wood/leaves at the box
         actions.Enqueue(() => {
             GameObject box = GameController.instance.GetBox();
             // makes sure the box exists and the character is at the box's location
             if (box != null && box.transform.parent == previousTargetLoc) {
                 previousTargetLoc.GetComponent<GroundSpace>().Deposit(PopItem());
+            }
+            currentAction = null;
+        });
+    }
+
+    public void AddPlantTree() {
+
+        // go to the box
+        actions.Enqueue(() => {
+            // only do this if a box exists
+            if (!GameController.instance.BoxCanSpawn()) {
+                GroundSpace boxLoc = GameController.instance.FindObjectInGround(null, "Box");
+                if (boxLoc != null) {
+                    currentAction = () => Move(boxLoc.transform);
+                } else {
+                    currentAction = null;
+                }
+            } else {
+                currentAction = null;
+            }
+        });
+
+        // get a tree from the box
+        actions.Enqueue(() => {
+            GameObject box = GameController.instance.GetBox();
+            // makes sure the box exists and the character is at the box's location
+            if (box != null && box.transform.parent == previousTargetLoc) {
+                AddItem(box.GetComponent<BoxController>().GetTree());
+            }
+            currentAction = null;
+        });
+
+        // go to a clear patch of ground
+        actions.Enqueue(() => {
+            GroundSpace previousSpace = null;
+            if (previousTargetLoc != null) {
+                previousSpace = previousTargetLoc.GetComponent<GroundSpace>();
+            }
+            GroundSpace emptyLoc = GameController.instance.FindObjectInGround(previousSpace, null);
+            if (emptyLoc != null) {
+                emptyLoc.hardMarked = true;
+                currentAction = () => Move(emptyLoc.transform);
+            } else {
+                currentAction = null;
+            }
+        });
+
+        // plant the tree
+        actions.Enqueue(() => {
+            GroundSpace previousGroundSpace = previousTargetLoc.GetComponent<GroundSpace>();
+
+            if (previousGroundSpace.hardMarked) {
+
+                previousGroundSpace.hardMarked = false;
+                previousGroundSpace.ChangeCurrentObject(PopItem());
             }
             currentAction = null;
         });
