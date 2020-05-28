@@ -13,12 +13,16 @@ public class ConveyorController : MonoBehaviour
 
     //singly linked nodes
     public GameObject storedObject;
-    public ConveyorController next;
+    public GameObject next;
 
     //variables for right-click switch
     public Sprite[] sprites;
     private SpriteRenderer spriteRenderer;
     private int switchCounter = 0;
+
+    //hover color
+    private Color startingColor;
+    private Color hoverColor;
 
     private Dictionary<int, Vector2> offsetDictionary = new Dictionary<int, Vector2>
     {
@@ -79,18 +83,28 @@ public class ConveyorController : MonoBehaviour
     // moves object individually
     //!needs to be improved!
     public void MoveObject() {
-        //moves object from this to next
-        if (storedObject != null && next.storedObject == null)
+
+        //if next is belt
+        if (next.CompareTag("Belt"))
         {
-            next.storedObject = storedObject;
-            next.storedObject.transform.SetParent(next.transform,false);
-            storedObject = null;
+            ConveyorController conveyor = next.GetComponent<ConveyorController>();
+            if (conveyor != null && conveyor.storedObject == null)
+            {
+                conveyor.storedObject = storedObject;
+                conveyor.storedObject.transform.SetParent(conveyor.transform, false);
+                storedObject = null;
+            }
+        }
+
+        //if next is a box and object is toilet paper
+        if (next.CompareTag("Box"))
+        {
         }
     }
 
     public static void MoveObjects()
     {
-        if (conveyorControllers != null) {
+        if (filledConveyors != null) {
             foreach (ConveyorController belt in filledConveyors) {
                 if (belt.next != null) {
                     belt.MoveObject();
@@ -103,6 +117,7 @@ public class ConveyorController : MonoBehaviour
     private void OnMouseOver()
     {
         
+        
         if (Input.GetMouseButtonDown(1))
         {
             switchCounter++;
@@ -111,6 +126,7 @@ public class ConveyorController : MonoBehaviour
             FindConveyor();
         }
 
+        //instantiate object for testing
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if(storedObject != null)
@@ -122,6 +138,12 @@ public class ConveyorController : MonoBehaviour
                 storedObject = Instantiate(newObject, transform);
             }
         }
+
+        //checks reference for testing
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log(next);
+        }
     }
 
     //allows conveyor to find another conveyor in front or behind it
@@ -132,30 +154,26 @@ public class ConveyorController : MonoBehaviour
         foreach (GroundSpace space in transform.parent.GetComponent<GroundSpace>().GetNeighbors()) {
 
             GameObject objectAttachedToSpace = space.GetCurrentObject();
+
             // the space has something on it
             if (objectAttachedToSpace != null)
             {
-                ConveyorController conveyor = objectAttachedToSpace.GetComponent<ConveyorController>();
+                Vector2 otherPos = new Vector2(space.transform.position.x, space.transform.position.y);
+                Vector2 thisPos = new Vector2(transform.parent.position.x, transform.parent.position.y);
 
-                // the thing on that space is a conveyor belt
-                if (conveyor != null)
+                //gameobject infront is any gameobject
+                if(thisPos + offsetDictionary[switchCounter] == otherPos)
                 {
+                    next = objectAttachedToSpace;
+                }
 
-                    next = null;
-                    if (conveyor.next == this) conveyor.next = null;
-
-                    Vector2 otherPos = new Vector2(space.transform.position.x, space.transform.position.y);
-                    Vector2 thisPos = new Vector2(transform.parent.position.x, transform.parent.position.y);
-
-                    //find conveyor infront
-                    if (thisPos + offsetDictionary[switchCounter] == otherPos)
-                    {
-                        next = conveyor;
-                    }
-                    //find conveyor behind
+                //gameobject behind is a conveyor belt
+                if (objectAttachedToSpace.CompareTag(tag))
+                {
+                    ConveyorController conveyor = objectAttachedToSpace.GetComponent<ConveyorController>();
                     if (otherPos + offsetDictionary[conveyor.switchCounter] == thisPos)
                     {
-                        conveyor.next = this;
+                        conveyor.next = gameObject;
                     }
                 }
             }
