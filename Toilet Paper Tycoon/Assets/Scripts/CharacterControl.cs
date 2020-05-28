@@ -30,7 +30,6 @@ public class CharacterControl : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        Debug.Log(auto);
         if (currentAction != null) {
             currentAction();
 		} else if (actions.Count > 0) {
