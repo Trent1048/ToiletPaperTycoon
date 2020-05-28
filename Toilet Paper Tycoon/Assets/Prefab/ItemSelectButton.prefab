@@ -105,6 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 6764785069711079150, guid: 854b5d0ab2b2b1a488f1646ffba69ecd, type: 3}
+  selectionController: {fileID: 0}
 --- !u!1 &5324788089696213944
 GameObject:
   m_ObjectHideFlags: 0

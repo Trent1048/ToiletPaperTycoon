@@ -58,12 +58,12 @@ public class ConveyorController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    { 
-        if(storedObject != null)
+    {
+        if (storedObject != null)
         {
             filledConveyors.Add(this);
         }
-        else if(filledConveyors.Contains(this) && storedObject == null)
+        else if (filledConveyors.Contains(this) && storedObject == null)
         {
             filledConveyors.Remove(this);
         }
@@ -78,21 +78,25 @@ public class ConveyorController : MonoBehaviour
 
     // moves object individually
     //!needs to be improved!
-    public void MoveObject() {
+    public void MoveObject()
+    {
         //moves object from this to next
         if (storedObject != null && next.storedObject == null)
         {
             next.storedObject = storedObject;
-            next.storedObject.transform.SetParent(next.transform,false);
+            next.storedObject.transform.SetParent(next.transform, false);
             storedObject = null;
         }
     }
 
     public static void MoveObjects()
     {
-        if (conveyorControllers != null) {
-            foreach (ConveyorController belt in filledConveyors) {
-                if (belt.next != null) {
+        if (conveyorControllers != null)
+        {
+            foreach (ConveyorController belt in filledConveyors)
+            {
+                if (belt.next != null)
+                {
                     belt.MoveObject();
                 }
             }
@@ -102,7 +106,7 @@ public class ConveyorController : MonoBehaviour
     //changes sprite with right-click and check for new reference
     private void OnMouseOver()
     {
-        
+
         if (Input.GetMouseButtonDown(1))
         {
             switchCounter++;
@@ -113,7 +117,7 @@ public class ConveyorController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if(storedObject != null)
+            if (storedObject != null)
             {
                 Destroy(storedObject);
             }
@@ -129,7 +133,8 @@ public class ConveyorController : MonoBehaviour
     {
 
         //searches for conveyor and references it
-        foreach (GroundSpace space in transform.parent.GetComponent<GroundSpace>().GetNeighbors()) {
+        foreach (GroundSpace space in transform.parent.GetComponent<GroundSpace>().GetNeighbors())
+        {
 
             GameObject objectAttachedToSpace = space.GetCurrentObject();
             // the space has something on it
