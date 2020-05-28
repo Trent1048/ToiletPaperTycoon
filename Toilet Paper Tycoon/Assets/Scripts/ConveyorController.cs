@@ -103,7 +103,15 @@ public class ConveyorController : MonoBehaviour
         //if next is a box and object is toilet paper
         if (next.CompareTag("Box"))
         {
+            BoxController box = next.GetComponent<BoxController>();
+            if (box != null && storedObject.CompareTag("ToiletPaper"))
+            {
+                box.IncreaseToiletPaper(1);
+                Destroy(storedObject);
+                storedObject = null;
+            }
         }
+        
     }
 
     public static void MoveObjects()
