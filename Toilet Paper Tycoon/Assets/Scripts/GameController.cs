@@ -41,7 +41,7 @@ public class GameController : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetMouseButtonDown(1) && !objectIsSelected) {
+        if (Input.GetMouseButtonDown(1) && !objectIsSelected && !selectedCharacterControl.InAutoMode()) {
             selectedCharacterControl.AddMoveToTree();
         }
     }
@@ -116,7 +116,7 @@ public class GameController : MonoBehaviour {
 
     public void ChangeSelectedSpace(GameObject newSpace) {
         selectedSpace = newSpace;
-        if (!objectIsSelected && selectedCharacterControl != null) {
+        if (!objectIsSelected && selectedCharacterControl != null && !selectedCharacterControl.InAutoMode()) {
             selectedCharacterControl.AddMove(newSpace);
         }
     }
@@ -132,7 +132,7 @@ public class GameController : MonoBehaviour {
     // unmarks all ground tiles as being searched already
     public void ResetGroundSearch() {
         foreach (GroundSpace tile in groundTiles) {
-            tile.marked = false;
+            tile.marked = tile.hardMarked;
         }
     }
 
@@ -170,7 +170,7 @@ public class GameController : MonoBehaviour {
 
     // returns the nearest ground tile that contains an adult tree with it's leaves attached
     // if none are found, returns null
-    public GroundSpace FindAdultTree(GroundSpace start) {
+    public GroundSpace FindAdultTree(GroundSpace start, bool mustHaveLeaves = false) {
         // setup
         ResetGroundSearch();
         if (start == null) {
@@ -188,7 +188,7 @@ public class GameController : MonoBehaviour {
             GameObject currentObject = current.GetCurrentObject();
             if (current != start && currentObject != null) {
                 TreeController currentTree = currentObject.GetComponent<TreeController>();
-                if (currentTree != null && currentTree.CanPickLeaves()) {
+                if (currentTree != null && (currentTree.CanPickLeaves() || !mustHaveLeaves)) {
                     return current;
                 }
             }

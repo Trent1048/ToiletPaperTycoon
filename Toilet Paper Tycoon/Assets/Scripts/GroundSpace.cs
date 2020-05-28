@@ -14,6 +14,7 @@ public class GroundSpace : MonoBehaviour {
     // for graph based pathfinding
     public int tileNum;
     public bool marked;
+    public bool hardMarked;
 
     private void Start() {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -74,23 +75,34 @@ public class GroundSpace : MonoBehaviour {
         return neighbors;
     }
 
-    public GameObject Interact(GameObject item = null) {
-        if (item == null) {
-
+    public GameObject Harvest(bool chopWood = false) {
+        if (currentObject != null) {
             TreeController treeControl = currentObject.GetComponent<TreeController>();
             if (treeControl != null) {
-                return treeControl.PickLeaf();
+                if (chopWood) {
+                    return treeControl.ChopWood();
+                } else {
+                    return treeControl.PickLeaf();
+                }
             }
-
-        } else {
-
-            BoxController boxControl = currentObject.GetComponent<BoxController>();
-            if (boxControl != null) {
-                boxControl.IncreaseToiletPaper(1);
-            }
-
         }
         return null;
+	}
+
+    public void Deposit(GameObject item) {
+        if (currentObject != null && item != null) {
+            BoxController boxControl = currentObject.GetComponent<BoxController>();
+            if (boxControl != null) {
+                ItemController itemControl = item.GetComponent<ItemController>();
+                int amount = 0;
+
+                if (itemControl != null) {
+                    amount = itemControl.value;
+				}
+
+                boxControl.IncreaseToiletPaper(amount);
+            }
+        }
     }
 
     private void OnMouseEnter() {
