@@ -57,6 +57,10 @@ public class ConveyorController : MonoBehaviour
             sprites[0] = spriteRenderer.sprite;
         }
 
+        //initialize hover color
+        startingColor = spriteRenderer.color;
+        hoverColor = new Color(0.5f,0.5f,0.5f, 1f);
+
         FindConveyor();
     }
 
@@ -111,6 +115,19 @@ public class ConveyorController : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void OnMouseEnter()
+    {
+        if (!GameController.instance.GameIsPaused())
+        {
+            spriteRenderer.color = hoverColor;
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        spriteRenderer.color = startingColor;
     }
 
     //changes sprite with right-click and check for new reference
