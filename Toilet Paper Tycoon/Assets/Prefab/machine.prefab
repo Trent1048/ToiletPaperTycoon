@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 7631886052763079827}
   - component: {fileID: 5001921969531021136}
   - component: {fileID: 626123222372026787}
-  - component: {fileID: -4033948782727992184}
+  - component: {fileID: -2002690045638020879}
   m_Layer: 8
   m_Name: machine
-  m_TagString: Untagged
+  m_TagString: Belt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 4635450942556347315, guid: 838c98acad0ed054a9e06d42450c07dd,
+  m_Sprite: {fileID: -7562061902129085522, guid: 3f8c140bf17a4f04d9e1f3455c02d3f2,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -100,8 +100,8 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.7}
-    oldSize: {x: 1, y: 0.8125}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1.125}
     newSize: {x: 1, y: 0.8125}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -117,7 +117,7 @@ PolygonCollider2D:
       - {x: 0.063158005, y: -0.31916034}
       - {x: 0.5006503, y: -0.06906527}
       - {x: 0.5006868, y: -0.0067402124}
---- !u!114 &-4033948782727992184
+--- !u!114 &-2002690045638020879
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -132,11 +132,11 @@ MonoBehaviour:
   storedObject: {fileID: 0}
   next: {fileID: 0}
   sprites:
-  - {fileID: 4635450942556347315, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
-  - {fileID: 2699063360140803876, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
-  - {fileID: -7874262641381568579, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
-  - {fileID: 6618317597360158505, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
+  - {fileID: -7562061902129085522, guid: 3f8c140bf17a4f04d9e1f3455c02d3f2, type: 3}
+  - {fileID: -8413006076780265586, guid: 3f8c140bf17a4f04d9e1f3455c02d3f2, type: 3}
+  - {fileID: -4627874047666434002, guid: 3f8c140bf17a4f04d9e1f3455c02d3f2, type: 3}
+  - {fileID: 4268238855074740292, guid: 3f8c140bf17a4f04d9e1f3455c02d3f2, type: 3}
   newObject: {fileID: 0}
-  machine: {fileID: 4601622713248464093}
-  toiletPaper: {fileID: 8178116865223952026, guid: f9d734b7e6178684fa42e782f1f233ac,
+  wood: {fileID: 8178116865223952026, guid: 631da9a84c4531e42b194dfa4bfcc85d, type: 3}
+  toiletPaper: {fileID: 6764785069711079150, guid: 854b5d0ab2b2b1a488f1646ffba69ecd,
     type: 3}

@@ -9,39 +9,34 @@ using UnityEngine;
 
 public class Machine : ConveyorController
 {
-  public GameObject machine;
+  public GameObject wood;
   public GameObject toiletPaper;
   int woodPiece = 0;
 
-    public void checkConveyor()
+
+
+    void Update()
     {
-        if (conveyorControllers != null)
+
+        collectWood();
+
+    }
+
+
+    public void collectWood()
+    {
+
+
+
+
+        if (storedObject.CompareTag("wood"))
+
+
         {
-            foreach (ConveyorController conveyor in filledConveyors)
-
-            {
-                if (conveyor.next == machine)
-                {
-
-                    woodPiece++;
-                    Debug.Log("yes");
-                    conveyor.MoveObject();
-                    Destroy(storedObject);
-                }
-            }
+            Debug.Log("worked");
+            Destroy(storedObject);
+            storedObject = toiletPaper;
         }
-     }
-
-
-  
-        public void craftTp()
-        {
-            if (woodPiece == 2)
-            {
-                Instantiate(toiletPaper);
-                Debug.Log("created");
-                MoveObject();
-            }
-        }
-
+    }
+    
 }
