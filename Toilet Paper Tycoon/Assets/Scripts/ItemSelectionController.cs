@@ -5,6 +5,7 @@ public class ItemSelectionController : MonoBehaviour {
 
     public Image itemIcon;
     public GameObject itemSelectionMenu;
+    public GameObject[] characterOptions;
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -21,4 +22,10 @@ public class ItemSelectionController : MonoBehaviour {
         itemSelectionMenu.SetActive(!itemSelectionMenu.activeInHierarchy);
         GameController.instance.TogglePause();
     }
+
+    public void DisableAllCharacterOptions() {
+        foreach (GameObject option in characterOptions) {
+            option.SetActive(false);
+		}
+	}
 }

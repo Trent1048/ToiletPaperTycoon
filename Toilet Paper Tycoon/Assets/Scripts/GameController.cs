@@ -42,7 +42,7 @@ public class GameController : MonoBehaviour {
 
     private void Update() {
         if (Input.GetMouseButtonDown(1) && !objectIsSelected && !selectedCharacterControl.InAutoMode()) {
-            selectedCharacterControl.AddMoveToTree();
+            selectedCharacterControl.AddChopTree();
         }
     }
 
