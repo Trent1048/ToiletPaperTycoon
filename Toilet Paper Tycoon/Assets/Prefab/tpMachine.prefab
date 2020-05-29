@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8335107710721749455}
   - component: {fileID: 3345497825084915167}
   m_Layer: 8
-  m_Name: TP Machine
+  m_Name: tpMachine
   m_TagString: Belt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,8 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: -7562061902129085522, guid: 3f8c140bf17a4f04d9e1f3455c02d3f2,
-    type: 3}
+  m_Sprite: {fileID: 600365294433982486, guid: 0bd1e70fc95f9f84392856a06ea0f587, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -132,10 +131,10 @@ MonoBehaviour:
   storedObject: {fileID: 0}
   next: {fileID: 0}
   sprites:
-  - {fileID: -7562061902129085522, guid: 3f8c140bf17a4f04d9e1f3455c02d3f2, type: 3}
-  - {fileID: -8413006076780265586, guid: 3f8c140bf17a4f04d9e1f3455c02d3f2, type: 3}
-  - {fileID: -4627874047666434002, guid: 3f8c140bf17a4f04d9e1f3455c02d3f2, type: 3}
-  - {fileID: 4268238855074740292, guid: 3f8c140bf17a4f04d9e1f3455c02d3f2, type: 3}
+  - {fileID: 600365294433982486, guid: 0bd1e70fc95f9f84392856a06ea0f587, type: 3}
+  - {fileID: 8857647051715037628, guid: 0bd1e70fc95f9f84392856a06ea0f587, type: 3}
+  - {fileID: -7325315609362505723, guid: 0bd1e70fc95f9f84392856a06ea0f587, type: 3}
+  - {fileID: -2968042500014788790, guid: 0bd1e70fc95f9f84392856a06ea0f587, type: 3}
   newObject: {fileID: 0}
   tp: {fileID: 8178116865223952026, guid: 631da9a84c4531e42b194dfa4bfcc85d, type: 3}
   howMuchTp: 2
