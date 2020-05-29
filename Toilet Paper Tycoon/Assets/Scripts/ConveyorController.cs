@@ -61,7 +61,7 @@ public class ConveyorController : MonoBehaviour
         startingColor = spriteRenderer.color;
         hoverColor = new Color(0.5f,0.5f,0.5f, 1f);
 
-        FindConveyor();
+        FindGameObject();
     }
 
     // Update is called once per frame
@@ -125,54 +125,8 @@ public class ConveyorController : MonoBehaviour
         }
     }
 
-    private void OnMouseEnter()
-    {
-        if (!GameController.instance.GameIsPaused())
-        {
-            spriteRenderer.color = hoverColor;
-        }
-    }
-
-    private void OnMouseExit()
-    {
-        spriteRenderer.color = startingColor;
-    }
-
-    //changes sprite with right-click and check for new reference
-    private void OnMouseOver()
-    {
-        
-        
-        if (Input.GetMouseButtonDown(1))
-        {
-            switchCounter++;
-            if (switchCounter > 3) switchCounter = 0;
-            spriteRenderer.sprite = sprites[switchCounter];
-            FindConveyor();
-        }
-
-        //instantiate object for testing
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if(storedObject != null)
-            {
-                Destroy(storedObject);
-            }
-            else
-            {
-                storedObject = Instantiate(newObject, transform);
-            }
-        }
-
-        //checks reference for testing
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log(next);
-        }
-    }
-
-    //allows conveyor to find another conveyor in front or behind it
-    private void FindConveyor()
+    //allows conveyor to finds any game object in front and only conveyors from behind.
+    private void FindGameObject()
     {
 
         //searches for conveyor and references it
@@ -202,6 +156,52 @@ public class ConveyorController : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        spriteRenderer.color = hoverColor;
+    }
+
+    {
+        spriteRenderer.color = startingColor;
+    }
+
+    //changes sprite with right-click and check for new reference
+    private void OnMouseOver()
+    {
+        
+        
+        if (Input.GetMouseButtonDown(1))
+        {
+            switchCounter++;
+            if (switchCounter > 3) switchCounter = 0;
+            spriteRenderer.sprite = sprites[switchCounter];
+            FindGameObject();
+        }
+
+        //instantiate object for testing
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if(storedObject != null)
+            {
+                Destroy(storedObject);
+            }
+            else
+            {
+                storedObject = Instantiate(newObject, transform);
+            }
+        }
+
+        //checks reference for testing
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log(next);
+        }
+    }
+
+    {
         }
     }
 }
