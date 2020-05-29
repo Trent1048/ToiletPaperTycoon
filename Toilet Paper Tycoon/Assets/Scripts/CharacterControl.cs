@@ -15,6 +15,8 @@ public class CharacterControl : MonoBehaviour {
 
     private Action currentAction;
     private Queue<Action> actions;
+    private bool shouldChopWood = false;
+    private bool auto;
 
     private Animator animator;
     private Direction dir;
@@ -32,6 +34,8 @@ public class CharacterControl : MonoBehaviour {
             currentAction();
 		} else if (actions.Count > 0) {
             currentAction = actions.Dequeue();
+		} else if (auto) {
+            AddMoveToTree();
 		}
     }
 
@@ -90,8 +94,9 @@ public class CharacterControl : MonoBehaviour {
             if (previousTargetLoc != null) {
                 previousSpace = previousTargetLoc.GetComponent<GroundSpace>();
             }
-            GroundSpace treeLoc = GameController.instance.FindAdultTree(previousSpace);
+            GroundSpace treeLoc = GameController.instance.FindAdultTree(previousSpace, true);
             if (treeLoc != null) {
+                treeLoc.hardMarked = true;
                 currentAction = () => Move(treeLoc.transform);   
             } else {
                 currentAction = null;
@@ -99,7 +104,10 @@ public class CharacterControl : MonoBehaviour {
         });
 
         actions.Enqueue(() => {
-            GameObject newItem = previousTargetLoc.GetComponent<GroundSpace>().Interact();
+            GroundSpace previousGroundSpace = previousTargetLoc.GetComponent<GroundSpace>();
+            previousGroundSpace.hardMarked = false;
+
+            GameObject newItem = previousGroundSpace.Harvest(shouldChopWood);
             if (newItem != null) {
                 AddItem(newItem);
             }
@@ -124,7 +132,7 @@ public class CharacterControl : MonoBehaviour {
             GameObject box = GameController.instance.GetBox();
             // makes sure the box exists and the character is at the box's location
             if (box != null && box.transform.parent == previousTargetLoc) {
-                previousTargetLoc.GetComponent<GroundSpace>().Interact(PopItem());
+                previousTargetLoc.GetComponent<GroundSpace>().Deposit(PopItem());
             }
             currentAction = null;
         });
@@ -147,6 +155,14 @@ public class CharacterControl : MonoBehaviour {
         itemBubble.SetActive(false);
         return temp;
     }
+
+    public void ToggleAuto() {
+        auto = !auto;
+	}
+
+    public bool InAutoMode() {
+        return auto;
+	}
 }
 
 public enum Direction {

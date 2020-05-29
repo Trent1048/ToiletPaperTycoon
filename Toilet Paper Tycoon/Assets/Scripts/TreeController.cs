@@ -9,6 +9,7 @@ public class TreeController : MonoBehaviour {
     private SpriteRenderer spriteRenderer;
 
     public GameObject leaf;
+    public GameObject wood;
     private bool hasLeaves;
     protected static List<TreeController> treeControllers;
 
@@ -55,17 +56,30 @@ public class TreeController : MonoBehaviour {
         }        
     }
 
+    public bool CanChopWood() {
+        return currentPlantStage >= 2;
+    }
+
     public bool CanPickLeaves() {
         return hasLeaves && currentPlantStage >= 2;
     }
 
     public GameObject PickLeaf() {
-        if (hasLeaves && currentPlantStage >= 2) {
+        if (CanPickLeaves()) {
             spriteRenderer.sprite = plantStage[3];
             hasLeaves = false;
             return leaf;
         } else {
             return null;
 		}
+    }
+
+    public GameObject ChopWood() {
+        if (CanChopWood()) {
+            Destroy(gameObject);
+            return wood;
+        } else {
+            return null;
+        }
     }
 }
