@@ -159,17 +159,18 @@ public class ConveyorController : MonoBehaviour
         }
     }
 
-    private void OnMouseExit()
+    public void EnterHover()
     {
         spriteRenderer.color = hoverColor;
     }
 
+    public void ExitHover()
     {
         spriteRenderer.color = startingColor;
     }
 
     //changes sprite with right-click and check for new reference
-    private void OnMouseOver()
+    public void WhileHover()
     {
         
         
@@ -201,7 +202,15 @@ public class ConveyorController : MonoBehaviour
         }
     }
 
+    private void OnMouseOver()
     {
+        EnterHover();
+        WhileHover();
         }
+    }
+
+    private void OnMouseExit()
+    {
+        ExitHover();
     }
 }
