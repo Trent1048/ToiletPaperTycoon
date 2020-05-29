@@ -18,7 +18,7 @@ public class MachineController : ConveyorController
     void Update()
     {
 
-        collectWood();
+        if(storedObject) collectWood();
 
     }
 
@@ -27,19 +27,10 @@ public class MachineController : ConveyorController
     {
 
         if (storedObject.CompareTag("wood"))
-
-
         {
-            Debug.Log("worked");
             Destroy(storedObject);
-            storedObject = Instantiate(toiletPaper);
-           
+            storedObject = Instantiate(toiletPaper);           
         }
-        else
-        {
-            Debug.Log("no wood");
-        }
-
     }
     
 }
