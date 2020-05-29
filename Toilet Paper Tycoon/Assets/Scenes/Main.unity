@@ -323,7 +323,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemIcon: {fileID: 1642820583}
   itemSelectionMenu: {fileID: 1831770814}
-  characterOptions: []
+  characterOptions:
+  - {fileID: 444943997}
+  - {fileID: 1443575661}
+  - {fileID: 1478722384}
 --- !u!1001 &32427668
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1816,6 +1819,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 961612067753173518, guid: 43b5214c93d67b04e9175801b4cc49ad,
     type: 3}
   m_PrefabInstance: {fileID: 426341436}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &444943997 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4011926062776357650, guid: 6e2e5209fbf833349b1fd8dd2b13df48,
+    type: 3}
+  m_PrefabInstance: {fileID: 4011926061445934278}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &469649806
 PrefabInstance:
@@ -3434,7 +3443,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -7562061902129085522, guid: 3f8c140bf17a4f04d9e1f3455c02d3f2,
+      objectReference: {fileID: -4627874047666434002, guid: 3f8c140bf17a4f04d9e1f3455c02d3f2,
         type: 3}
     - target: {fileID: 5621037390931086349, guid: 8d4ec397803439b4597f724cddcbf067,
         type: 3}
@@ -7472,6 +7481,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1433529522}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1443575661 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4011926062776357650, guid: 6e2e5209fbf833349b1fd8dd2b13df48,
+    type: 3}
+  m_PrefabInstance: {fileID: 1976806039}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1454297614
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7696,6 +7711,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 961612067753173518, guid: 43b5214c93d67b04e9175801b4cc49ad,
     type: 3}
   m_PrefabInstance: {fileID: 1468812585}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1478722384 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4011926062776357650, guid: 6e2e5209fbf833349b1fd8dd2b13df48,
+    type: 3}
+  m_PrefabInstance: {fileID: 904712894}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1483851622 stripped
 GameObject:
