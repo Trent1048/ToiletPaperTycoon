@@ -7,7 +7,7 @@ using UnityEngine;
 
 
 
-public class Machine : ConveyorController
+public class MachineController : ConveyorController
 {
   public GameObject wood;
   public GameObject toiletPaper;
