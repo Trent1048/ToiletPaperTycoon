@@ -108,7 +108,6 @@ public class ConveyorController : MonoBehaviour
             {
                 box.IncreaseToiletPaper(1);
                 Destroy(storedObject);
-                storedObject = null;
             }
         }
         
