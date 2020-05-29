@@ -11,7 +11,7 @@ public class Machine : ConveyorController
 {
   public GameObject wood;
   public GameObject toiletPaper;
-  int woodPiece = 0;
+  
 
 
 
@@ -26,17 +26,20 @@ public class Machine : ConveyorController
     public void collectWood()
     {
 
-
-
-
         if (storedObject.CompareTag("wood"))
 
 
         {
             Debug.Log("worked");
             Destroy(storedObject);
-            storedObject = toiletPaper;
+            storedObject = Instantiate(toiletPaper);
+           
         }
+        else
+        {
+            Debug.Log("no wood");
+        }
+
     }
     
 }
