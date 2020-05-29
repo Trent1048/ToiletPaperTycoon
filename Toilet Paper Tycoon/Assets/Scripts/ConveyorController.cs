@@ -206,6 +206,9 @@ public class ConveyorController : MonoBehaviour
     {
         EnterHover();
         WhileHover();
+        if (Input.GetMouseButtonDown(0))
+        {
+            transform.parent.GetComponent<GroundSpace>().MouseLeftClick();
         }
     }
 
