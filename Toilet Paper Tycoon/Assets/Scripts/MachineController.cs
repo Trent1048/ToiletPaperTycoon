@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
-
-
-
 public class MachineController : ConveyorController
 {
   public GameObject wood;
@@ -18,15 +14,15 @@ public class MachineController : ConveyorController
     void Update()
     {
 
-        if(storedObject) collectWood();
+        if(storedObject) CollectWood();
 
     }
 
 
-    public void collectWood()
+    public void CollectWood()
     {
 
-        if (storedObject.CompareTag("wood"))
+        if (storedObject.CompareTag("Wood"))
         {
             Destroy(storedObject);
             storedObject = Instantiate(toiletPaper);           
