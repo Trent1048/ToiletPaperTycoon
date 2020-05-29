@@ -92,7 +92,7 @@ public class ConveyorController : MonoBehaviour
         if (next.CompareTag("Belt"))
         {
             ConveyorController conveyor = next.GetComponent<ConveyorController>();
-            if (conveyor != null && conveyor.storedObject == null)
+            if (conveyor != null && conveyor.storedObject == null && storedObject!=null)
             {
                 conveyor.storedObject = storedObject;
                 conveyor.storedObject.transform.SetParent(conveyor.transform, false);
