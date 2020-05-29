@@ -118,6 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1.2
   accuracy: 0.1
+  tree: {fileID: 6764785069711079150, guid: 854b5d0ab2b2b1a488f1646ffba69ecd, type: 3}
 --- !u!1001 &3593074903040288632
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -42,7 +42,7 @@ public class GameController : MonoBehaviour {
 
     private void Update() {
         if (Input.GetMouseButtonDown(1) && !objectIsSelected && !selectedCharacterControl.InAutoMode()) {
-            selectedCharacterControl.AddMoveToTree();
+            selectedCharacterControl.AddChopTree();
         }
     }
 
@@ -153,7 +153,8 @@ public class GameController : MonoBehaviour {
         while (spacesToCheck.Count != 0) {
             GroundSpace current = spacesToCheck.Dequeue();
             current.marked = true;
-            if (current != start && current.GetCurrentObject() != null && current.GetCurrentObject().CompareTag(tag)) {
+            if (current != start && ((current.GetCurrentObject() == null && tag == null) || 
+                (tag != null && current.GetCurrentObject() != null && current.GetCurrentObject().CompareTag(tag)))) {
                 return current;
             }
             // add all unmarked spaces to the queue

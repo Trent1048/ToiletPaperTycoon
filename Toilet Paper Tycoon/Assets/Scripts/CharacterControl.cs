@@ -13,7 +13,8 @@ public class CharacterControl : MonoBehaviour {
     private GameObject itemBubble;
     private SpriteRenderer itemBubbleIcon;
 
-    private Action currentAction;
+    private Action CurrentAction;
+    private Action AutoAction;
     private Queue<Action> actions;
     private bool shouldChopWood = false;
     private bool auto;
@@ -30,12 +31,12 @@ public class CharacterControl : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        if (currentAction != null) {
-            currentAction();
+        if (CurrentAction != null) {
+            CurrentAction();
 		} else if (actions.Count > 0) {
-            currentAction = actions.Dequeue();
-		} else if (auto) {
-            AddMoveToTree();
+            CurrentAction = actions.Dequeue();
+		} else if (auto && AutoAction != null) {
+            AutoAction();
 		}
     }
 
@@ -81,14 +82,15 @@ public class CharacterControl : MonoBehaviour {
 
             transform.Translate(moveVector);
         } else {
-            currentAction = null;
+            CurrentAction = null;
             previousTargetLoc = target;
         }
     }
 
-    // moves the character to a tree, picks some leaves, and then to the box if it exists
-    public void AddMoveToTree() {
+    // moves the character to a tree, picks some leaves or chops wood, and then to the box if it exists
+    public void AddChopTree() {
 
+        // go to the tree
         actions.Enqueue(() => {
             GroundSpace previousSpace = null;
             if (previousTargetLoc != null) {
@@ -97,45 +99,125 @@ public class CharacterControl : MonoBehaviour {
             GroundSpace treeLoc = GameController.instance.FindAdultTree(previousSpace, true);
             if (treeLoc != null) {
                 treeLoc.hardMarked = true;
-                currentAction = () => Move(treeLoc.transform);   
+                CurrentAction = () => Move(treeLoc.transform);   
             } else {
-                currentAction = null;
+                CurrentAction = null;
 			}
         });
 
+        // chop the tree or pick it's leaves
         actions.Enqueue(() => {
             GroundSpace previousGroundSpace = previousTargetLoc.GetComponent<GroundSpace>();
-            previousGroundSpace.hardMarked = false;
+            if(previousGroundSpace.hardMarked) {
+                previousGroundSpace.hardMarked = false;
 
-            GameObject newItem = previousGroundSpace.Harvest(shouldChopWood);
-            if (newItem != null) {
-                AddItem(newItem);
+                GameObject newItem = previousGroundSpace.Harvest(shouldChopWood);
+                if (newItem != null) {
+                    AddItem(newItem);
+
+                }
             }
-            currentAction = null;
+            CurrentAction = null;
         });
 
+        // go to the box
         actions.Enqueue(() => {
             // only do this if a box exists
             if (!GameController.instance.BoxCanSpawn()) {
                 GroundSpace boxLoc = GameController.instance.FindObjectInGround(null, "Box");
                 if (boxLoc != null) {
-                    currentAction = () => Move(boxLoc.transform);
+                    CurrentAction = () => Move(boxLoc.transform);
                 } else {
-                    currentAction = null;
+                    CurrentAction = null;
                 }
             } else {
-                currentAction = null;
+                CurrentAction = null;
 			}
         });
 
+        // deposit the wood/leaves at the box
         actions.Enqueue(() => {
             GameObject box = GameController.instance.GetBox();
             // makes sure the box exists and the character is at the box's location
             if (box != null && box.transform.parent == previousTargetLoc) {
                 previousTargetLoc.GetComponent<GroundSpace>().Deposit(PopItem());
             }
-            currentAction = null;
+            CurrentAction = null;
         });
+    }
+
+    public void AddPlantTree() {
+
+        // go to the box
+        actions.Enqueue(() => {
+            // only do this if a box exists
+            if (!GameController.instance.BoxCanSpawn()) {
+                GroundSpace boxLoc = GameController.instance.FindObjectInGround(null, "Box");
+                if (boxLoc != null) {
+                    CurrentAction = () => Move(boxLoc.transform);
+                } else {
+                    CurrentAction = null;
+                }
+            } else {
+                CurrentAction = null;
+            }
+        });
+
+        // get a tree from the box
+        actions.Enqueue(() => {
+            GameObject box = GameController.instance.GetBox();
+            // makes sure the box exists and the character is at the box's location
+            if (box != null && box.transform.parent == previousTargetLoc) {
+                AddItem(box.GetComponent<BoxController>().GetTree());
+            }
+            CurrentAction = null;
+        });
+
+        // go to a clear patch of ground
+        actions.Enqueue(() => {
+            GroundSpace previousSpace = null;
+            if (previousTargetLoc != null) {
+                previousSpace = previousTargetLoc.GetComponent<GroundSpace>();
+            }
+            GroundSpace emptyLoc = GameController.instance.FindObjectInGround(previousSpace, null);
+            if (emptyLoc != null) {
+                emptyLoc.hardMarked = true;
+                CurrentAction = () => Move(emptyLoc.transform);
+            } else {
+                CurrentAction = null;
+            }
+        });
+
+        // plant the tree
+        actions.Enqueue(() => {
+            GroundSpace previousGroundSpace = previousTargetLoc.GetComponent<GroundSpace>();
+
+            if (previousGroundSpace.hardMarked) {
+
+                previousGroundSpace.hardMarked = false;
+                previousGroundSpace.ChangeCurrentObject(PopItem());
+            }
+            CurrentAction = null;
+        });
+    }
+
+    public void ChangeAutoAction(ActionType actionType) {
+        if (actionType == ActionType.Manual) {
+            auto = false;
+            AutoAction = null;
+        } else {
+            auto = true;
+
+            if (actionType == ActionType.Plant) {
+                AutoAction = () => AddPlantTree();
+            } else if (actionType == ActionType.Leaf) {
+                shouldChopWood = false;
+                AutoAction = () => AddChopTree();
+            } else if (actionType == ActionType.Wood) {
+                shouldChopWood = true;
+                AutoAction = () => AddChopTree();
+            }
+        }
     }
 
     public void AddItem(GameObject item) {
@@ -170,4 +252,11 @@ public enum Direction {
     FrontRight,
     BackLeft,
     BackRight
+}
+
+public enum ActionType {
+    Plant,
+    Leaf,
+    Wood,
+    Manual
 }

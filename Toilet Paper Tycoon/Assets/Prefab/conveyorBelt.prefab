@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8758841101066059142}
   - component: {fileID: 6128877895886556741}
-  - component: {fileID: 1789107445382652086}
-  - component: {fileID: 8155700356827894968}
+  - component: {fileID: 4935208711790604493}
+  - component: {fileID: 7869262572258664621}
   m_Layer: 8
   m_Name: conveyorBelt
   m_TagString: Belt
@@ -84,7 +84,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!60 &1789107445382652086
+--- !u!114 &4935208711790604493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3438637974438974920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd6e9c8973258b54689f5394bb4b7cd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storedObject: {fileID: 0}
+  next: {fileID: 0}
+  sprites:
+  - {fileID: 4635450942556347315, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
+  - {fileID: 2699063360140803876, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
+  - {fileID: -7874262641381568579, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
+  - {fileID: 6618317597360158505, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
+  newObject: {fileID: 8178116865223952026, guid: 631da9a84c4531e42b194dfa4bfcc85d,
+    type: 3}
+--- !u!60 &7869262572258664621
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,32 +130,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.06266524, y: 0.24411982}
-      - {x: -0.06235622, y: 0.24409813}
-      - {x: -0.5007992, y: -0.006627679}
-      - {x: -0.50037354, y: -0.068840206}
-      - {x: -0.063323274, y: -0.3193103}
-      - {x: 0.063158005, y: -0.31916034}
-      - {x: 0.5006503, y: -0.06906527}
-      - {x: 0.5006868, y: -0.0067402124}
---- !u!114 &8155700356827894968
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3438637974438974920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd6e9c8973258b54689f5394bb4b7cd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  storedObject: {fileID: 0}
-  next: {fileID: 0}
-  sprites:
-  - {fileID: 4635450942556347315, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
-  - {fileID: 2699063360140803876, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
-  - {fileID: -7874262641381568579, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
-  - {fileID: 6618317597360158505, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
-  newObject: {fileID: 8178116865223952026, guid: 631da9a84c4531e42b194dfa4bfcc85d,
-    type: 3}
+    - - {x: -0.06977081, y: 0.25123823}
+      - {x: -0.5047524, y: -0.0059116483}
+      - {x: -0.5086994, y: -0.32900524}
+      - {x: -0.06029749, y: -0.57662344}
+      - {x: 0.06719065, y: -0.5737126}
+      - {x: 0.50324345, y: -0.33442926}
+      - {x: 0.5064876, y: -0.003564477}
+      - {x: 0.07095015, y: 0.25023475}
