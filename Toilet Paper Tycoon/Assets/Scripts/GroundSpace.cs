@@ -108,11 +108,39 @@ public class GroundSpace : MonoBehaviour {
     private void OnMouseEnter() {
         if (!GameController.instance.GameIsPaused()) {
             spriteRenderer.color = hoverColor;
+            if(currentObject)
+            {
+                ConveyorController conveyor = currentObject.GetComponent<ConveyorController>();
+                if (conveyor)
+                {
+                    conveyor.EnterHover();
+                }
+            }
         }
     }
 
     private void OnMouseExit() {
         spriteRenderer.color = startingColor;
+        if (currentObject)
+        {
+            ConveyorController conveyor = currentObject.GetComponent<ConveyorController>();
+            if (conveyor)
+            {
+                conveyor.ExitHover();
+            }
+        }
+    }
+
+    private void OnMouseOver()
+    {
+        if (currentObject)
+        {
+            ConveyorController conveyor = currentObject.GetComponent<ConveyorController>();
+            if (conveyor)
+            {
+                conveyor.WhileHover();
+            }
+        }
     }
 
     private void OnMouseDown() {
@@ -127,5 +155,9 @@ public class GroundSpace : MonoBehaviour {
             GameController.instance.ChangeSelectedSpace(gameObject);
         }
     }
-   
+    
+    public void MouseLeftClick()
+    {
+        OnMouseDown();
+    }
 }
