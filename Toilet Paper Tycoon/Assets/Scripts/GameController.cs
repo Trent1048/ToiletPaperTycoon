@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
@@ -11,6 +12,8 @@ public class GameController : MonoBehaviour {
 
     public GameObject groundTileParent;
     private GroundSpace[] groundTiles;
+
+    public Text tpCountText;
 
     private GameObject box;
     private GameObject selectedObject;
