@@ -40,6 +40,18 @@ public class CharacterControl : MonoBehaviour {
 		}
     }
 
+    // waits until a box is placed, then goes to the box
+    private void GoToBox() {
+        // wait for the box to exist
+        if (!GameController.instance.BoxCanSpawn()) {
+            GroundSpace boxLoc = GameController.instance.FindObjectInGround(null, "Box");
+            if (boxLoc != null) {
+                // move to the box
+                CurrentAction = () => Move(boxLoc.transform);
+            }
+        }
+    }
+
     // the target should always be a ground tile
     public void AddMove(GameObject targetLoc) {
         actions.Enqueue(() => Move(targetLoc.transform));
@@ -121,19 +133,7 @@ public class CharacterControl : MonoBehaviour {
         });
 
         // go to the box
-        actions.Enqueue(() => {
-            // only do this if a box exists
-            if (!GameController.instance.BoxCanSpawn()) {
-                GroundSpace boxLoc = GameController.instance.FindObjectInGround(null, "Box");
-                if (boxLoc != null) {
-                    CurrentAction = () => Move(boxLoc.transform);
-                } else {
-                    CurrentAction = null;
-                }
-            } else {
-                CurrentAction = null;
-			}
-        });
+        actions.Enqueue(() => GoToBox());
 
         // deposit the wood/leaves at the box
         actions.Enqueue(() => {
@@ -149,19 +149,7 @@ public class CharacterControl : MonoBehaviour {
     public void AddPlantTree() {
 
         // go to the box
-        actions.Enqueue(() => {
-            // only do this if a box exists
-            if (!GameController.instance.BoxCanSpawn()) {
-                GroundSpace boxLoc = GameController.instance.FindObjectInGround(null, "Box");
-                if (boxLoc != null) {
-                    CurrentAction = () => Move(boxLoc.transform);
-                } else {
-                    CurrentAction = null;
-                }
-            } else {
-                CurrentAction = null;
-            }
-        });
+        actions.Enqueue(() => GoToBox());
 
         // get a tree from the box
         actions.Enqueue(() => {
