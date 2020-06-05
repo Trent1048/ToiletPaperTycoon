@@ -13,7 +13,12 @@ public class BoxController : MonoBehaviour {
     }
 
     public GameObject GetTree() {
-        return tree;
+        if (tp > 0) {
+            IncreaseToiletPaper(-1);
+            return tree;
+        } else {
+            return null;
+		}
 	}
 
     public void IncreaseToiletPaper(int amount) {

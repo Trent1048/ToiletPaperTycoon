@@ -104,14 +104,18 @@ public class CharacterControl : MonoBehaviour {
 
         // go to the tree
         actions.Enqueue(() => {
-            GroundSpace previousSpace = null;
-            if (previousTargetLoc != null) {
-                previousSpace = previousTargetLoc.GetComponent<GroundSpace>();
-            }
-            GroundSpace treeLoc = GameController.instance.FindAdultTree(previousSpace, true);
-            if (treeLoc != null) {
-                treeLoc.hardMarked = true;
-                CurrentAction = () => Move(treeLoc.transform);   
+            if (item == null) {
+                GroundSpace previousSpace = null;
+                if (previousTargetLoc != null) {
+                    previousSpace = previousTargetLoc.GetComponent<GroundSpace>();
+                }
+                GroundSpace treeLoc = GameController.instance.FindAdultTree(previousSpace, true);
+                if (treeLoc != null) {
+                    treeLoc.hardMarked = true;
+                    CurrentAction = () => Move(treeLoc.transform);
+                } else {
+                    CurrentAction = null;
+                }
             } else {
                 CurrentAction = null;
 			}
@@ -163,27 +167,33 @@ public class CharacterControl : MonoBehaviour {
 
         // go to a clear patch of ground
         actions.Enqueue(() => {
-            GroundSpace previousSpace = null;
-            if (previousTargetLoc != null) {
-                previousSpace = previousTargetLoc.GetComponent<GroundSpace>();
-            }
-            GroundSpace emptyLoc = GameController.instance.FindObjectInGround(previousSpace, null);
-            if (emptyLoc != null) {
-                emptyLoc.hardMarked = true;
-                CurrentAction = () => Move(emptyLoc.transform);
+            if (item != null) {
+                GroundSpace previousSpace = null;
+                if (previousTargetLoc != null) {
+                    previousSpace = previousTargetLoc.GetComponent<GroundSpace>();
+                }
+                GroundSpace emptyLoc = GameController.instance.FindObjectInGround(previousSpace, null);
+                if (emptyLoc != null) {
+                    emptyLoc.hardMarked = true;
+                    CurrentAction = () => Move(emptyLoc.transform);
+                } else {
+                    CurrentAction = null;
+                }
             } else {
                 CurrentAction = null;
-            }
+			}
         });
 
         // plant the tree
         actions.Enqueue(() => {
-            GroundSpace previousGroundSpace = previousTargetLoc.GetComponent<GroundSpace>();
+            if (item != null) {
+                GroundSpace previousGroundSpace = previousTargetLoc.GetComponent<GroundSpace>();
 
-            if (previousGroundSpace.hardMarked) {
+                if (previousGroundSpace.hardMarked) {
 
-                previousGroundSpace.hardMarked = false;
-                previousGroundSpace.ChangeCurrentObject(PopItem());
+                    previousGroundSpace.hardMarked = false;
+                    previousGroundSpace.ChangeCurrentObject(PopItem());
+                }
             }
             CurrentAction = null;
         });
@@ -209,9 +219,11 @@ public class CharacterControl : MonoBehaviour {
     }
 
     public void AddItem(GameObject item) {
-        this.item = item;
-        itemBubbleIcon.sprite = item.GetComponent<SpriteRenderer>().sprite;
-        itemBubble.SetActive(true);
+        if (item != null) {
+            this.item = item;
+            itemBubbleIcon.sprite = item.GetComponent<SpriteRenderer>().sprite;
+            itemBubble.SetActive(true);
+        }
     }
 
     public bool HasItem() {
