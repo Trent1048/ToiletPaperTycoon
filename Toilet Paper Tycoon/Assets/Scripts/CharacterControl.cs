@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 
 public class CharacterControl : MonoBehaviour {
@@ -42,19 +43,6 @@ public class CharacterControl : MonoBehaviour {
 
     // waits until a box is placed, then goes to the box
     private void GoToBox() {
-        GroundSpace findStart = null;
-
-        if (previousTargetLoc != null) {
-            findStart = previousTargetLoc.GetComponent<GroundSpace>();
-        }
-
-        GroundSpace boxLoc = GameController.instance.FindObjectInGround(findStart, "Belt");
-        if (boxLoc != null) {
-            // move to the box
-            CurrentAction = () => Move(boxLoc.transform);
-        }
-
-        /*
         // wait for the box to exist
         if (!GameController.instance.BoxCanSpawn()) {
             GroundSpace boxLoc = GameController.instance.FindObjectInGround(null, "Box");
@@ -63,7 +51,40 @@ public class CharacterControl : MonoBehaviour {
                 CurrentAction = () => Move(boxLoc.transform);
             }
         }
-        */
+    }
+
+    // goes to the nearest box or conveyor belt, whatever is closer
+    private void GoToBeltOrBox() {
+        GroundSpace findStart = null;
+
+        if (previousTargetLoc != null) {
+            findStart = previousTargetLoc.GetComponent<GroundSpace>();
+        }
+
+        GroundSpace boxLoc = GameController.instance.FindObjectInGround(findStart, "Box");
+        GroundSpace beltLoc = GameController.instance.FindObjectInGround(findStart, "Belt");
+
+        float boxDist = float.MaxValue;
+        if (boxLoc != null) {
+            boxDist = UnityEngine.Vector3.Distance(transform.position, boxLoc.transform.position);
+        }
+
+        float beltDist = float.MaxValue;
+        if (beltLoc != null) {
+            beltDist = UnityEngine.Vector3.Distance(transform.position, beltLoc.transform.position);
+        }
+
+        if (beltLoc != null || boxLoc != null) {
+            Transform targetLoc;
+
+            if (boxDist <= beltDist) {
+                targetLoc = boxLoc.transform;
+            } else {
+                targetLoc = beltLoc.transform;
+			}
+
+            CurrentAction = () => Move(targetLoc);
+        }
     }
 
     // the target should always be a ground tile
@@ -72,7 +93,7 @@ public class CharacterControl : MonoBehaviour {
     }
 
     private void Move(Transform target) {
-        Vector3 targetPos = target.position;
+        UnityEngine.Vector3 targetPos = target.position;
 
         // isographic coordinates
         float targetIsoX = targetPos.y / 0.25f + targetPos.x / 0.5f;
@@ -100,7 +121,7 @@ public class CharacterControl : MonoBehaviour {
         // so it won't move when it is really close
         if (Math.Abs(moveX) > accuracy || Math.Abs(moveY) > accuracy) {
 
-            Vector3 moveVector = new Vector3((moveX - moveY) * 0.5f, (moveX + moveY) * 0.25f, 0);
+            UnityEngine.Vector3 moveVector = new UnityEngine.Vector3((moveX - moveY) * 0.5f, (moveX + moveY) * 0.25f, 0);
 
             // keep the speed the same regardless of distance or framerate
             moveVector.Normalize();
@@ -150,23 +171,13 @@ public class CharacterControl : MonoBehaviour {
             CurrentAction = null;
         });
 
-        // go to the box
-        actions.Enqueue(() => GoToBox());
+        // go to the box or a conveyor belt
+        actions.Enqueue(() => GoToBeltOrBox());
 
-        // deposit the wood/leaves at the box
+        // deposit the wood/leaves at the box or on the belt
         actions.Enqueue(() => {
-
             previousTargetLoc.GetComponent<GroundSpace>().Deposit(PopItem());
             CurrentAction = null;
-
-            /*
-            GameObject box = GameController.instance.GetBox();
-            // makes sure the box exists and the character is at the box's location
-            if (box != null && box.transform.parent == previousTargetLoc) {
-                previousTargetLoc.GetComponent<GroundSpace>().Deposit(PopItem());
-            }
-            CurrentAction = null;
-            */
         });
     }
 

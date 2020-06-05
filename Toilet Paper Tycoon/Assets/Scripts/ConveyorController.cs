@@ -87,7 +87,6 @@ public class ConveyorController : MonoBehaviour
             if (conveyor.storedObject != null) {
                 return false;
             } else {
-                Debug.Log(storedObject);
                 conveyor.storedObject = storedObject;
                 conveyor.storedObject.transform.SetParent(conveyor.transform, false);
                 storedObject = null;
