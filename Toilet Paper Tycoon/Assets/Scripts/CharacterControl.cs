@@ -42,6 +42,19 @@ public class CharacterControl : MonoBehaviour {
 
     // waits until a box is placed, then goes to the box
     private void GoToBox() {
+        GroundSpace findStart = null;
+
+        if (previousTargetLoc != null) {
+            findStart = previousTargetLoc.GetComponent<GroundSpace>();
+        }
+
+        GroundSpace boxLoc = GameController.instance.FindObjectInGround(findStart, "Belt");
+        if (boxLoc != null) {
+            // move to the box
+            CurrentAction = () => Move(boxLoc.transform);
+        }
+
+        /*
         // wait for the box to exist
         if (!GameController.instance.BoxCanSpawn()) {
             GroundSpace boxLoc = GameController.instance.FindObjectInGround(null, "Box");
@@ -50,6 +63,7 @@ public class CharacterControl : MonoBehaviour {
                 CurrentAction = () => Move(boxLoc.transform);
             }
         }
+        */
     }
 
     // the target should always be a ground tile
@@ -141,12 +155,18 @@ public class CharacterControl : MonoBehaviour {
 
         // deposit the wood/leaves at the box
         actions.Enqueue(() => {
+
+            previousTargetLoc.GetComponent<GroundSpace>().Deposit(PopItem());
+            CurrentAction = null;
+
+            /*
             GameObject box = GameController.instance.GetBox();
             // makes sure the box exists and the character is at the box's location
             if (box != null && box.transform.parent == previousTargetLoc) {
                 previousTargetLoc.GetComponent<GroundSpace>().Deposit(PopItem());
             }
             CurrentAction = null;
+            */
         });
     }
 

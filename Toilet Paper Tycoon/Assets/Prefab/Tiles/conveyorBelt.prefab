@@ -103,7 +103,7 @@ MonoBehaviour:
   - {fileID: 2699063360140803876, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
   - {fileID: -7874262641381568579, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
   - {fileID: 6618317597360158505, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
-  newObject: {fileID: 6764785069711079150, guid: 854b5d0ab2b2b1a488f1646ffba69ecd,
+  newObject: {fileID: 8178116865223952026, guid: f9d734b7e6178684fa42e782f1f233ac,
     type: 3}
 --- !u!60 &7869262572258664621
 PolygonCollider2D:

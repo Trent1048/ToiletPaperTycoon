@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ConveyorController : MonoBehaviour
 {
     //list of conveyors
     protected static List<ConveyorController> conveyorControllers;
-
-    //list of filled conveyors
-    protected static List<ConveyorController> filledConveyors;
 
     //singly linked nodes
     public GameObject storedObject;
@@ -32,9 +27,6 @@ public class ConveyorController : MonoBehaviour
         {3, new Vector2(0.5f,-0.25f)}
     };
 
-    //instantiation var
-    public GameObject newObject;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -42,7 +34,6 @@ public class ConveyorController : MonoBehaviour
         if (conveyorControllers == null)
         {
             conveyorControllers = new List<ConveyorController>();
-            filledConveyors = conveyorControllers;
         }
         conveyorControllers.Add(this);
 
@@ -64,19 +55,6 @@ public class ConveyorController : MonoBehaviour
         FindGameObject();
     }
 
-    // Update is called once per frame
-    void Update()
-    { 
-        if(storedObject != null)
-        {
-            filledConveyors.Add(this);
-        }
-        else if(filledConveyors.Contains(this) && storedObject == null)
-        {
-            filledConveyors.Remove(this);
-        }
-    }
-
     //unlinks any conveyor connected through prev and next, and removes conveyor
     private void OnDestroy()
     {
@@ -84,15 +62,26 @@ public class ConveyorController : MonoBehaviour
         conveyorControllers.Remove(this);
     }
 
+    // for use by the character to put an object on the conveyor belt
+    public bool AddObject(GameObject newObject) {
+        if (storedObject != null) {
+            return false;
+		} else {
+            storedObject = Instantiate(newObject, transform);
+            storedObject.transform.SetParent(transform, false);
+            return true;
+		}
+    }
+
     // moves object individually
-    //!needs to be improved!
+    // !needs to be improved!
     public void MoveObject() {
 
         //if next is belt
         if (next.CompareTag("Belt"))
         {
             ConveyorController conveyor = next.GetComponent<ConveyorController>();
-            if (conveyor != null && conveyor.storedObject == null && storedObject!=null)
+            if (conveyor != null && conveyor.storedObject == null && storedObject != null)
             {
                 conveyor.storedObject = storedObject;
                 conveyor.storedObject.transform.SetParent(conveyor.transform, false);
@@ -100,14 +89,25 @@ public class ConveyorController : MonoBehaviour
             }
         }
 
-        //if next is a box and object is toilet paper
+        // if next is a box
         if (next.CompareTag("Box"))
         {
-            BoxController box = next.GetComponent<BoxController>();
-            if (box != null && storedObject.CompareTag("ToiletPaper"))
-            {
-                box.IncreaseToiletPaper(1);
-                Destroy(storedObject);
+            if (storedObject != null) {
+                BoxController box = next.GetComponent<BoxController>();
+
+                int amount = 0;
+                ItemController itemController = storedObject.GetComponent<ItemController>();
+                if (itemController != null) {
+                    amount = itemController.value;
+                }
+
+                if (box != null) {
+                    Debug.Log("good");
+
+                    Destroy(storedObject);
+                    storedObject = null;
+                    box.IncreaseToiletPaper(amount);
+                }
             }
         }
         
@@ -115,8 +115,8 @@ public class ConveyorController : MonoBehaviour
 
     public static void MoveObjects()
     {
-        if (filledConveyors != null) {
-            foreach (ConveyorController belt in filledConveyors) {
+        if (conveyorControllers != null) {
+            foreach (ConveyorController belt in conveyorControllers) {
                 if (belt.next != null) {
                     belt.MoveObject();
                 }
@@ -124,9 +124,10 @@ public class ConveyorController : MonoBehaviour
         }
     }
 
-    //allows conveyor to finds any game object in front and only conveyors from behind.
-    private void FindGameObject()
+    // allows conveyor to finds any game object in front and only conveyors from behind.
+    public void FindGameObject()
     {
+        Debug.Log("test");
 
         //searches for conveyor and references it
         foreach (GroundSpace space in transform.parent.GetComponent<GroundSpace>().GetNeighbors()) {
@@ -179,19 +180,6 @@ public class ConveyorController : MonoBehaviour
             if (switchCounter > 3) switchCounter = 0;
             spriteRenderer.sprite = sprites[switchCounter];
             FindGameObject();
-        }
-
-        //instantiate object for testing
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if(storedObject != null)
-            {
-                Destroy(storedObject);
-            }
-            else
-            {
-                storedObject = Instantiate(newObject, transform);
-            }
         }
 
         //checks reference for testing

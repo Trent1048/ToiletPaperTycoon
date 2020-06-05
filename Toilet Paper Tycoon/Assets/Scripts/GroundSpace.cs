@@ -101,7 +101,12 @@ public class GroundSpace : MonoBehaviour {
 				}
 
                 boxControl.IncreaseToiletPaper(amount);
-            }
+            } else {
+                ConveyorController conveyorControl = currentObject.GetComponent<ConveyorController>();
+                if (conveyorControl != null) {
+                    conveyorControl.AddObject(item);
+				}
+			}
         }
     }
 

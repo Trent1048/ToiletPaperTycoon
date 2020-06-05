@@ -9,6 +9,7 @@ public class BoxController : MonoBehaviour {
 
     private void Start() {
         GameController.instance.AddBox(gameObject);
+        UpdateConveyors();
         tpCount = GameController.instance.tpCountText;
     }
 
@@ -24,5 +25,23 @@ public class BoxController : MonoBehaviour {
     public void IncreaseToiletPaper(int amount) {
         tp += amount;
         tpCount.text = "TP: " + tp;
+    }
+
+    private void UpdateConveyors() {
+
+        //searches for conveyor and references it
+        foreach (GroundSpace space in transform.parent.GetComponent<GroundSpace>().GetNeighbors()) {
+
+            GameObject objectAttachedToSpace = space.GetCurrentObject();
+
+            // the space has something on it
+            if (objectAttachedToSpace != null) {
+                ConveyorController conveyor = objectAttachedToSpace.GetComponent<ConveyorController>();
+
+                if (conveyor != null) {
+                    conveyor.FindGameObject();
+				}
+            }
+        }
     }
 }
