@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class ConveyorController : MonoBehaviour
 {
@@ -74,60 +75,82 @@ public class ConveyorController : MonoBehaviour
     }
 
     // moves object individually
-    // !needs to be improved!
-    public void MoveObject() {
+    // returns if it sucessfully completed it's move regardless if it had an object on it
+    public bool MoveObject() {
 
-        //if next is belt
-        if (next.CompareTag("Belt"))
-        {
-            ConveyorController conveyor = next.GetComponent<ConveyorController>();
-            if (conveyor != null && conveyor.storedObject == null && storedObject != null)
-            {
+        if (storedObject == null) {
+            return true;
+        }
+
+        ConveyorController conveyor = next.GetComponent<ConveyorController>();
+        if (conveyor != null) {
+            if (conveyor.storedObject != null) {
+                return false;
+            } else {
+                Debug.Log(storedObject);
                 conveyor.storedObject = storedObject;
                 conveyor.storedObject.transform.SetParent(conveyor.transform, false);
                 storedObject = null;
+                return true;
             }
         }
 
-        // if next is a box
-        if (next.CompareTag("Box"))
-        {
-            if (storedObject != null) {
-                BoxController box = next.GetComponent<BoxController>();
+        BoxController box = next.GetComponent<BoxController>();
 
-                int amount = 0;
-                ItemController itemController = storedObject.GetComponent<ItemController>();
-                if (itemController != null) {
-                    amount = itemController.value;
-                }
+        if (box != null) {
 
-                if (box != null) {
-                    Debug.Log("good");
-
-                    Destroy(storedObject);
-                    storedObject = null;
-                    box.IncreaseToiletPaper(amount);
-                }
+            int amount = 0;
+            ItemController itemController = storedObject.GetComponent<ItemController>();
+            if (itemController != null) {
+                amount = itemController.value;
             }
+
+            Destroy(storedObject);
+            storedObject = null;
+            box.IncreaseToiletPaper(amount);
         }
-        
+
+        return true;
     }
 
     public static void MoveObjects()
     {
         if (conveyorControllers != null) {
-            foreach (ConveyorController belt in conveyorControllers) {
-                if (belt.next != null) {
-                    belt.MoveObject();
+
+            Queue<ConveyorController> unMovedConveyors = new Queue<ConveyorController>();
+            foreach (ConveyorController conveyor in conveyorControllers) {
+                if (conveyor.storedObject != null) {
+                    unMovedConveyors.Enqueue(conveyor);
+				}
+			}
+
+            // used to make sure the while loop won't go on forever
+            int previousSize = unMovedConveyors.Count;
+            int count = 0;
+
+            ConveyorController belt;
+            while (unMovedConveyors.Count > 0) {
+                count++;
+                belt = unMovedConveyors.Dequeue();
+                if (!belt.MoveObject()) {
+                    unMovedConveyors.Enqueue(belt);
+				}
+                if (count == previousSize) {
+                    if (unMovedConveyors.Count == previousSize) {
+                        // the size of the queue hasn't changed since the last check,
+                        // meaning none of the belts moved and the movements are done
+                        return;
+					}
+                    previousSize = unMovedConveyors.Count;
+                    count = 0;
                 }
-            }
+			}
         }
     }
 
     // allows conveyor to finds any game object in front and only conveyors from behind.
     public void FindGameObject()
     {
-        Debug.Log("test");
 
         //searches for conveyor and references it
         foreach (GroundSpace space in transform.parent.GetComponent<GroundSpace>().GetNeighbors()) {
