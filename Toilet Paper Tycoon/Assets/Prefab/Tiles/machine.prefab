@@ -136,7 +136,6 @@ MonoBehaviour:
   - {fileID: -8413006076780265586, guid: 3f8c140bf17a4f04d9e1f3455c02d3f2, type: 3}
   - {fileID: -4627874047666434002, guid: 3f8c140bf17a4f04d9e1f3455c02d3f2, type: 3}
   - {fileID: 4268238855074740292, guid: 3f8c140bf17a4f04d9e1f3455c02d3f2, type: 3}
-  newObject: {fileID: 0}
   wood: {fileID: 8178116865223952026, guid: 631da9a84c4531e42b194dfa4bfcc85d, type: 3}
-  toiletPaper: {fileID: 8178116865223952026, guid: f9d734b7e6178684fa42e782f1f233ac,
+  toiletPaper: {fileID: 6963675737351733379, guid: 1c08229c7f6abff40bbc5afa6276a184,
     type: 3}

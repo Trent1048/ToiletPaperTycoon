@@ -135,6 +135,5 @@ MonoBehaviour:
   - {fileID: 8857647051715037628, guid: 0bd1e70fc95f9f84392856a06ea0f587, type: 3}
   - {fileID: -7325315609362505723, guid: 0bd1e70fc95f9f84392856a06ea0f587, type: 3}
   - {fileID: -2968042500014788790, guid: 0bd1e70fc95f9f84392856a06ea0f587, type: 3}
-  newObject: {fileID: 0}
-  tp: {fileID: 8178116865223952026, guid: 631da9a84c4531e42b194dfa4bfcc85d, type: 3}
+  tp: {fileID: 6963675737351733379, guid: fbf052d35a8e281489bc93a87d7b8752, type: 3}
   howMuchTp: 2

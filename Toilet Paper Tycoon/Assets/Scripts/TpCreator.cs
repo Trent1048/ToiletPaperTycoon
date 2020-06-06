@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TpCreator : ConveyorController
 {
@@ -19,13 +17,14 @@ public class TpCreator : ConveyorController
 
     public void CountPaper()
     {
-        if (storedObject.CompareTag("Tree"))//change to "paper"
+        if (storedObject.CompareTag("Single Ply Tp"))
         {
             paperNum++;
             Destroy(storedObject);
             if (paperNum == howMuchTp)
             {
-                storedObject = Instantiate(tp);
+                paperNum = 0;
+                storedObject = Instantiate(tp, transform);
             }
         }
 

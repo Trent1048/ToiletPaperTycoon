@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 public class MachineController : ConveyorController
@@ -8,9 +6,6 @@ public class MachineController : ConveyorController
   public GameObject wood;
   public GameObject toiletPaper;
   
-
-
-
     void Update()
     {
 
@@ -25,7 +20,7 @@ public class MachineController : ConveyorController
         if (storedObject.CompareTag("Wood"))
         {
             Destroy(storedObject);
-            storedObject = Instantiate(toiletPaper);           
+            storedObject = Instantiate(toiletPaper, transform);           
         }
     }
     

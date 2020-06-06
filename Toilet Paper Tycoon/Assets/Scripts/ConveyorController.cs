@@ -168,10 +168,10 @@ public class ConveyorController : MonoBehaviour
                     next = objectAttachedToSpace;
                 }
 
-                //gameobject behind is a conveyor belt
-                if (objectAttachedToSpace.CompareTag(tag))
+                ConveyorController conveyor = objectAttachedToSpace.GetComponent<ConveyorController>();
+                // gameobject behind is a conveyor belt
+                if (conveyor != null)
                 {
-                    ConveyorController conveyor = objectAttachedToSpace.GetComponent<ConveyorController>();
                     if (otherPos + offsetDictionary[conveyor.switchCounter] == thisPos)
                     {
                         conveyor.next = gameObject;
