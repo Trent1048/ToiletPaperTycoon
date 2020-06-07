@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 3f8c140bf17a4f04d9e1f3455c02d3f2
+guid: 0bd1e70fc95f9f84392856a06ea0f587
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4627874047666434002
-    second: machine_top_right
+      213: -7325315609362505723
+    second: tpMachine_top_right
   - first:
-      213: -8413006076780265586
-    second: machine_top_left
+      213: 8857647051715037628
+    second: tpMachine_top_left
   - first:
-      213: -7562061902129085522
-    second: machine_bottom_left
+      213: 600365294433982486
+    second: tpMachine_bottom_left
   - first:
-      213: 4268238855074740292
-    second: machine_bottom_right
+      213: -2968042500014788790
+    second: tpMachine_bottom_right
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -99,7 +99,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: machine_top_right
+      name: tpMachine_top_right
       rect:
         serializedVersion: 2
         x: 0
@@ -113,14 +113,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e20d79bb21d76cfb0800000000000000
-      internalID: -4627874047666434002
+      spriteID: 500e254b340475a90800000000000000
+      internalID: -7325315609362505723
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: machine_top_left
+      name: tpMachine_top_left
       rect:
         serializedVersion: 2
         x: 16
@@ -134,14 +134,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e8f3f441c8ffe3b80800000000000000
-      internalID: -8413006076780265586
+      spriteID: cb9c24f401facea70800000000000000
+      internalID: 8857647051715037628
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: machine_bottom_left
+      name: tpMachine_bottom_left
       rect:
         serializedVersion: 2
         x: 32
@@ -155,14 +155,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ea3c41af3c82e0790800000000000000
-      internalID: -7562061902129085522
+      spriteID: 618d53eed0de45800800000000000000
+      internalID: 600365294433982486
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: machine_bottom_right
+      name: tpMachine_bottom_right
       rect:
         serializedVersion: 2
         x: 48
@@ -176,8 +176,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 448ff35ef94db3b30800000000000000
-      internalID: 4268238855074740292
+      spriteID: a4f2b5452156fc6d0800000000000000
+      internalID: -2968042500014788790
       vertices: []
       indices: 
       edges: []

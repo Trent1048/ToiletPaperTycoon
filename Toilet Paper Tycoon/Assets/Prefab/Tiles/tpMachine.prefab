@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4953978246449382577
+--- !u!1 &4601622713248464093
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1366218377090591999}
-  - component: {fileID: 4500866285574659900}
-  - component: {fileID: 8335107710721749455}
-  - component: {fileID: 3345497825084915167}
+  - component: {fileID: 7631886052763079827}
+  - component: {fileID: 5001921969531021136}
+  - component: {fileID: 626123222372026787}
+  - component: {fileID: -2002690045638020879}
   m_Layer: 8
-  m_Name: tpMachine
+  m_Name: machine
   m_TagString: Belt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1366218377090591999
+--- !u!4 &7631886052763079827
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4953978246449382577}
+  m_GameObject: {fileID: 4601622713248464093}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.28, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,13 +33,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &4500866285574659900
+--- !u!212 &5001921969531021136
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4953978246449382577}
+  m_GameObject: {fileID: 4601622713248464093}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -72,7 +72,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 600365294433982486, guid: 0bd1e70fc95f9f84392856a06ea0f587, type: 3}
+  m_Sprite: {fileID: -7562061902129085522, guid: 3f8c140bf17a4f04d9e1f3455c02d3f2,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -83,13 +84,13 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!60 &8335107710721749455
+--- !u!60 &626123222372026787
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4953978246449382577}
+  m_GameObject: {fileID: 4601622713248464093}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -116,24 +117,25 @@ PolygonCollider2D:
       - {x: 0.063158005, y: -0.31916034}
       - {x: 0.5006503, y: -0.06906527}
       - {x: 0.5006868, y: -0.0067402124}
---- !u!114 &3345497825084915167
+--- !u!114 &-2002690045638020879
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4953978246449382577}
+  m_GameObject: {fileID: 4601622713248464093}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04c0d68cca4a7c546967a234ce1c2d84, type: 3}
+  m_Script: {fileID: 11500000, guid: 561e8b2d32a8b894580630524ec8cd2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   storedObject: {fileID: 0}
   next: {fileID: 0}
   sprites:
-  - {fileID: 600365294433982486, guid: 0bd1e70fc95f9f84392856a06ea0f587, type: 3}
-  - {fileID: 8857647051715037628, guid: 0bd1e70fc95f9f84392856a06ea0f587, type: 3}
-  - {fileID: -7325315609362505723, guid: 0bd1e70fc95f9f84392856a06ea0f587, type: 3}
-  - {fileID: -2968042500014788790, guid: 0bd1e70fc95f9f84392856a06ea0f587, type: 3}
-  tp: {fileID: 6963675737351733379, guid: fbf052d35a8e281489bc93a87d7b8752, type: 3}
-  howMuchTp: 2
+  - {fileID: -7562061902129085522, guid: 3f8c140bf17a4f04d9e1f3455c02d3f2, type: 3}
+  - {fileID: -8413006076780265586, guid: 3f8c140bf17a4f04d9e1f3455c02d3f2, type: 3}
+  - {fileID: -4627874047666434002, guid: 3f8c140bf17a4f04d9e1f3455c02d3f2, type: 3}
+  - {fileID: 4268238855074740292, guid: 3f8c140bf17a4f04d9e1f3455c02d3f2, type: 3}
+  wood: {fileID: 8178116865223952026, guid: 631da9a84c4531e42b194dfa4bfcc85d, type: 3}
+  toiletPaper: {fileID: 6963675737351733379, guid: 1c08229c7f6abff40bbc5afa6276a184,
+    type: 3}

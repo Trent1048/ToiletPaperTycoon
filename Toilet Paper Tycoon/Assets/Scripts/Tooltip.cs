@@ -51,7 +51,6 @@ public class Tooltip : MonoBehaviour {
 	}
 
 	public static void HideTooltip() {
-		instance.gameObject.SetActive(false);
-		instance.activated = false;
+		instance.Deactivate();
 	}
 }
