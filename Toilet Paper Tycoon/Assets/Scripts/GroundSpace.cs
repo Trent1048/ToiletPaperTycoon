@@ -31,9 +31,10 @@ public class GroundSpace : MonoBehaviour {
 
     public void ChangeCurrentObject(GameObject newObject) {
         if (currentObject != null) {
-            Destroy(currentObject);
-        }
-        if (newObject != null) {
+            if (GameController.instance.CanRemoveObject()) {
+                Destroy(currentObject);
+            }
+        } else if (newObject != null && !newObject.CompareTag("Shovel")) {
             // makes sure the object is not a box or that a box can spawn if it is
             bool currentObjectIsBox = newObject.GetComponent<BoxController>() != null;
             if (!currentObjectIsBox || (currentObjectIsBox && GameController.instance.BoxCanSpawn())) {

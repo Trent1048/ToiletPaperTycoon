@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour {
     private GameObject selectedSpace;
     private bool objectIsSelected = true;
     private bool gameIsPaused = false;
+    private bool removeObject = false;
 
     private CharacterControl selectedCharacterControl;
 
@@ -86,7 +87,7 @@ public class GameController : MonoBehaviour {
 
     private void ChangeSelectedCharacter(GameObject character) {
         CharacterControl newCharacterControl = character.GetComponent<CharacterControl>();
-        if (newCharacterControl != null) { 
+        if (newCharacterControl != null) {
             selectedCharacterControl = newCharacterControl;
         } else {
             Debug.LogError("That is not a valid character");
@@ -97,6 +98,7 @@ public class GameController : MonoBehaviour {
         if (selectedObject.GetComponent<CharacterControl>() == null) {
             objectIsSelected = true;
             this.selectedObject = selectedObject;
+            removeObject = selectedObject.CompareTag("Shovel");
         } else {
             objectIsSelected = false;
             ChangeSelectedCharacter(selectedObject);
@@ -150,7 +152,7 @@ public class GameController : MonoBehaviour {
         while (spacesToCheck.Count != 0) {
             GroundSpace current = spacesToCheck.Dequeue();
             current.marked = true;
-            if (current != start && ((current.GetCurrentObject() == null && tag == null) || 
+            if (current != start && ((current.GetCurrentObject() == null && tag == null) ||
                 (tag != null && current.GetCurrentObject() != null && current.GetCurrentObject().CompareTag(tag)))) {
                 return current;
             }
@@ -160,7 +162,7 @@ public class GameController : MonoBehaviour {
                     spacesToCheck.Enqueue(neigbor);
                 }
             }
-            
+
         }
 
         return null;
@@ -216,4 +218,9 @@ public class GameController : MonoBehaviour {
     public GameObject GetBox() {
         return box;
     }
+
+    // object deletion stuff
+    public bool CanRemoveObject() {
+        return removeObject;
+	}
 }
