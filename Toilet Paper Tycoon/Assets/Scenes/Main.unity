@@ -3225,7 +3225,8 @@ PrefabInstance:
     - target: {fileID: 2013337657070993809, guid: 8d4ec397803439b4597f724cddcbf067,
         type: 3}
       propertyPath: tooltipText
-      value: Conveyor Belt
+      value: Conveyor Belt\nMoves items in the direction of the arrows\nRight click
+        to rotate\nCosts 5 tp
       objectReference: {fileID: 0}
     - target: {fileID: 4672298684821221976, guid: 8d4ec397803439b4597f724cddcbf067,
         type: 3}
@@ -3524,7 +3525,7 @@ PrefabInstance:
     - target: {fileID: 2013337657070993809, guid: 8d4ec397803439b4597f724cddcbf067,
         type: 3}
       propertyPath: tooltipText
-      value: Tp machine
+      value: Tp machine\nConverts wood into toilet paper\nCosts 10 tp
       objectReference: {fileID: 0}
     - target: {fileID: 4672298684821221976, guid: 8d4ec397803439b4597f724cddcbf067,
         type: 3}
@@ -4245,7 +4246,8 @@ PrefabInstance:
     - target: {fileID: 2013337657070993809, guid: 8d4ec397803439b4597f724cddcbf067,
         type: 3}
       propertyPath: tooltipText
-      value: 2 Ply Machine
+      value: 2 Ply Machine\nTurns 2 single ply toilet paper into 2 ply\nCosts 25
+        tp
       objectReference: {fileID: 0}
     - target: {fileID: 4672298684821221976, guid: 8d4ec397803439b4597f724cddcbf067,
         type: 3}
@@ -4536,7 +4538,7 @@ PrefabInstance:
     - target: {fileID: 2013337657070993809, guid: 8d4ec397803439b4597f724cddcbf067,
         type: 3}
       propertyPath: tooltipText
-      value: Tree
+      value: Tree\nGrows up and can be harvested\nCosts 2 tp
       objectReference: {fileID: 0}
     - target: {fileID: 3475451038904887717, guid: 8d4ec397803439b4597f724cddcbf067,
         type: 3}
@@ -4974,7 +4976,7 @@ PrefabInstance:
     - target: {fileID: 9156763590357657190, guid: 6e2e5209fbf833349b1fd8dd2b13df48,
         type: 3}
       propertyPath: tooltipText
-      value: Rick
+      value: Rick\nClick for options
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e2e5209fbf833349b1fd8dd2b13df48, type: 3}
@@ -10174,7 +10176,7 @@ PrefabInstance:
     - target: {fileID: 9156763590357657190, guid: 6e2e5209fbf833349b1fd8dd2b13df48,
         type: 3}
       propertyPath: tooltipText
-      value: Rachel
+      value: Rachel\nClick for options
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e2e5209fbf833349b1fd8dd2b13df48, type: 3}
@@ -10685,7 +10687,7 @@ PrefabInstance:
     - target: {fileID: 2013337657070993809, guid: 8d4ec397803439b4597f724cddcbf067,
         type: 3}
       propertyPath: tooltipText
-      value: Box
+      value: Box\nMove items here to earn tp\nCan only place one\nCosts 0 tp
       objectReference: {fileID: 0}
     - target: {fileID: 4672298684821221976, guid: 8d4ec397803439b4597f724cddcbf067,
         type: 3}
@@ -11277,7 +11279,7 @@ PrefabInstance:
     - target: {fileID: 9156763590357657190, guid: 6e2e5209fbf833349b1fd8dd2b13df48,
         type: 3}
       propertyPath: tooltipText
-      value: Jerry
+      value: Jerry\nClick for options
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e2e5209fbf833349b1fd8dd2b13df48, type: 3}

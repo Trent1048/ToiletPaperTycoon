@@ -600,7 +600,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bce8aea1ca9ad0d4fae5d087f749c1fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipText: Auto Chop Wood
+  tooltipText: Auto Chop Wood\nWood sells for 0 tp at the box\nBut can be converted
+    into\ntoilet paper with a machine
 --- !u!1 &4011926061481048281
 GameObject:
   m_ObjectHideFlags: 0
@@ -720,7 +721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bce8aea1ca9ad0d4fae5d087f749c1fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipText: Auto Pick Leaves
+  tooltipText: Auto Pick Leaves\nLeaves sell for 1 tp at the box
 --- !u!1 &4011926061747950298
 GameObject:
   m_ObjectHideFlags: 0
@@ -1404,7 +1405,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bce8aea1ca9ad0d4fae5d087f749c1fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipText: Auto Plant Tree
+  tooltipText: Auto Plant Tree\nCosts 1 tp per tree
 --- !u!1 &5693319907761779418
 GameObject:
   m_ObjectHideFlags: 0
