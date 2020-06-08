@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6128877895886556741}
   - component: {fileID: 4935208711790604493}
   - component: {fileID: 7869262572258664621}
+  - component: {fileID: -2626634114927930680}
   m_Layer: 8
   m_Name: conveyorBelt
   m_TagString: Belt
@@ -103,8 +104,6 @@ MonoBehaviour:
   - {fileID: 2699063360140803876, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
   - {fileID: -7874262641381568579, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
   - {fileID: 6618317597360158505, guid: 838c98acad0ed054a9e06d42450c07dd, type: 3}
-  newObject: {fileID: 8178116865223952026, guid: f9d734b7e6178684fa42e782f1f233ac,
-    type: 3}
 --- !u!60 &7869262572258664621
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -138,3 +137,16 @@ PolygonCollider2D:
       - {x: 0.50324345, y: -0.33442926}
       - {x: 0.5064876, y: -0.003564477}
       - {x: 0.07095015, y: 0.25023475}
+--- !u!114 &-2626634114927930680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3438637974438974920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92c9c686e0339014f89b497e6b87ba5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: 5

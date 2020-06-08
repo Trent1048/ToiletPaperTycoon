@@ -22,6 +22,8 @@ public class GameController : MonoBehaviour {
     private bool gameIsPaused = false;
     private bool removeObject = false;
 
+    private int tp;
+
     private CharacterControl selectedCharacterControl;
 
     private void Awake() {
@@ -62,7 +64,7 @@ public class GameController : MonoBehaviour {
     // Pausing and Resuming the Game:
 
     public void PauseGame() {
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
         gameIsPaused = true;
     }
 
@@ -71,7 +73,7 @@ public class GameController : MonoBehaviour {
     }
 
     public void ResumeGame() {
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
         gameIsPaused = false;
     }
 
@@ -168,7 +170,7 @@ public class GameController : MonoBehaviour {
         return null;
     }
 
-    // returns the nearest ground tile that contains an adult tree with it's leaves attached
+    // returns the nearest ground tile that contains an adult tree
     // if none are found, returns null
     public GroundSpace FindAdultTree(GroundSpace start, bool mustHaveLeaves = false) {
         // setup
@@ -223,4 +225,15 @@ public class GameController : MonoBehaviour {
     public bool CanRemoveObject() {
         return removeObject;
 	}
+
+    // tp counting stuff
+
+    public int GetToiletPaper() {
+        return tp;
+	}
+
+    public void IncreaseToiletPaper(int amount) {
+        tp += amount;
+        tpCountText.text = "TP: " + tp;
+    }
 }

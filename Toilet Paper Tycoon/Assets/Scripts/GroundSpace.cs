@@ -9,7 +9,7 @@ public class GroundSpace : MonoBehaviour {
 
     private GroundSpace[] neighbors;
     private GameObject currentObject;
-    public GameObject[] objects;
+    public GameObject tree;
 
     // for graph based pathfinding
     public int tileNum;
@@ -23,8 +23,7 @@ public class GroundSpace : MonoBehaviour {
 
         // initial tree generation
         if (Random.Range(0, 3) == 0) {
-            int treeType = Random.Range(0, objects.Length);
-            ChangeCurrentObject(objects[treeType]);
+            currentObject = Instantiate(tree, transform);
             currentObject.GetComponent<TreeController>().RandomizeAge();
         }
     }
@@ -35,9 +34,16 @@ public class GroundSpace : MonoBehaviour {
                 Destroy(currentObject);
             }
         } else if (newObject != null && !newObject.CompareTag("Shovel")) {
-            // makes sure the object is not a box or that a box can spawn if it is
+
+            ItemController itemController = newObject.GetComponent<ItemController>();
             bool currentObjectIsBox = newObject.GetComponent<BoxController>() != null;
-            if (!currentObjectIsBox || (currentObjectIsBox && GameController.instance.BoxCanSpawn())) {
+
+            // makes sure the object is affordable
+            if (itemController != null && GameController.instance.GetToiletPaper() - itemController.value >= 0 &&
+                // makes sure the object is not a box or that a box can spawn if it is
+                (!currentObjectIsBox || (currentObjectIsBox && GameController.instance.BoxCanSpawn()))) {
+
+                GameController.instance.IncreaseToiletPaper(-itemController.value);
                 currentObject = Instantiate(newObject, transform);
             } else {
                 currentObject = null;
@@ -101,7 +107,7 @@ public class GroundSpace : MonoBehaviour {
                     amount = itemControl.value;
 				}
 
-                boxControl.IncreaseToiletPaper(amount);
+                GameController.instance.IncreaseToiletPaper(amount);
             } else {
                 ConveyorController conveyorControl = currentObject.GetComponent<ConveyorController>();
                 if (conveyorControl != null) {
