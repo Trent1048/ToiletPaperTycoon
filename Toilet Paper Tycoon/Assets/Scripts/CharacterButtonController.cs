@@ -12,7 +12,7 @@ public class CharacterButtonController : MonoBehaviour {
 	}
 
 	public void ToggleOptions() {
-		selectionController.DisableAllCharacterOptions();
+		selectionController.DisableAllCharacterOptions(optionsMenu);
 		optionsMenu.SetActive(!optionsMenu.activeInHierarchy);
 	}
 }
