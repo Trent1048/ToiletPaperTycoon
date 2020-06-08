@@ -3,7 +3,12 @@ guid: 90303af72edd2674f9a4e5b5ede816dc
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - currentMap: {instanceID: 0}
+  - dirtTile: {instanceID: 0}
+  - grassTile: {instanceID: 0}
+  - spaceTile: {instanceID: 0}
+  - groundTile: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

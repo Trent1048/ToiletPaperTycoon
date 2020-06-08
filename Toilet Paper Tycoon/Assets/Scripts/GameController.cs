@@ -55,16 +55,19 @@ public class GameController : MonoBehaviour {
             // calls GameTick once per second
             GameTick();
         }
+    }
 
+    private void Update()
+    {
         //if we expand map
         if (AdditionalTiles.transform.childCount != AddCount)
         {
             AddCount = AdditionalTiles.transform.childCount;
-            UpdateControls();
+            UpdateTileCount();
         }
     }
 
-    private void UpdateControls()
+    private void UpdateTileCount()
     {
         groundTiles = new GroundSpace[groundTileParent.transform.childCount];
         int currentSpace = 0;

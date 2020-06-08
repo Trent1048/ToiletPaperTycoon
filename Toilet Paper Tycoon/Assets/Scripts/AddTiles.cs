@@ -14,9 +14,7 @@ public class AddTiles : MonoBehaviour
     public TileBase grassTile;
 
     protected static TileBase[] tileSetupArray;
-    protected List<AddTiles> additionalTiles;
 
-    public bool deleted = false;
     public GameObject groundTile;
 
     private Vector3Int cellPosition;
@@ -36,6 +34,8 @@ public class AddTiles : MonoBehaviour
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         startingColor = spriteRenderer.color;
         hoverColor = new Color(0f, 0f, 0f, 0.5f);
+        
+        //saves the original map design to be used and copied
         if (tileSetupArray == null)
         {
             tileSetupArray = new TileBase[100];
@@ -55,21 +55,11 @@ public class AddTiles : MonoBehaviour
         {
             currentMap = transform.parent.parent.GetComponent<Tilemap>();
         }
-
-        if (additionalTiles == null)
-        {
-            additionalTiles = new List<AddTiles>();
-        }
-        additionalTiles.Add(this);
-
+        
         gridLayout = transform.parent.GetComponentInParent<GridLayout>();
         cellPosition = gridLayout.WorldToCell(transform.position);
     }
 
-    private void OnDestroy()
-    {
-        additionalTiles.Remove(this);
-    }
     private void OnMouseExit()
     {
         spriteRenderer.color = startingColor;
@@ -77,56 +67,67 @@ public class AddTiles : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        spriteRenderer.color = hoverColor;
+        if (!GameController.instance.GameIsPaused())
+        {
+            spriteRenderer.color = hoverColor;
+        }
     }
 
     private void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(0))
+        //do only if game is not paused
+        if (!GameController.instance.GameIsPaused())
         {
-            spriteRenderer.color = startingColor;
-            MakeGroundTiles();
-            Destroy(gameObject);
+            if (Input.GetMouseButtonDown(0))
+            {
+                spriteRenderer.color = startingColor;
+                MakeGroundTiles();
+                Destroy(gameObject);
+            }
         }
     }
 
+    /*fills in a 10x10 tile area with pre-made tileSetupArray
+    and place a groundspace on top of each one*/
     private void MakeGroundTiles()
     {
 
-        int cellX = cellPosition.x;
-        Vector3Int saveCellPos = cellPosition;
-        
+        //create this gameobject around this to allow more expansion of map
         for(int i=0; i<4; i++)
         {
             Vector3Int checkPos = cellPosition + directionalCheck[i];
             Vector3 worldPos= gridLayout.CellToWorld(checkPos) + new Vector3(0f, 0.25f, 0f);
-            if (!currentMap.HasTile(checkPos))
+            if (!currentMap.HasTile(checkPos)) //if there is a 10x10 tile area, don't do this
             {
                 Instantiate(this, worldPos, new Quaternion(0, 0, 0, 0), transform.parent);
             }
         }
 
+        int cellX = cellPosition.x; //to reset x-coordinate after doing a for loop 10 times
+        Vector3Int tempCellPos = cellPosition; //new var, so cellPosition does not get altered
+
+        //loop to fill 10x10 area
         foreach (TileBase tile in tileSetupArray)
         {
-            if(cellPosition.x > cellX+9)
+            if(tempCellPos.x > cellX+9)
             {
-                cellPosition.x = cellX;
-                cellPosition.y--;
+                tempCellPos.x = cellX;
+                tempCellPos.y--;
             }
 
-            currentMap.SetTile(cellPosition, tile);
-            cellPosition.x++;
+            currentMap.SetTile(tempCellPos, tile);
+            Vector3 worldPos = gridLayout.CellToWorld(tempCellPos) + new Vector3(0f,0.25f,0f);
 
-            Vector3 worldPos = gridLayout.CellToWorld(cellPosition) + new Vector3(-0.5f, 0f, 0f);
+            tempCellPos.x++;
+
             Instantiate(groundTile, worldPos, new Quaternion(0,0,0,0), transform.parent.parent.GetChild(0));
         }
-
-        cellPosition = saveCellPos;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //if current position has a tile, destroy 'this'
         if (currentMap.HasTile(cellPosition))
         {
             Destroy(gameObject);

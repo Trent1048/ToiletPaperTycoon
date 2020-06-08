@@ -52,25 +52,38 @@ public class GroundSpace : MonoBehaviour {
     }
 
     public GroundSpace[] GetNeighbors() {
+        
         if (neighbors == null) {
+
             List<GroundSpace> neighborHelper = new List<GroundSpace>();
-            GroundSpace[] allGroundTiles = GameController.instance.GetGroundTiles();
+            Collider2D[] collidedGroundTiles = Physics2D.OverlapCircleAll(transform.position, 0.5f);
 
-            // makes sure not to add tiles that don't exist or are on the 
-            // other side of the ground area
-            if (tileNum % 10 != 9) {
-                neighborHelper.Add(allGroundTiles[tileNum + 1]);
-            }
-            if (tileNum % 10 != 0) {
-                neighborHelper.Add(allGroundTiles[tileNum - 1]);
-            }
-            if (tileNum / 10 != 9) {
-                neighborHelper.Add(allGroundTiles[tileNum + 10]);
-            }
-            if (tileNum / 10 != 0) {
-                neighborHelper.Add(allGroundTiles[tileNum - 10]);
-            }
+            foreach (Collider2D collider in collidedGroundTiles)
+            {
+                GroundSpace groundTile = collider.GetComponent<GroundSpace>();
+                if (groundTile)
+                {
+                    Vector2 checkPos = (Vector2)transform.position + new Vector2(-0.5f, -0.25f);
+                    if (checkPos == (Vector2)collider.transform.position){ //backleft
+                        neighborHelper.Add(groundTile);
+                    }
 
+                    checkPos = (Vector2)transform.position + new Vector2(-0.5f, 0.25f);
+                    if (checkPos == (Vector2)collider.transform.position){ //frontleft
+                        neighborHelper.Add(groundTile);
+                    }
+
+                    checkPos = (Vector2)transform.position + new Vector2(0.5f, 0.25f);
+                    if (checkPos == (Vector2)collider.transform.position){ //frontright
+                        neighborHelper.Add(groundTile);
+                    }
+
+                    checkPos = (Vector2)transform.position + new Vector2(0.5f, -0.25f);
+                    if (checkPos == (Vector2)collider.transform.position){ //backright
+                        neighborHelper.Add(groundTile);
+                    }
+                }
+            }
             neighbors = neighborHelper.ToArray();
         }
         return neighbors;

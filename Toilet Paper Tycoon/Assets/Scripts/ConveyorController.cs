@@ -95,7 +95,6 @@ public class ConveyorController : MonoBehaviour
         }
 
         BoxController box = next.GetComponent<BoxController>();
-
         if (box != null) {
 
             int amount = 0;

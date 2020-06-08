@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5818549234119480927}
   - component: {fileID: -7039743311753946870}
   - component: {fileID: 5783363234310303792}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: AdditionalTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,11 +69,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1009806605
-  m_SortingLayer: 1
-  m_SortingOrder: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7689e360ba857ec44816a8b0a0115499, type: 3}
-  m_Color: {r: 0.7607844, g: 0.7607844, b: 0.7607844, a: 1}
+  m_Color: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -127,6 +127,5 @@ MonoBehaviour:
   currentMap: {fileID: 0}
   dirtTile: {fileID: 11400000, guid: 7fd32eb745d218742aea6a8f69c67aa3, type: 2}
   grassTile: {fileID: 11400000, guid: ef9b0e7771dcc2a4eb860ebc49e46751, type: 2}
-  deleted: 0
   groundTile: {fileID: 961612067753173512, guid: 43b5214c93d67b04e9175801b4cc49ad,
     type: 3}
