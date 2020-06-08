@@ -11,8 +11,10 @@ public class GameController : MonoBehaviour {
     public GameObject initialCharacter;
 
     public GameObject groundTileParent;
+    public GameObject AdditionalTiles;
     private GroundSpace[] groundTiles;
 
+    private int AddCount;
     public Text tpCountText;
 
     private GameObject box;
@@ -31,6 +33,8 @@ public class GameController : MonoBehaviour {
         } else {
             Debug.LogError("Cannot have more than one game controller");
         }
+
+        AddCount = AdditionalTiles.transform.childCount;
         ChangeSelectedObject(initialSelectedObject);
         ChangeSelectedCharacter(initialCharacter);
 
@@ -50,6 +54,26 @@ public class GameController : MonoBehaviour {
         if ((int)masterTime != previousSecond) {
             // calls GameTick once per second
             GameTick();
+        }
+
+        //if we expand map
+        if (AdditionalTiles.transform.childCount != AddCount)
+        {
+            AddCount = AdditionalTiles.transform.childCount;
+            UpdateControls();
+        }
+    }
+
+    private void UpdateControls()
+    {
+        groundTiles = new GroundSpace[groundTileParent.transform.childCount];
+        int currentSpace = 0;
+        foreach (Transform tile in groundTileParent.transform)
+        {
+            groundTiles[currentSpace] = tile.gameObject.GetComponent<GroundSpace>();
+            tile.GetComponent<GroundSpace>().tileNum = currentSpace;
+            tile.name = "GroundTile (" + currentSpace + ")";
+            currentSpace++;
         }
     }
 
