@@ -158,8 +158,8 @@ public class ConveyorController : MonoBehaviour
             // the space has something on it
             if (objectAttachedToSpace != null)
             {
-                Vector2 otherPos = new Vector2(space.transform.position.x, space.transform.position.y);
-                Vector2 thisPos = new Vector2(transform.parent.position.x, transform.parent.position.y);
+                Vector2 otherPos = space.transform.position;
+                Vector2 thisPos = transform.parent.position;
 
                 //gameobject infront is any gameobject
                 if(thisPos + offsetDictionary[switchCounter] == otherPos)

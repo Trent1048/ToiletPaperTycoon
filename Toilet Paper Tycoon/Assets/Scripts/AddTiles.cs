@@ -91,7 +91,6 @@ public class AddTiles : MonoBehaviour
     and place a groundspace on top of each one*/
     private void MakeGroundTiles()
     {
-
         //create this gameobject around this to allow more expansion of map
         for(int i=0; i<4; i++)
         {
