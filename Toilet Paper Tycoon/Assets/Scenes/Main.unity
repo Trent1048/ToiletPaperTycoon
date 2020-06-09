@@ -7929,6 +7929,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1988171991}
     m_Modifications:
+    - target: {fileID: -7039743311753946870, guid: 71eb4172658c6fc4f9e179e977031dd2,
+        type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[0].y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7039743311753946870, guid: 71eb4172658c6fc4f9e179e977031dd2,
+        type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[1].y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -7039743311753946870, guid: 71eb4172658c6fc4f9e179e977031dd2,
+        type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[2].y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7039743311753946870, guid: 71eb4172658c6fc4f9e179e977031dd2,
+        type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[3].y
+      value: -2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2764283602166062595, guid: 71eb4172658c6fc4f9e179e977031dd2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7988,6 +8008,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: AdditionalTile (0)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5818549234119480927, guid: 71eb4172658c6fc4f9e179e977031dd2,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71eb4172658c6fc4f9e179e977031dd2, type: 3}
