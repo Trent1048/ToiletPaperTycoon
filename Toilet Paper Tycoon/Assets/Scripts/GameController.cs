@@ -69,14 +69,25 @@ public class GameController : MonoBehaviour {
 
     private void UpdateTileCount()
     {
-        groundTiles = new GroundSpace[groundTileParent.transform.childCount];
-        int currentSpace = 0;
-        foreach (Transform tile in groundTileParent.transform)
+        if(groundTiles.Length != groundTileParent.transform.childCount)
         {
-            groundTiles[currentSpace] = tile.gameObject.GetComponent<GroundSpace>();
-            tile.GetComponent<GroundSpace>().tileNum = currentSpace;
-            tile.name = "GroundTile (" + currentSpace + ")";
-            currentSpace++;
+            groundTiles = new GroundSpace[groundTileParent.transform.childCount];
+            int currentSpace = 0;
+            foreach (Transform tile in groundTileParent.transform)
+            {
+                groundTiles[currentSpace] = tile.gameObject.GetComponent<GroundSpace>();
+                GroundSpace currentGround = tile.GetComponent<GroundSpace>();
+                currentGround.tileNum = currentSpace;
+                tile.name = "GroundTile (" + currentSpace + ")";
+                currentSpace++;
+
+                //reset neighbors for edge cases
+                int edgeReset = currentSpace % 100;
+                if (edgeReset < 10 || edgeReset % 10 == 0 || (edgeReset - 9) % 10 == 0 || edgeReset > 89)
+                {
+                    currentGround.ResetNeighbors();
+                }
+            }
         }
     }
 
