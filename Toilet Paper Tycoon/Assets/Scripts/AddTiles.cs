@@ -33,7 +33,7 @@ public class AddTiles : MonoBehaviour
     {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         startingColor = spriteRenderer.color;
-        hoverColor = new Color(0f, 0f, 0f, 0.5f);
+        hoverColor = new Color(0.5f, 0.5f, 0.5f, 1f);
         
         //saves the original map design to be used and copied
         if (tileSetupArray == null)
