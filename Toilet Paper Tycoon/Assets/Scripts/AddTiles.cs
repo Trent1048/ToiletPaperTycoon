@@ -95,7 +95,7 @@ public class AddTiles : MonoBehaviour
         for(int i=0; i<4; i++)
         {
             Vector3Int checkPos = cellPosition + directionalCheck[i];
-            Vector3 worldPos= gridLayout.CellToWorld(checkPos) + new Vector3(0f, 0.254f, 0f);
+            Vector3 worldPos= gridLayout.CellToWorld(checkPos) + new Vector3(0f, 0.4f, 0f);
             if (!currentMap.HasTile(checkPos)) //if there is a 10x10 tile area, don't do this
             {
                 Instantiate(this, worldPos, new Quaternion(0, 0, 0, 0), transform.parent);
