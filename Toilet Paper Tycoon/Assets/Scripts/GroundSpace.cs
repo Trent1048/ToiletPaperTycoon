@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System;
 
 public class GroundSpace : MonoBehaviour {
 
@@ -14,6 +13,10 @@ public class GroundSpace : MonoBehaviour {
 
     private ContactFilter2D contactFilter;
 
+    //checks getNeighbor every gametick
+    protected static List<GroundSpace> noNeighborSpaces;
+    public static int SEARCH_NEIGHBOR = 1;
+
     // for graph based pathfinding
     public int tileNum;
     public bool marked;
@@ -24,14 +27,20 @@ public class GroundSpace : MonoBehaviour {
         startingColor = spriteRenderer.color;
         hoverColor = new Color(0f, 0f, 0f, 0.5f);
 
+        if(noNeighborSpaces == null)
+        {
+            noNeighborSpaces = new List<GroundSpace>();
+        }
+        noNeighborSpaces.Add(this);
+
+        contactFilter = new ContactFilter2D();
+
         // initial tree generation
         if (UnityEngine.Random.Range(0, 3) == 0) {
             int treeType = UnityEngine.Random.Range(0, objects.Length);
             ChangeCurrentObject(objects[treeType]);
             currentObject.GetComponent<TreeController>().RandomizeAge();
         }
-
-        contactFilter = new ContactFilter2D();
     }
 
     public void ChangeCurrentObject(GameObject newObject) {
@@ -56,6 +65,17 @@ public class GroundSpace : MonoBehaviour {
         return currentObject;
     }
 
+    //calls getNeighbors SEARCH_NEIGHBOR times per second/GameTick.
+    public static void GetNeighbor()
+    {
+        for(int i=0; i<SEARCH_NEIGHBOR; i++)
+        {
+            int rand = Random.Range(0, (noNeighborSpaces.Count) - 1);
+            noNeighborSpaces[rand].GetNeighbors();
+        }
+    }
+
+    //finds neighbors of 'this', returns array of groundSpaces neighboring 'this'
     public GroundSpace[] GetNeighbors()
     {
         int modTileNum = tileNum % 100;
@@ -70,6 +90,8 @@ public class GroundSpace : MonoBehaviour {
                 return GetMidNeighbors(modTileNum);
             }
         }
+
+        if (noNeighborSpaces.Contains(this)) noNeighborSpaces.Remove(this);
         return neighbors;
     }
 
@@ -139,6 +161,7 @@ public class GroundSpace : MonoBehaviour {
     public void ResetNeighbors()
     {
         neighbors = null;
+        noNeighborSpaces.Add(this);
     }
 
     public GameObject Harvest(bool chopWood = false) {

@@ -57,6 +57,13 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    // put anything that runs every tick in this function
+    public void GameTick() {
+        TreeController.GrowTrees();
+        ConveyorController.MoveObjects();
+        GroundSpace.GetNeighbor();
+    }
+
     private void Update()
     {
         //if we expand map
@@ -67,9 +74,10 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    //add new groundspaces into groundtiles
     private void UpdateTileCount()
     {
-        if(groundTiles.Length != groundTileParent.transform.childCount)
+        if (groundTiles.Length != groundTileParent.transform.childCount)
         {
             groundTiles = new GroundSpace[groundTileParent.transform.childCount];
             int currentSpace = 0;
@@ -91,14 +99,7 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    // put anything that runs every tick in this function
-    public void GameTick() {
-        TreeController.GrowTrees();
-        ConveyorController.MoveObjects();
-    }
-
     // Pausing and Resuming the Game:
-
     public void PauseGame() {
         Time.timeScale = 0;
         gameIsPaused = true;
