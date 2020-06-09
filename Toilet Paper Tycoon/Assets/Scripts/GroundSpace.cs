@@ -99,18 +99,15 @@ public class GroundSpace : MonoBehaviour {
             }
 
             if (modTileNum < 10 || modTileNum % 10 == 0 || (modTileNum - 9) % 10 == 0 || modTileNum > 89) {
-                Debug.Log("EDGY");
                 return GetEdgeNeighbors(range);
             }
             else {
-                Debug.Log("MIDDY");
                 return GetMidNeighbors(modTileNum);
             }
         }
 
         if (noNeighborSpaces.Contains(this)) noNeighborSpaces.Remove(this);
 
-        Debug.Log("QUICKY");
         return neighbors;
     }
 
