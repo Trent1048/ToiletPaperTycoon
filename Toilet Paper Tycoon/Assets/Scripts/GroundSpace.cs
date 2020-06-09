@@ -120,35 +120,36 @@ public class GroundSpace : MonoBehaviour {
         return neighbors;
     }
 
-    //find neighbors for tile type dirtTile (significantly more expensive)
+    //find neighbors for tile type dirtTile (improved?)
     public GroundSpace[] GetEdgeNeighbors() {
         
         List<GroundSpace> neighborHelper = new List<GroundSpace>();
-        List<Collider2D> hitColliders = new List<Collider2D>();
-        Physics2D.OverlapCircle(transform.position, 0.5f, contactFilter, hitColliders);
 
+        //finds collider in a box area, max collider = 4
+        List<Collider2D> hitColliders = new List<Collider2D>();
+        Vector2 pointA = (Vector2)transform.position + new Vector2(-0.25f, 0.2f);
+        Vector2 pointB = (Vector2)transform.position + new Vector2(0.25f, -0.2f);
+        Physics2D.OverlapArea(pointA, pointB, contactFilter, hitColliders);
+        hitColliders.Remove(gameObject.GetComponent<Collider2D>()); //remove 'this' collider from list
+
+        //searches each collider to see if it neighbors 'this'
         foreach (Collider2D collider in hitColliders)
         {
             GroundSpace groundTile = collider.GetComponent<GroundSpace>();
             if (groundTile)
             {
-                Vector2 checkPos = (Vector2)transform.position + new Vector2(-0.5f, -0.25f);
-                if (checkPos == (Vector2)collider.transform.position){ //backleft
+                Vector2 collPos = collider.transform.position;
+                Vector2 thisPos = transform.position;
+                if (thisPos + new Vector2(-0.5f, -0.25f) == collPos) { //backleft
                     neighborHelper.Add(groundTile);
                 }
-
-                checkPos = (Vector2)transform.position + new Vector2(-0.5f, 0.25f);
-                if (checkPos == (Vector2)collider.transform.position){ //frontleft
+                if (thisPos + new Vector2(-0.5f, 0.25f) == collPos) { //frontleft
                     neighborHelper.Add(groundTile);
                 }
-
-                checkPos = (Vector2)transform.position + new Vector2(0.5f, 0.25f);
-                if (checkPos == (Vector2)collider.transform.position){ //frontright
+                if (thisPos + new Vector2(0.5f, 0.25f) == collPos) { //frontright
                     neighborHelper.Add(groundTile);
                 }
-
-                checkPos = (Vector2)transform.position + new Vector2(0.5f, -0.25f);
-                if (checkPos == (Vector2)collider.transform.position){ //backright
+                if (thisPos + new Vector2(0.5f, -0.25f) == collPos) { //backright
                     neighborHelper.Add(groundTile);
                 }
             }
