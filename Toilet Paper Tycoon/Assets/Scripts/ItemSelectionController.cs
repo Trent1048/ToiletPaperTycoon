@@ -23,9 +23,11 @@ public class ItemSelectionController : MonoBehaviour {
         GameController.instance.TogglePause();
     }
 
-    public void DisableAllCharacterOptions() {
+    public void DisableAllCharacterOptions(GameObject ignore = null) {
         foreach (GameObject option in characterOptions) {
-            option.SetActive(false);
+            if (option != ignore) {
+                option.SetActive(false);
+            }
 		}
 	}
 }

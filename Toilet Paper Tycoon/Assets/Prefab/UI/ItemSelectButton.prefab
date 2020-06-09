@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1788352399997117551}
   - component: {fileID: 2300748806007651722}
   - component: {fileID: 5621037390931086349}
+  - component: {fileID: 2013337657070993809}
   m_Layer: 5
   m_Name: ItemSelectButton
   m_TagString: Untagged
@@ -106,6 +107,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 6764785069711079150, guid: 854b5d0ab2b2b1a488f1646ffba69ecd, type: 3}
   selectionController: {fileID: 0}
+--- !u!114 &2013337657070993809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863135338869466330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bce8aea1ca9ad0d4fae5d087f749c1fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipText: item button
 --- !u!1 &5324788089696213944
 GameObject:
   m_ObjectHideFlags: 0

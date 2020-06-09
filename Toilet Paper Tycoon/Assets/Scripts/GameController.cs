@@ -20,6 +20,9 @@ public class GameController : MonoBehaviour {
     private GameObject selectedSpace;
     private bool objectIsSelected = true;
     private bool gameIsPaused = false;
+    private bool removeObject = false;
+
+    private int tp;
 
     private CharacterControl selectedCharacterControl;
 
@@ -43,12 +46,6 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    private void Update() {
-        if (Input.GetMouseButtonDown(1) && !objectIsSelected && !selectedCharacterControl.InAutoMode()) {
-            selectedCharacterControl.AddChopTree();
-        }
-    }
-
     private void FixedUpdate() {
         int previousSecond = (int)masterTime;
         masterTime += Time.fixedDeltaTime;
@@ -67,7 +64,7 @@ public class GameController : MonoBehaviour {
     // Pausing and Resuming the Game:
 
     public void PauseGame() {
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
         gameIsPaused = true;
     }
 
@@ -76,7 +73,7 @@ public class GameController : MonoBehaviour {
     }
 
     public void ResumeGame() {
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
         gameIsPaused = false;
     }
 
@@ -92,7 +89,7 @@ public class GameController : MonoBehaviour {
 
     private void ChangeSelectedCharacter(GameObject character) {
         CharacterControl newCharacterControl = character.GetComponent<CharacterControl>();
-        if (newCharacterControl != null) { 
+        if (newCharacterControl != null) {
             selectedCharacterControl = newCharacterControl;
         } else {
             Debug.LogError("That is not a valid character");
@@ -103,6 +100,7 @@ public class GameController : MonoBehaviour {
         if (selectedObject.GetComponent<CharacterControl>() == null) {
             objectIsSelected = true;
             this.selectedObject = selectedObject;
+            removeObject = selectedObject.CompareTag("Shovel");
         } else {
             objectIsSelected = false;
             ChangeSelectedCharacter(selectedObject);
@@ -156,7 +154,7 @@ public class GameController : MonoBehaviour {
         while (spacesToCheck.Count != 0) {
             GroundSpace current = spacesToCheck.Dequeue();
             current.marked = true;
-            if (current != start && ((current.GetCurrentObject() == null && tag == null) || 
+            if (current != start && ((current.GetCurrentObject() == null && tag == null) ||
                 (tag != null && current.GetCurrentObject() != null && current.GetCurrentObject().CompareTag(tag)))) {
                 return current;
             }
@@ -166,13 +164,13 @@ public class GameController : MonoBehaviour {
                     spacesToCheck.Enqueue(neigbor);
                 }
             }
-            
+
         }
 
         return null;
     }
 
-    // returns the nearest ground tile that contains an adult tree with it's leaves attached
+    // returns the nearest ground tile that contains an adult tree
     // if none are found, returns null
     public GroundSpace FindAdultTree(GroundSpace start, bool mustHaveLeaves = false) {
         // setup
@@ -221,5 +219,21 @@ public class GameController : MonoBehaviour {
 
     public GameObject GetBox() {
         return box;
+    }
+
+    // object deletion stuff
+    public bool CanRemoveObject() {
+        return removeObject;
+	}
+
+    // tp counting stuff
+
+    public int GetToiletPaper() {
+        return tp;
+	}
+
+    public void IncreaseToiletPaper(int amount) {
+        tp += amount;
+        tpCountText.text = "TP: " + tp;
     }
 }
