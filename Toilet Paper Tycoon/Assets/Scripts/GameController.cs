@@ -149,11 +149,11 @@ public class GameController : MonoBehaviour {
         // uses a queue for breadth first search in order to find the nearest tile
         Queue<GroundSpace> spacesToCheck = new Queue<GroundSpace>();
         spacesToCheck.Enqueue(start);
+        start.marked = true;
 
         // the queue is not empty
         while (spacesToCheck.Count != 0) {
             GroundSpace current = spacesToCheck.Dequeue();
-            current.marked = true;
             if (current != start && ((current.GetCurrentObject() == null && tag == null) ||
                 (tag != null && current.GetCurrentObject() != null && current.GetCurrentObject().CompareTag(tag)))) {
                 return current;
@@ -161,6 +161,7 @@ public class GameController : MonoBehaviour {
             // add all unmarked spaces to the queue
             foreach (GroundSpace neigbor in current.GetNeighbors()) {
                 if (!neigbor.marked) {
+                    neigbor.marked = true;
                     spacesToCheck.Enqueue(neigbor);
                 }
             }
@@ -182,11 +183,11 @@ public class GameController : MonoBehaviour {
         // uses a queue for breadth first search in order to find the nearest tile
         Queue<GroundSpace> spacesToCheck = new Queue<GroundSpace>();
         spacesToCheck.Enqueue(start);
+        start.marked = true;
 
         // the queue is not empty
         while (spacesToCheck.Count != 0) {
             GroundSpace current = spacesToCheck.Dequeue();
-            current.marked = true;
             GameObject currentObject = current.GetCurrentObject();
             if (current != start && currentObject != null) {
                 TreeController currentTree = currentObject.GetComponent<TreeController>();
@@ -197,6 +198,7 @@ public class GameController : MonoBehaviour {
             // add all unmarked spaces to the queue
             foreach (GroundSpace neigbor in current.GetNeighbors()) {
                 if (!neigbor.marked) {
+                    neigbor.marked = true;
                     spacesToCheck.Enqueue(neigbor);
                 }
             }
