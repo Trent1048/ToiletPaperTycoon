@@ -58,6 +58,7 @@ public class AddTiles : MonoBehaviour
         
         gridLayout = transform.parent.GetComponentInParent<GridLayout>();
         cellPosition = gridLayout.WorldToCell(transform.position);
+        Debug.Log(cellPosition);
     }
 
     private void OnMouseExit()
@@ -95,13 +96,13 @@ public class AddTiles : MonoBehaviour
         for(int i=0; i<4; i++)
         {
             Vector3Int checkPos = cellPosition + directionalCheck[i];
-            Vector3 worldPos= gridLayout.CellToWorld(checkPos) + new Vector3(0f, 0.4f, 0f);
+            Vector3 worldPos= gridLayout.CellToWorld(checkPos) + new Vector3(0f, 0f, 0f);
             if (!currentMap.HasTile(checkPos)) //if there is a 10x10 tile area, don't do this
             {
                 Instantiate(this, worldPos, new Quaternion(0, 0, 0, 0), transform.parent);
             }
         }
-        Vector3Int tempCellPos = cellPosition + new Vector3Int(-4,5,0); //new var, so cellPosition does not get altered
+        Vector3Int tempCellPos = cellPosition + new Vector3Int(-5,4,0); //new var, so cellPosition does not get altered
         int cellX = tempCellPos.x; //to reset x-coordinate after doing a for loop 10 times
 
         //loop to fill 10x10 area
