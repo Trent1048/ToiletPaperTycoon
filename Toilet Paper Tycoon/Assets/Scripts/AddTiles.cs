@@ -33,7 +33,7 @@ public class AddTiles : MonoBehaviour
     {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         startingColor = spriteRenderer.color;
-        hoverColor = new Color(0.5f, 0.5f, 0.5f, 1f);
+        hoverColor = new Color(0.4f, 0.4f, 0.4f, 1f);
         
         //saves the original map design to be used and copied
         if (tileSetupArray == null)
@@ -58,7 +58,6 @@ public class AddTiles : MonoBehaviour
         
         gridLayout = transform.parent.GetComponentInParent<GridLayout>();
         cellPosition = gridLayout.WorldToCell(transform.position);
-        Debug.Log(cellPosition);
     }
 
     private void OnMouseExit()

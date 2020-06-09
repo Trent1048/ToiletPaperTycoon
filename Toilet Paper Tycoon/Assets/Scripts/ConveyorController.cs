@@ -206,12 +206,6 @@ public class ConveyorController : MonoBehaviour
             spriteRenderer.sprite = sprites[switchCounter];
             FindGameObject();
         }
-
-        //checks reference for testing
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log(next);
-        }
     }
 
     private void OnMouseOver()
