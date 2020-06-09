@@ -14,6 +14,8 @@ public class GameController : MonoBehaviour {
     public GameObject AdditionalTiles;
     private List<GroundSpace> groundTiles;
 
+    public AudioSource errorNoise;
+
     private int AddCount;
     public Text tpCountText;
 
@@ -100,6 +102,10 @@ public class GameController : MonoBehaviour {
             }
         }
     }
+
+    public void PlayErrorNoise() {
+        errorNoise.Play();
+	}
 
     // Pausing and Resuming the Game:
     public void PauseGame() {

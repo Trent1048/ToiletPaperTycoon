@@ -47,7 +47,9 @@ public class GroundSpace : MonoBehaviour {
         if (currentObject != null) {
             if (GameController.instance.CanRemoveObject()) {
                 Destroy(currentObject);
-            }
+            } else {
+                GameController.instance.PlayErrorNoise();
+			}
         } else if (newObject != null && !newObject.CompareTag("Shovel")) {
 
             ItemController itemController = newObject.GetComponent<ItemController>();
@@ -61,9 +63,11 @@ public class GroundSpace : MonoBehaviour {
                 GameController.instance.IncreaseToiletPaper(-itemController.value);
                 currentObject = Instantiate(newObject, transform);
             } else {
+                GameController.instance.PlayErrorNoise();
                 currentObject = null;
             }
         } else {
+            GameController.instance.PlayErrorNoise();
             currentObject = null;
         }
     }
