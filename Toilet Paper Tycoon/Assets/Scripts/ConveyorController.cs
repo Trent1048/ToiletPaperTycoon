@@ -5,7 +5,7 @@ using UnityEngine.Rendering;
 public class ConveyorController : MonoBehaviour
 {
     //list of conveyors
-    protected static List<ConveyorController> conveyorControllers;
+    public static List<ConveyorController> conveyorControllers;
 
     //singly linked nodes
     public GameObject storedObject;
