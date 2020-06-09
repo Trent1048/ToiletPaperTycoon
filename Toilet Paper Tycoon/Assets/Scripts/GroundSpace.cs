@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 public class GroundSpace : MonoBehaviour {
 
@@ -229,7 +230,7 @@ public class GroundSpace : MonoBehaviour {
     }
 
     private void OnMouseEnter() {
-        if (!GameController.instance.GameIsPaused()) {
+        if (!GameController.instance.GameIsPaused() && !EventSystem.current.IsPointerOverGameObject()) {
             spriteRenderer.color = hoverColor;
             if(currentObject)
             {
@@ -267,7 +268,7 @@ public class GroundSpace : MonoBehaviour {
     }
 
     private void OnMouseDown() {
-        if (!GameController.instance.GameIsPaused()) {
+        if (!GameController.instance.GameIsPaused() && !EventSystem.current.IsPointerOverGameObject()) {
             if (GameController.instance.GetSelectedObject() != null) {
                 if (currentObject == null) {
                     ChangeCurrentObject(GameController.instance.GetSelectedObject());

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
 public class AddTiles : MonoBehaviour
@@ -67,7 +68,7 @@ public class AddTiles : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (!GameController.instance.GameIsPaused())
+        if (!GameController.instance.GameIsPaused() && !EventSystem.current.IsPointerOverGameObject())
         {
             spriteRenderer.color = hoverColor;
         }
@@ -76,7 +77,7 @@ public class AddTiles : MonoBehaviour
     private void OnMouseOver()
     {
         //do only if game is not paused
-        if (!GameController.instance.GameIsPaused())
+        if (!GameController.instance.GameIsPaused() && !EventSystem.current.IsPointerOverGameObject())
         {
             if (Input.GetMouseButtonDown(0))
             {
