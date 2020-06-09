@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class GroundSpace : MonoBehaviour {
 
@@ -68,10 +69,13 @@ public class GroundSpace : MonoBehaviour {
     //calls getNeighbors SEARCH_NEIGHBOR times per second/GameTick.
     public static void GetNeighbor()
     {
-        for(int i=0; i<SEARCH_NEIGHBOR; i++)
+        if(noNeighborSpaces.Count != 0)
         {
-            int rand = Random.Range(0, (noNeighborSpaces.Count) - 1);
-            noNeighborSpaces[rand].GetNeighbors();
+            for (int i = 0; i < SEARCH_NEIGHBOR; i++)
+            {
+                int rand = Random.Range(0, (noNeighborSpaces.Count) - 1);
+                noNeighborSpaces[rand].GetNeighbors();
+            }
         }
     }
 
@@ -79,19 +83,25 @@ public class GroundSpace : MonoBehaviour {
     public GroundSpace[] GetNeighbors()
     {
         int modTileNum = tileNum % 100;
-        if (neighbors == null)
-        {
-            if (modTileNum < 10 || modTileNum % 10 == 0 || (modTileNum - 9) % 10 == 0 || modTileNum > 89)
-            {
-                return GetEdgeNeighbors();
+
+        //find tile range, every 100 tiles.
+        int[] range = { 0, 99 };
+        if(tileNum > 99) {
+            range[0] = (tileNum.ToString()[0]) * 100; 
+            range[1] = (tileNum.ToString()[0]) * 100 + 99;
+        }
+
+        if (neighbors == null) {
+            if (modTileNum < 10 || modTileNum % 10 == 0 || (modTileNum - 9) % 10 == 0 || modTileNum > 89) {
+                return GetEdgeNeighbors(range);
             }
-            else
-            {
+            else {
                 return GetMidNeighbors(modTileNum);
             }
         }
 
         if (noNeighborSpaces.Contains(this)) noNeighborSpaces.Remove(this);
+
         return neighbors;
     }
 
@@ -121,7 +131,7 @@ public class GroundSpace : MonoBehaviour {
     }
 
     //find neighbors for tile type dirtTile (improved?)
-    public GroundSpace[] GetEdgeNeighbors() {
+    private GroundSpace[] GetEdgeNeighbors(int[]range) {
         
         List<GroundSpace> neighborHelper = new List<GroundSpace>();
 
@@ -133,11 +143,9 @@ public class GroundSpace : MonoBehaviour {
         hitColliders.Remove(gameObject.GetComponent<Collider2D>()); //remove 'this' collider from list
 
         //searches each collider to see if it neighbors 'this'
-        foreach (Collider2D collider in hitColliders)
-        {
+        foreach (Collider2D collider in hitColliders) {
             GroundSpace groundTile = collider.GetComponent<GroundSpace>();
-            if (groundTile)
-            {
+            if (groundTile) {
                 Vector2 collPos = collider.transform.position;
                 Vector2 thisPos = transform.position;
                 if (thisPos + new Vector2(-0.5f, -0.25f) == collPos) { //backleft
@@ -151,6 +159,16 @@ public class GroundSpace : MonoBehaviour {
                 }
                 if (thisPos + new Vector2(0.5f, -0.25f) == collPos) { //backright
                     neighborHelper.Add(groundTile);
+                }
+
+                //Reset neighbor of collider's groundspace if
+                //not empty, not within range, and does not contain this groundspace.
+                if (groundTile.neighbors != null) {
+                    if (groundTile.tileNum < range[0] || groundTile.tileNum > range[1]) {
+                        if (!groundTile.neighbors.Contains(this)) {
+                            groundTile.ResetNeighbors();
+                        }
+                    }
                 }
             }
         }

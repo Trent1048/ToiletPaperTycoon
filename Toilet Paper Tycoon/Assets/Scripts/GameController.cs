@@ -55,13 +55,13 @@ public class GameController : MonoBehaviour {
             // calls GameTick once per second
             GameTick();
         }
+        GroundSpace.GetNeighbor();
     }
 
     // put anything that runs every tick in this function
     public void GameTick() {
         TreeController.GrowTrees();
         ConveyorController.MoveObjects();
-        GroundSpace.GetNeighbor();
     }
 
     private void Update()
@@ -88,13 +88,6 @@ public class GameController : MonoBehaviour {
                 currentGround.tileNum = currentSpace;
                 tile.name = "GroundTile (" + currentSpace + ")";
                 currentSpace++;
-
-                //reset neighbors for edge cases
-                int edgeReset = currentSpace % 100;
-                if (edgeReset < 10 || edgeReset % 10 == 0 || (edgeReset - 9) % 10 == 0 || edgeReset > 89)
-                {
-                    currentGround.ResetNeighbors();
-                }
             }
         }
     }
