@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour {
 
     public GameObject groundTileParent;
     public GameObject AdditionalTiles;
-    private GroundSpace[] groundTiles;
+    private List<GroundSpace> groundTiles;
 
     private int AddCount;
     public Text tpCountText;
@@ -39,10 +39,13 @@ public class GameController : MonoBehaviour {
         ChangeSelectedCharacter(initialCharacter);
 
         // set up the array of ground tiles for making a graph
-        groundTiles = new GroundSpace[100];
+        if(groundTiles == null)
+        {
+            groundTiles = new List<GroundSpace>();
+        }
         int currentSpace = 0;
         foreach (Transform tile in groundTileParent.transform) {
-            groundTiles[currentSpace] = tile.gameObject.GetComponent<GroundSpace>();
+            groundTiles.Add(tile.gameObject.GetComponent<GroundSpace>());
             tile.GetComponent<GroundSpace>().tileNum = currentSpace;
             currentSpace++;
         }
@@ -77,17 +80,21 @@ public class GameController : MonoBehaviour {
     //add new groundspaces into groundtiles
     private void UpdateTileCount()
     {
-        if (groundTiles.Length != groundTileParent.transform.childCount)
+        if (groundTiles.Count != groundTileParent.transform.childCount)
         {
-            groundTiles = new GroundSpace[groundTileParent.transform.childCount];
             int currentSpace = 0;
-            foreach (Transform tile in groundTileParent.transform)
+            if(groundTileParent.transform.childCount > 100)
             {
-                groundTiles[currentSpace] = tile.gameObject.GetComponent<GroundSpace>();
+                currentSpace = 100 * (groundTileParent.transform.childCount / 100 - 1);
+            }
+
+            for(int i=0; i<100; i++)
+            {
+                Transform tile = groundTileParent.transform.GetChild(currentSpace+i);
+                groundTiles.Add(tile.gameObject.GetComponent<GroundSpace>());
                 GroundSpace currentGround = tile.GetComponent<GroundSpace>();
-                currentGround.tileNum = currentSpace;
-                tile.name = "GroundTile (" + currentSpace + ")";
-                currentSpace++;
+                currentGround.tileNum = currentSpace + i;
+                tile.name = "GroundTile (" + (currentSpace + i) + ")";
             }
         }
     }
@@ -156,7 +163,7 @@ public class GameController : MonoBehaviour {
         return selectedSpace;
     }
 
-    public GroundSpace[] GetGroundTiles() {
+    public List<GroundSpace> GetGroundTiles() {
         return groundTiles;
     }
 

@@ -82,26 +82,29 @@ public class GroundSpace : MonoBehaviour {
     //finds neighbors of 'this', returns array of groundSpaces neighboring 'this'
     public GroundSpace[] GetNeighbors()
     {
-        int modTileNum = tileNum % 100;
-
-        //find tile range, every 100 tiles.
-        int[] range = { 0, 99 };
-        if(tileNum > 99) {
-            range[0] = (tileNum.ToString()[0]) * 100; 
-            range[1] = (tileNum.ToString()[0]) * 100 + 99;
-        }
-
         if (neighbors == null) {
+            int modTileNum = tileNum % 100;
+
+            //find tile range, every 100 tiles.
+            int[] range = { 0, 99 };
+            if (tileNum > 99) {
+                range[0] = (tileNum.ToString()[0]) * 100;
+                range[1] = (tileNum.ToString()[0]) * 100 + 99;
+            }
+
             if (modTileNum < 10 || modTileNum % 10 == 0 || (modTileNum - 9) % 10 == 0 || modTileNum > 89) {
+                Debug.Log("EDGY");
                 return GetEdgeNeighbors(range);
             }
             else {
+                Debug.Log("MIDDY");
                 return GetMidNeighbors(modTileNum);
             }
         }
 
         if (noNeighborSpaces.Contains(this)) noNeighborSpaces.Remove(this);
 
+        Debug.Log("QUICKY");
         return neighbors;
     }
 
@@ -109,7 +112,7 @@ public class GroundSpace : MonoBehaviour {
     private GroundSpace[] GetMidNeighbors(int modTileNum)
     {
         List<GroundSpace> neighborHelper = new List<GroundSpace>();
-        GroundSpace[] allGroundTiles = GameController.instance.GetGroundTiles();
+        List<GroundSpace> allGroundTiles = GameController.instance.GetGroundTiles();
 
         // makes sure not to add tiles that don't exist or are on the 
         // other side of the ground area (10x10)
