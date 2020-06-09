@@ -81,10 +81,16 @@ public class AddTiles : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                spriteRenderer.color = startingColor;
-                MakeGroundTiles();
-                GameController.instance.PlayBuildNoise();
-                Destroy(gameObject);
+                int currentTp = GameController.instance.GetToiletPaper();
+                if (currentTp - 50 >= 0) {
+                    GameController.instance.IncreaseToiletPaper(-50);
+                    spriteRenderer.color = startingColor;
+                    MakeGroundTiles();
+                    GameController.instance.PlayBuildNoise();
+                    Destroy(gameObject);
+                } else {
+                    GameController.instance.PlayErrorNoise();
+				}
             }
         }
     }
