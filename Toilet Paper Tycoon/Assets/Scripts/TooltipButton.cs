@@ -16,4 +16,8 @@ public class TooltipButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 	void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) {
 		Tooltip.ShowTooltip(tooltipText);
 	}
+
+	private void OnDisable() {
+		Tooltip.HideTooltip();
+	}
 }

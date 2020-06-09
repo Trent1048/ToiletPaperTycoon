@@ -144,7 +144,7 @@ public class CharacterControl : MonoBehaviour {
                 if (previousTargetLoc != null) {
                     previousSpace = previousTargetLoc.GetComponent<GroundSpace>();
                 }
-                GroundSpace treeLoc = GameController.instance.FindAdultTree(previousSpace, true);
+                GroundSpace treeLoc = GameController.instance.FindAdultTree(previousSpace, !shouldChopWood);
                 if (treeLoc != null) {
                     treeLoc.hardMarked = true;
                     CurrentAction = () => Move(treeLoc.transform);

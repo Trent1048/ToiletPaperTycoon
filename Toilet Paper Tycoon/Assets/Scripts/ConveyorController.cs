@@ -82,30 +82,34 @@ public class ConveyorController : MonoBehaviour
             return true;
         }
 
-        ConveyorController conveyor = next.GetComponent<ConveyorController>();
-        if (conveyor != null) {
-            if (conveyor.storedObject != null) {
-                return false;
-            } else {
-                conveyor.storedObject = storedObject;
-                conveyor.storedObject.transform.SetParent(conveyor.transform, false);
+        if (next != null) {
+            ConveyorController conveyor = next.GetComponent<ConveyorController>();
+            if (conveyor != null) {
+                if (conveyor.storedObject != null) {
+                    return false;
+                } else {
+                    conveyor.storedObject = storedObject;
+                    conveyor.storedObject.transform.SetParent(conveyor.transform, false);
+                    storedObject = null;
+                    return true;
+                }
+            }
+
+
+            BoxController box = next.GetComponent<BoxController>();
+
+            if (box != null) {
+
+                int amount = 0;
+                ItemController itemController = storedObject.GetComponent<ItemController>();
+                if (itemController != null) {
+                    amount = itemController.value;
+                }
+
+                Destroy(storedObject);
                 storedObject = null;
-                return true;
+                GameController.instance.IncreaseToiletPaper(amount);
             }
-        }
-
-        BoxController box = next.GetComponent<BoxController>();
-        if (box != null) {
-
-            int amount = 0;
-            ItemController itemController = storedObject.GetComponent<ItemController>();
-            if (itemController != null) {
-                amount = itemController.value;
-            }
-
-            Destroy(storedObject);
-            storedObject = null;
-            box.IncreaseToiletPaper(amount);
         }
 
         return true;

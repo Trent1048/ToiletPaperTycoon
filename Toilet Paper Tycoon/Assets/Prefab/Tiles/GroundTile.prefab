@@ -95,8 +95,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34916dc06a06e0a40b32c349780d48c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 6764785069711079150, guid: 854b5d0ab2b2b1a488f1646ffba69ecd, type: 3}
+  tree: {fileID: 6764785069711079150, guid: 854b5d0ab2b2b1a488f1646ffba69ecd, type: 3}
+  tileNum: 0
+  marked: 0
+  hardMarked: 0
 --- !u!60 &2375675294264591676
 PolygonCollider2D:
   m_ObjectHideFlags: 0

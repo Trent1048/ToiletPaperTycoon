@@ -24,6 +24,8 @@ public class GameController : MonoBehaviour {
     private bool gameIsPaused = false;
     private bool removeObject = false;
 
+    private int tp;
+
     private CharacterControl selectedCharacterControl;
 
     private void Awake() {
@@ -101,7 +103,7 @@ public class GameController : MonoBehaviour {
 
     // Pausing and Resuming the Game:
     public void PauseGame() {
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
         gameIsPaused = true;
     }
 
@@ -110,7 +112,7 @@ public class GameController : MonoBehaviour {
     }
 
     public void ResumeGame() {
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
         gameIsPaused = false;
     }
 
@@ -186,11 +188,11 @@ public class GameController : MonoBehaviour {
         // uses a queue for breadth first search in order to find the nearest tile
         Queue<GroundSpace> spacesToCheck = new Queue<GroundSpace>();
         spacesToCheck.Enqueue(start);
+        start.marked = true;
 
         // the queue is not empty
         while (spacesToCheck.Count != 0) {
             GroundSpace current = spacesToCheck.Dequeue();
-            current.marked = true;
             if (current != start && ((current.GetCurrentObject() == null && tag == null) ||
                 (tag != null && current.GetCurrentObject() != null && current.GetCurrentObject().CompareTag(tag)))) {
                 return current;
@@ -198,6 +200,7 @@ public class GameController : MonoBehaviour {
             // add all unmarked spaces to the queue
             foreach (GroundSpace neigbor in current.GetNeighbors()) {
                 if (!neigbor.marked) {
+                    neigbor.marked = true;
                     spacesToCheck.Enqueue(neigbor);
                 }
             }
@@ -207,7 +210,7 @@ public class GameController : MonoBehaviour {
         return null;
     }
 
-    // returns the nearest ground tile that contains an adult tree with it's leaves attached
+    // returns the nearest ground tile that contains an adult tree
     // if none are found, returns null
     public GroundSpace FindAdultTree(GroundSpace start, bool mustHaveLeaves = false) {
         // setup
@@ -219,11 +222,11 @@ public class GameController : MonoBehaviour {
         // uses a queue for breadth first search in order to find the nearest tile
         Queue<GroundSpace> spacesToCheck = new Queue<GroundSpace>();
         spacesToCheck.Enqueue(start);
+        start.marked = true;
 
         // the queue is not empty
         while (spacesToCheck.Count != 0) {
             GroundSpace current = spacesToCheck.Dequeue();
-            current.marked = true;
             GameObject currentObject = current.GetCurrentObject();
             if (current != start && currentObject != null) {
                 TreeController currentTree = currentObject.GetComponent<TreeController>();
@@ -234,6 +237,7 @@ public class GameController : MonoBehaviour {
             // add all unmarked spaces to the queue
             foreach (GroundSpace neigbor in current.GetNeighbors()) {
                 if (!neigbor.marked) {
+                    neigbor.marked = true;
                     spacesToCheck.Enqueue(neigbor);
                 }
             }
@@ -262,4 +266,15 @@ public class GameController : MonoBehaviour {
     public bool CanRemoveObject() {
         return removeObject;
 	}
+
+    // tp counting stuff
+
+    public int GetToiletPaper() {
+        return tp;
+	}
+
+    public void IncreaseToiletPaper(int amount) {
+        tp += amount;
+        tpCountText.text = "TP: " + tp;
+    }
 }
