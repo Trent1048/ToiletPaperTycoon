@@ -15,6 +15,8 @@ public class GameController : MonoBehaviour {
     private List<GroundSpace> groundTiles;
 
     public AudioSource errorNoise;
+    public AudioSource buildNoise;
+    public AudioSource digNoise;
 
     private int AddCount;
     public Text tpCountText;
@@ -103,8 +105,18 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    // sound effects
+
     public void PlayErrorNoise() {
         errorNoise.Play();
+	}
+
+    public void PlayBuildNoise() {
+        buildNoise.Play();
+	}
+
+    public void PlayDigNoise() {
+        digNoise.Play();
 	}
 
     // Pausing and Resuming the Game:

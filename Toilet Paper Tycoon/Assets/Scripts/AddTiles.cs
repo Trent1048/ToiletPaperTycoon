@@ -83,6 +83,7 @@ public class AddTiles : MonoBehaviour
             {
                 spriteRenderer.color = startingColor;
                 MakeGroundTiles();
+                GameController.instance.PlayBuildNoise();
                 Destroy(gameObject);
             }
         }

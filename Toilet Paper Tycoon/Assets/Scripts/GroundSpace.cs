@@ -47,6 +47,7 @@ public class GroundSpace : MonoBehaviour {
     public void ChangeCurrentObject(GameObject newObject) {
         if (currentObject != null) {
             if (GameController.instance.CanRemoveObject()) {
+                GameController.instance.PlayDigNoise();
                 Destroy(currentObject);
             } else {
                 GameController.instance.PlayErrorNoise();
@@ -63,6 +64,7 @@ public class GroundSpace : MonoBehaviour {
 
                 GameController.instance.IncreaseToiletPaper(-itemController.value);
                 currentObject = Instantiate(newObject, transform);
+                GameController.instance.PlayBuildNoise();
             } else {
                 GameController.instance.PlayErrorNoise();
                 currentObject = null;
