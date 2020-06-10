@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterControl : MonoBehaviour {
 
-    public float speed;
+    private float speed;
     public float accuracy;
 
     private Transform previousTargetLoc;
@@ -182,6 +182,14 @@ public class CharacterControl : MonoBehaviour {
 
         // go to the tree
         actions.Enqueue(() => {
+
+            // set speed based on character type
+            if ((charType == CharacterType.Jerry && !shouldChopWood) || (charType == CharacterType.Rick && shouldChopWood)) {
+                speed = 0.9f;
+            } else {
+                speed = 0.7f;
+            }
+
             if (item == null) {
                 GroundSpace previousSpace = null;
                 if (previousTargetLoc != null) {
@@ -227,7 +235,16 @@ public class CharacterControl : MonoBehaviour {
     private void AddPlantTree() {
 
         // go to the box
-        actions.Enqueue(() => GoToBox());
+        actions.Enqueue(() => {
+            GoToBox();
+
+            // set speed based on character type
+            if (charType == CharacterType.Rachel) {
+                speed = 0.9f;
+			} else {
+                speed = 0.7f;
+			}
+        });
 
         // get a tree from the box
         actions.Enqueue(() => {

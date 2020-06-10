@@ -5298,7 +5298,7 @@ PrefabInstance:
     - target: {fileID: 9156763590357657190, guid: 6e2e5209fbf833349b1fd8dd2b13df48,
         type: 3}
       propertyPath: tooltipText
-      value: Rick\nClick for options
+      value: Rick\nFast at chopping wood\nClick for options
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e2e5209fbf833349b1fd8dd2b13df48, type: 3}
@@ -10963,7 +10963,7 @@ PrefabInstance:
     - target: {fileID: 9156763590357657190, guid: 6e2e5209fbf833349b1fd8dd2b13df48,
         type: 3}
       propertyPath: tooltipText
-      value: Rachel\nClick for options
+      value: Rachel\nFast at planting trees\nClick for options
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e2e5209fbf833349b1fd8dd2b13df48, type: 3}
@@ -12105,7 +12105,7 @@ PrefabInstance:
     - target: {fileID: 9156763590357657190, guid: 6e2e5209fbf833349b1fd8dd2b13df48,
         type: 3}
       propertyPath: tooltipText
-      value: Jerry\nClick for options
+      value: Jerry\nFast at picking leaves\nClick for options
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e2e5209fbf833349b1fd8dd2b13df48, type: 3}
