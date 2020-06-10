@@ -9,8 +9,7 @@ public class TipsController : MonoBehaviour {
 
 	private void Start() {
 		Time.timeScale = 0;
-		instructionNum = 0;
-		instructionText.text = instructions[instructionNum];
+		instructionNum = -1;
 	}
 
 	private void Update() {
