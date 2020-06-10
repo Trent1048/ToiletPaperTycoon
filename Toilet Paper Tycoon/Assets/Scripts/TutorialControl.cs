@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class TutorialControl : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject[] gameTip;
+    private int gameTipIndex;
 
-    // Update is called once per frame
     void Update()
     {
+        for (int i = 0; i < gameTip.Length; i++)
+        {
+            if (i == gameTipIndex)
+            {
+                gameTip[i].SetActive(true);
+            } else
+            {
+                gameTip[i].SetActive(false);
+            }
+        }
         
+         if (Input.GetMouseButtonDown(0))
+         {
+            gameTipIndex++;
+         }
+        if (Input.GetMouseButtonDown(1))
+        {
+            gameTipIndex--;
+        }
     }
 }
