@@ -255,7 +255,7 @@ public class GameController : MonoBehaviour {
             GameObject currentObject = current.GetCurrentObject();
             if (current != start && currentObject != null) {
                 TreeController currentTree = currentObject.GetComponent<TreeController>();
-                if (currentTree != null && (currentTree.CanPickLeaves() || !mustHaveLeaves)) {
+                if (currentTree != null && (currentTree.CanPickLeaves() || (!mustHaveLeaves && currentTree.CanChopWood()))) {
                     return current;
                 }
             }
