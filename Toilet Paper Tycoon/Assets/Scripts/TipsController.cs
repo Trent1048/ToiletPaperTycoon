@@ -14,6 +14,7 @@ public class TipsController : MonoBehaviour {
 
 	private void Update() {
 		if (Input.GetMouseButtonDown(0)) {
+			GameController.instance.PlayClickNoise();
 			instructionNum++;
 			if (instructionNum < instructions.Length) {
 				instructionText.text = instructions[instructionNum];

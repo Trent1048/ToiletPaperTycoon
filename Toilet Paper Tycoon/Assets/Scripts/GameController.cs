@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour {
     public AudioSource errorNoise;
     public AudioSource buildNoise;
     public AudioSource digNoise;
+    public AudioSource clickNoise;
 
     private int AddCount;
     public Text tpCountText;
@@ -117,6 +118,10 @@ public class GameController : MonoBehaviour {
 
     public void PlayDigNoise() {
         digNoise.Play();
+	}
+
+    public void PlayClickNoise() {
+        clickNoise.Play();
 	}
 
     // Pausing and Resuming the Game:
