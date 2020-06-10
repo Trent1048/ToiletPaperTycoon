@@ -118,6 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.7
   accuracy: 0.1
+  charType: 2
 --- !u!1001 &3401855751889795597
 PrefabInstance:
   m_ObjectHideFlags: 0

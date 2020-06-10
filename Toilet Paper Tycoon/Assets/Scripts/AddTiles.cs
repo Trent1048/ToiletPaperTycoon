@@ -66,21 +66,12 @@ public class AddTiles : MonoBehaviour
         spriteRenderer.color = startingColor;
     }
 
-    private void OnMouseEnter()
-    {
-        if (!GameController.instance.GameIsPaused() && !EventSystem.current.IsPointerOverGameObject())
-        {
-            spriteRenderer.color = hoverColor;
-        }
-    }
-
     private void OnMouseOver()
     {
         //do only if game is not paused
-        if (!GameController.instance.GameIsPaused() && !EventSystem.current.IsPointerOverGameObject())
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
+        if (!GameController.instance.GameIsPaused() && !EventSystem.current.IsPointerOverGameObject()) {
+            spriteRenderer.color = hoverColor;
+            if (Input.GetMouseButtonDown(0)) {
                 int currentTp = GameController.instance.GetToiletPaper();
                 if (currentTp - 50 >= 0) {
                     GameController.instance.IncreaseToiletPaper(-50);
@@ -92,6 +83,8 @@ public class AddTiles : MonoBehaviour
                     GameController.instance.PlayErrorNoise();
 				}
             }
+        } else {
+            spriteRenderer.color = startingColor;
         }
     }
 

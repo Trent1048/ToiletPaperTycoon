@@ -5107,6 +5107,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1831770815}
     m_Modifications:
+    - target: {fileID: 475359959616615342, guid: 6e2e5209fbf833349b1fd8dd2b13df48,
+        type: 3}
+      propertyPath: tooltipText
+      value: Hire another Rick\nCosts 30 tp
+      objectReference: {fileID: 0}
     - target: {fileID: 823829075693107306, guid: 6e2e5209fbf833349b1fd8dd2b13df48,
         type: 3}
       propertyPath: characterControl
@@ -10767,6 +10772,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1831770815}
     m_Modifications:
+    - target: {fileID: 475359959616615342, guid: 6e2e5209fbf833349b1fd8dd2b13df48,
+        type: 3}
+      propertyPath: tooltipText
+      value: Hire another Rachel\nCosts 30 tp
+      objectReference: {fileID: 0}
     - target: {fileID: 823829075693107306, guid: 6e2e5209fbf833349b1fd8dd2b13df48,
         type: 3}
       propertyPath: characterControl
@@ -11907,6 +11917,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1831770815}
     m_Modifications:
+    - target: {fileID: 475359959616615342, guid: 6e2e5209fbf833349b1fd8dd2b13df48,
+        type: 3}
+      propertyPath: tooltipText
+      value: Hire another Jerry\nCosts 30 tp
+      objectReference: {fileID: 0}
     - target: {fileID: 823829075693107306, guid: 6e2e5209fbf833349b1fd8dd2b13df48,
         type: 3}
       propertyPath: characterControl

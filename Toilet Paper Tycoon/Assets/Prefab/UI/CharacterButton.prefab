@@ -956,10 +956,9 @@ GameObject:
   - component: {fileID: 3667207928741621888}
   - component: {fileID: 3801000755140360378}
   - component: {fileID: 5179670015601269696}
-  - component: {fileID: 823829075693107306}
   - component: {fileID: 475359959616615342}
   m_Layer: 5
-  m_Name: Manual
+  m_Name: Hire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1028,7 +1027,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 823829075693107306}
+      - m_Target: {fileID: 0}
         m_MethodName: ChangeAction
         m_Mode: 1
         m_Arguments:
@@ -1064,20 +1063,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 0}
   selectionController: {fileID: 0}
---- !u!114 &823829075693107306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4336911700455871330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b2c2f2eb1eb4ed46a1706cec7e10871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterControl: {fileID: 0}
-  actionType: 3
 --- !u!114 &475359959616615342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1090,7 +1075,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bce8aea1ca9ad0d4fae5d087f749c1fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipText: Manual Control
+  tooltipText: Hire another character\nCosts 30 tp
 --- !u!1 &4371510781673945319
 GameObject:
   m_ObjectHideFlags: 0

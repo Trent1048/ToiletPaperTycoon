@@ -15,6 +15,7 @@ public class CharacterControl : MonoBehaviour {
 
     private Action CurrentAction;
     private Action AutoAction;
+    private ActionType autoActionType = ActionType.Manual;
     private Queue<Action> actions;
     private bool shouldChopWood = false;
     private bool auto;
@@ -22,12 +23,47 @@ public class CharacterControl : MonoBehaviour {
     private Animator animator;
     private Direction dir;
 
+    public CharacterType charType;
+
+    protected static List<CharacterControl> jerrys;
+    protected static List<CharacterControl> rachels;
+    protected static List<CharacterControl> ricks;
+
+    private List<CharacterControl> equalTypeCharacters;
+
     private void Start() {
+
+        // setup character control lists
+        if (jerrys == null) {
+            jerrys = new List<CharacterControl>();
+        }
+        if (rachels == null) {
+            rachels = new List<CharacterControl>();
+        }
+        if (ricks == null) {
+            ricks = new List<CharacterControl>();
+        }
+
+        Dictionary<CharacterType, List<CharacterControl>> charTypeToListDict = new Dictionary<CharacterType, List<CharacterControl>>() {
+            {CharacterType.Jerry, jerrys},
+            {CharacterType.Rachel, rachels},
+            {CharacterType.Rick, ricks}
+        };
+
+        equalTypeCharacters = charTypeToListDict[charType];
+        equalTypeCharacters.Add(this);
+
         animator = GetComponent<Animator>();
         actions = new Queue<Action>();
 
         itemBubble = transform.GetChild(0).gameObject;
+        itemBubble.SetActive(false);
         itemBubbleIcon = itemBubble.transform.GetChild(0).GetComponent<SpriteRenderer>();
+
+        GameObject gameSelectedSpace = GameController.instance.GetSelectedSpace();
+        if (gameSelectedSpace != null) {
+            previousTargetLoc = gameSelectedSpace.transform;
+        }
     }
 
     private void FixedUpdate() {
@@ -95,7 +131,7 @@ public class CharacterControl : MonoBehaviour {
     }
 
     // the target should always be a ground tile
-    public void AddMove(GameObject targetLoc) {
+    protected void AddMove(GameObject targetLoc) {
         actions.Enqueue(() => Move(targetLoc.transform));
     }
 
@@ -142,7 +178,7 @@ public class CharacterControl : MonoBehaviour {
     }
 
     // moves the character to a tree, picks some leaves or chops wood, and then to the box if it exists
-    public void AddChopTree() {
+    private void AddChopTree() {
 
         // go to the tree
         actions.Enqueue(() => {
@@ -188,7 +224,7 @@ public class CharacterControl : MonoBehaviour {
         });
     }
 
-    public void AddPlantTree() {
+    private void AddPlantTree() {
 
         // go to the box
         actions.Enqueue(() => GoToBox());
@@ -199,6 +235,14 @@ public class CharacterControl : MonoBehaviour {
             // makes sure the box exists and the character is at the box's location
             if (box != null && box.transform.parent == previousTargetLoc) {
                 AddItem(box.GetComponent<BoxController>().GetTree());
+
+                // make tree f
+                if (item != null) {
+                    ItemController itemController = item.GetComponent<ItemController>();
+                    if (itemController != null) {
+                        itemController.value = 0;
+                    }
+                }
             }
             CurrentAction = null;
         });
@@ -238,6 +282,8 @@ public class CharacterControl : MonoBehaviour {
     }
 
     public void ChangeAutoAction(ActionType actionType) {
+        autoActionType = actionType;
+
         if (actionType == ActionType.Manual) {
             auto = false;
             AutoAction = null;
@@ -255,6 +301,18 @@ public class CharacterControl : MonoBehaviour {
             }
         }
     }
+
+    // apply ChangeAutoAction to all characters of the same type
+
+    public void CommunalChangeAutoAction(ActionType actionType) {
+        foreach (CharacterControl characterControl in equalTypeCharacters) {
+            characterControl.ChangeAutoAction(actionType);
+        }
+    }
+
+    public ActionType GetAutoActionType() {
+        return autoActionType;
+	}
 
     public void AddItem(GameObject item) {
         if (item != null) {
@@ -297,4 +355,10 @@ public enum ActionType {
     Leaf,
     Wood,
     Manual
+}
+
+public enum CharacterType {
+    Jerry,
+    Rachel,
+    Rick
 }

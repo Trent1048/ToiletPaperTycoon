@@ -174,8 +174,15 @@ public class GameController : MonoBehaviour {
 
     public void ChangeSelectedSpace(GameObject newSpace) {
         selectedSpace = newSpace;
-        if (!objectIsSelected && selectedCharacterControl != null && !selectedCharacterControl.InAutoMode()) {
-            selectedCharacterControl.AddMove(newSpace);
+        if (!objectIsSelected && selectedCharacterControl != null) {
+            if (tp - 30 >= 0) {
+                GameObject newCharacter = Instantiate(selectedCharacterControl.gameObject, newSpace.transform.position, new Quaternion(0, 0, 0, 0));
+                CharacterControl newCharacterController = newCharacter.GetComponent<CharacterControl>();
+                newCharacterController.ChangeAutoAction(selectedCharacterControl.GetAutoActionType());
+                IncreaseToiletPaper(-30);
+            } else {
+                PlayErrorNoise();
+			}
         }
     }
 

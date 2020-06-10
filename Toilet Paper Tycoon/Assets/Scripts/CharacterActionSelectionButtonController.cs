@@ -6,7 +6,7 @@ public class CharacterActionSelectionButtonController : MonoBehaviour {
 	public ActionType actionType;
 
 	public void ChangeAction() {
-		characterControl.ChangeAutoAction(actionType);
+		characterControl.CommunalChangeAutoAction(actionType);
 	}
 
 }
