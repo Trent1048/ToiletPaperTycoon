@@ -19,9 +19,13 @@ public class TipsController : MonoBehaviour {
 			if (instructionNum < instructions.Length) {
 				instructionText.text = instructions[instructionNum];
 			} else {
-				Time.timeScale = 1;
-				gameObject.SetActive(false);
+				CloseTips();
 			}
 		}
+	}
+
+	public void CloseTips() {
+		Time.timeScale = 1;
+		gameObject.SetActive(false);
 	}
 }
