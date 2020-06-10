@@ -5,7 +5,7 @@ using UnityEngine.Rendering;
 public class ConveyorController : MonoBehaviour
 {
     //list of conveyors
-    protected static List<ConveyorController> conveyorControllers;
+    public static List<ConveyorController> conveyorControllers;
 
     //singly linked nodes
     public GameObject storedObject;
@@ -162,8 +162,8 @@ public class ConveyorController : MonoBehaviour
             // the space has something on it
             if (objectAttachedToSpace != null)
             {
-                Vector2 otherPos = new Vector2(space.transform.position.x, space.transform.position.y);
-                Vector2 thisPos = new Vector2(transform.parent.position.x, transform.parent.position.y);
+                Vector2 otherPos = space.transform.position;
+                Vector2 thisPos = transform.parent.position;
 
                 //gameobject infront is any gameobject
                 if(thisPos + offsetDictionary[switchCounter] == otherPos)
@@ -205,12 +205,6 @@ public class ConveyorController : MonoBehaviour
             if (switchCounter > 3) switchCounter = 0;
             spriteRenderer.sprite = sprites[switchCounter];
             FindGameObject();
-        }
-
-        //checks reference for testing
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log(next);
         }
     }
 

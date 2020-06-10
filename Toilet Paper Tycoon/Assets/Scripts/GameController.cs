@@ -11,8 +11,14 @@ public class GameController : MonoBehaviour {
     public GameObject initialCharacter;
 
     public GameObject groundTileParent;
-    private GroundSpace[] groundTiles;
+    public GameObject AdditionalTiles;
+    private List<GroundSpace> groundTiles;
 
+    public AudioSource errorNoise;
+    public AudioSource buildNoise;
+    public AudioSource digNoise;
+
+    private int AddCount;
     public Text tpCountText;
 
     private GameObject box;
@@ -33,14 +39,19 @@ public class GameController : MonoBehaviour {
         } else {
             Debug.LogError("Cannot have more than one game controller");
         }
+
+        AddCount = AdditionalTiles.transform.childCount;
         ChangeSelectedObject(initialSelectedObject);
         ChangeSelectedCharacter(initialCharacter);
 
         // set up the array of ground tiles for making a graph
-        groundTiles = new GroundSpace[100];
+        if(groundTiles == null)
+        {
+            groundTiles = new List<GroundSpace>();
+        }
         int currentSpace = 0;
         foreach (Transform tile in groundTileParent.transform) {
-            groundTiles[currentSpace] = tile.gameObject.GetComponent<GroundSpace>();
+            groundTiles.Add(tile.gameObject.GetComponent<GroundSpace>());
             tile.GetComponent<GroundSpace>().tileNum = currentSpace;
             currentSpace++;
         }
@@ -53,6 +64,7 @@ public class GameController : MonoBehaviour {
             // calls GameTick once per second
             GameTick();
         }
+        GroundSpace.GetNeighbor();
     }
 
     // put anything that runs every tick in this function
@@ -61,8 +73,53 @@ public class GameController : MonoBehaviour {
         ConveyorController.MoveObjects();
     }
 
-    // Pausing and Resuming the Game:
+    private void Update()
+    {
+        //if we expand map
+        if (AdditionalTiles.transform.childCount != AddCount)
+        {
+            AddCount = AdditionalTiles.transform.childCount;
+            UpdateTileCount();
+        }
+    }
 
+    //add new groundspaces into groundtiles
+    private void UpdateTileCount()
+    {
+        if (groundTiles.Count != groundTileParent.transform.childCount)
+        {
+            int currentSpace = 0;
+            if(groundTileParent.transform.childCount > 100)
+            {
+                currentSpace = 100 * (groundTileParent.transform.childCount / 100 - 1);
+            }
+
+            for(int i=0; i<100; i++)
+            {
+                Transform tile = groundTileParent.transform.GetChild(currentSpace+i);
+                groundTiles.Add(tile.gameObject.GetComponent<GroundSpace>());
+                GroundSpace currentGround = tile.GetComponent<GroundSpace>();
+                currentGround.tileNum = currentSpace + i;
+                tile.name = "GroundTile (" + (currentSpace + i) + ")";
+            }
+        }
+    }
+
+    // sound effects
+
+    public void PlayErrorNoise() {
+        errorNoise.Play();
+	}
+
+    public void PlayBuildNoise() {
+        buildNoise.Play();
+	}
+
+    public void PlayDigNoise() {
+        digNoise.Play();
+	}
+
+    // Pausing and Resuming the Game:
     public void PauseGame() {
         //Time.timeScale = 0;
         gameIsPaused = true;
@@ -126,7 +183,7 @@ public class GameController : MonoBehaviour {
         return selectedSpace;
     }
 
-    public GroundSpace[] GetGroundTiles() {
+    public List<GroundSpace> GetGroundTiles() {
         return groundTiles;
     }
 
@@ -149,11 +206,11 @@ public class GameController : MonoBehaviour {
         // uses a queue for breadth first search in order to find the nearest tile
         Queue<GroundSpace> spacesToCheck = new Queue<GroundSpace>();
         spacesToCheck.Enqueue(start);
+        start.marked = true;
 
         // the queue is not empty
         while (spacesToCheck.Count != 0) {
             GroundSpace current = spacesToCheck.Dequeue();
-            current.marked = true;
             if (current != start && ((current.GetCurrentObject() == null && tag == null) ||
                 (tag != null && current.GetCurrentObject() != null && current.GetCurrentObject().CompareTag(tag)))) {
                 return current;
@@ -161,6 +218,7 @@ public class GameController : MonoBehaviour {
             // add all unmarked spaces to the queue
             foreach (GroundSpace neigbor in current.GetNeighbors()) {
                 if (!neigbor.marked) {
+                    neigbor.marked = true;
                     spacesToCheck.Enqueue(neigbor);
                 }
             }
@@ -182,11 +240,11 @@ public class GameController : MonoBehaviour {
         // uses a queue for breadth first search in order to find the nearest tile
         Queue<GroundSpace> spacesToCheck = new Queue<GroundSpace>();
         spacesToCheck.Enqueue(start);
+        start.marked = true;
 
         // the queue is not empty
         while (spacesToCheck.Count != 0) {
             GroundSpace current = spacesToCheck.Dequeue();
-            current.marked = true;
             GameObject currentObject = current.GetCurrentObject();
             if (current != start && currentObject != null) {
                 TreeController currentTree = currentObject.GetComponent<TreeController>();
@@ -197,6 +255,7 @@ public class GameController : MonoBehaviour {
             // add all unmarked spaces to the queue
             foreach (GroundSpace neigbor in current.GetNeighbors()) {
                 if (!neigbor.marked) {
+                    neigbor.marked = true;
                     spacesToCheck.Enqueue(neigbor);
                 }
             }

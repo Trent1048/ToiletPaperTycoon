@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
 
 public class CharacterControl : MonoBehaviour {
@@ -61,17 +60,25 @@ public class CharacterControl : MonoBehaviour {
             findStart = previousTargetLoc.GetComponent<GroundSpace>();
         }
 
-        GroundSpace boxLoc = GameController.instance.FindObjectInGround(findStart, "Box");
-        GroundSpace beltLoc = GameController.instance.FindObjectInGround(findStart, "Belt");
+        GroundSpace boxLoc = null;
+        GroundSpace beltLoc = null;
+
+        if (!GameController.instance.BoxCanSpawn()) {
+            boxLoc = GameController.instance.FindObjectInGround(findStart, "Box");
+        }
+
+        if (ConveyorController.conveyorControllers != null && ConveyorController.conveyorControllers.Count > 0) {
+            beltLoc = GameController.instance.FindObjectInGround(findStart, "Belt");
+        }
 
         float boxDist = float.MaxValue;
         if (boxLoc != null) {
-            boxDist = UnityEngine.Vector3.Distance(transform.position, boxLoc.transform.position);
+            boxDist = Vector3.Distance(transform.position, boxLoc.transform.position);
         }
 
         float beltDist = float.MaxValue;
         if (beltLoc != null) {
-            beltDist = UnityEngine.Vector3.Distance(transform.position, beltLoc.transform.position);
+            beltDist = Vector3.Distance(transform.position, beltLoc.transform.position);
         }
 
         if (beltLoc != null || boxLoc != null) {
@@ -93,7 +100,7 @@ public class CharacterControl : MonoBehaviour {
     }
 
     private void Move(Transform target) {
-        UnityEngine.Vector3 targetPos = target.position;
+        Vector3 targetPos = target.position;
 
         // isographic coordinates
         float targetIsoX = targetPos.y / 0.25f + targetPos.x / 0.5f;
@@ -121,7 +128,7 @@ public class CharacterControl : MonoBehaviour {
         // so it won't move when it is really close
         if (Math.Abs(moveX) > accuracy || Math.Abs(moveY) > accuracy) {
 
-            UnityEngine.Vector3 moveVector = new UnityEngine.Vector3((moveX - moveY) * 0.5f, (moveX + moveY) * 0.25f, 0);
+            Vector3 moveVector = new Vector3((moveX - moveY) * 0.5f, (moveX + moveY) * 0.25f, 0);
 
             // keep the speed the same regardless of distance or framerate
             moveVector.Normalize();
